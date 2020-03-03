@@ -48,12 +48,10 @@
             />
           </svg>
         </button>
-
-        <!-- @click.away="open = false" -->
-        <div class="ml-3 relative" x-data="{ open: false }">
+        <div ref="menu" class="ml-3 relative">
           <div>
             <button
-              @click="open = !open"
+              @click="toggleMenu"
               class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:shadow-outline"
             >
               <img
@@ -63,31 +61,34 @@
               />
             </button>
           </div>
-          <div
-            v-show="open"
-            x-transition:enter="transition ease-out duration-100"
-            x-transition:enter-start="transform opacity-0 scale-95"
-            x-transition:enter-end="transform opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-75"
-            x-transition:leave-start="transform opacity-100 scale-100"
-            x-transition:leave-end="transform opacity-0 scale-95"
-            class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg"
+          <transition
+            enter-active-class="duration-150 ease-out"
+            enter-class="opacity-0 scale-95"
+            enter-to-class="opacity-100 scale-100"
+            leave-active-class="duration-100 ease-in"
+            leave-class="opacity-100 scale-100"
+            leave-to-class="opacity-0 scale-95"
           >
-            <div class="py-1 rounded-md bg-white shadow-xs">
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-              >Your Profile</a>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-              >Settings</a>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-              >Sign out</a>
+            <div
+              v-show="menuOpen"
+              class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg"
+            >
+              <div class="py-1 rounded-md bg-white shadow-xs">
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
+                >Your Profile</a>
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
+                >Settings</a>
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
+                >Sign out</a>
+              </div>
             </div>
-          </div>
+          </transition>
         </div>
       </div>
     </div>
@@ -99,15 +100,17 @@ export default {
   props: ["sidebarOpen"],
   data() {
     return {
-      sidebarOpen: false,
-      open: false
+      // sidebarOpen: false,
+      menuOpen: false
     };
   },
   methods: {
     toggleSidebar() {
-      this.sidebarOpen = !this.sidebarOpen;
-      console.log(this.sidebarOpen);
-      this.$emit("toggleSidebar", this.sidebarOpen);
+      this.$emit("toggleSidebar", true);
+    },
+
+    toggleMenu() {
+      this.menuOpen = !this.menuOpen;
     }
   }
 };

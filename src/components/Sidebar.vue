@@ -105,9 +105,16 @@ export default {
   },
   methods: {
     toggleSidebar() {
-      sidebarOpen = !sidebarOpen;
-      this.$emit("toggleSidebar", sidebarOpen);
+      this.$emit("toggleSidebar", false);
     }
+  },
+  mounted() {
+    document.addEventListener("click", evt => {
+      evt.stopPropagation();
+      if (!this.$refs.menu.contains(evt.target)) {
+        this.menuOpen = false;
+      }
+    });
   }
 };
 </script>

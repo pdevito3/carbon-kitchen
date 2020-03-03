@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     toggleSidebar(toggleVal) {
-      sidebarOpen = toggleVal;
+      this.sidebarOpen = toggleVal;
     }
   }
 };
