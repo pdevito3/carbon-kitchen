@@ -1,9 +1,10 @@
 <template>
-  <div class="h-screen flex overflow-hidden bg-gray-100" x-data="{ sidebarOpen: false }">
+  <!-- @keydown.window.escape="sidebarOpen = false" -->
+  <div class="h-screen flex overflow-hidden bg-gray-100">
     <!-- Off-canvas menu for mobile -->
     <div class="md:hidden">
       <div
-        @click="toggleSidebar()"
+        @click="closeSidebar()"
         class="fixed inset-0 z-30 bg-gray-600 opacity-0 pointer-events-none transition-opacity ease-linear duration-300"
         :class="{'opacity-75 pointer-events-auto': sidebarOpen, 'opacity-0 pointer-events-none': !sidebarOpen}"
       ></div>
@@ -18,7 +19,7 @@
         <div class="absolute top-0 right-0 -mr-14 p-1">
           <button
             v-show="sidebarOpen"
-            @click="toggleSidebar()"
+            @click="closeSidebar()"
             class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600"
           >
             <svg class="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -104,17 +105,9 @@ export default {
     };
   },
   methods: {
-    toggleSidebar() {
-      this.$emit("toggleSidebar", false);
+    closeSidebar() {
+      this.$emit("closeSidebar", false);
     }
-  },
-  mounted() {
-    document.addEventListener("click", evt => {
-      evt.stopPropagation();
-      if (!this.$refs.menu.contains(evt.target)) {
-        this.menuOpen = false;
-      }
-    });
   }
 };
 </script>

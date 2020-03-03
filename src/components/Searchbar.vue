@@ -1,7 +1,7 @@
 <template>
   <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
     <button
-      @click.stop="toggleSidebar()"
+      @click.stop="openSidebar()"
       class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden"
     >
       <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -100,15 +100,13 @@ export default {
   props: ["sidebarOpen"],
   data() {
     return {
-      // sidebarOpen: false,
       menuOpen: false
     };
   },
   methods: {
-    toggleSidebar() {
-      this.$emit("toggleSidebar", true);
+    openSidebar() {
+      this.$emit("openSidebar", true);
     },
-
     toggleMenu() {
       this.menuOpen = !this.menuOpen;
     }
