@@ -10,8 +10,9 @@
         x-data
         x-init="$el.focus()"
       >
-        <router-view />
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <router-view />
+        </div>
       </main>
     </div>
   </div>
