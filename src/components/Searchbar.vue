@@ -97,7 +97,6 @@
 
 <script>
 export default {
-  props: ["sidebarOpen"],
   data() {
     return {
       menuOpen: false
