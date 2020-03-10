@@ -1,6 +1,6 @@
 <template>
-  <a
-    href="#"
+  <router-link
+    to="/myrecipes/recipe"
     class="group block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
   >
     <div class="flex items-center px-4 py-4">
@@ -121,7 +121,7 @@
         </button>
       </popper>
     </div>
-  </a>
+  </router-link>
 </template>
 
 <script>
