@@ -13,7 +13,9 @@ export default {
   },
 
   created() {
-    fetch("/api/recipes/1")
+    let id = this.$route.params.id;
+
+    fetch(`/api/recipes/${id}`)
       .then(res => res.json())
       .then(json => {
         this.recipe = json.recipe;

@@ -1,6 +1,6 @@
 <template>
   <router-link
-    to="/myrecipes/recipe"
+    :to="`/myrecipes/recipe/${this.recipeId}`"
     class="group block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
   >
     <div class="flex items-center px-4 py-4">
@@ -131,7 +131,8 @@ export default {
   props: {
     title: String,
     imageLink: String,
-    recipeSourceLink: String
+    recipeSourceLink: String,
+    recipeId: Number
   },
   components: {
     popper: Popper

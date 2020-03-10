@@ -11,6 +11,7 @@
             :title="recipe.title"
             :recipeSourceLink="recipe.recipeSourceLink"
             :imageLink="recipe.imageLink"
+            :recipeId="recipe.recipeId"
           />
         </li>
       </ul>
