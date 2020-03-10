@@ -1,6 +1,7 @@
 <template>
   <router-link
     :to="`/myrecipes/recipe/${this.recipeId}`"
+    target="_blank"
     class="group block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
   >
     <div class="flex items-center px-4 py-4">
