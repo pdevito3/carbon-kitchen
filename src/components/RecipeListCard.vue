@@ -6,17 +6,13 @@
     <div class="flex items-center px-4 py-4">
       <div class="min-w-0 flex-1 flex items-center">
         <div class="flex-shrink-0">
-          <img
-            class="h-20 w-20 object-cover rounded-full"
-            src="https://images-gmi-pmc.edge-generalmills.com/60c3ebda-50a7-415e-8c66-14f6c9b93034.jpg"
-            alt
-          />
+          <img class="h-20 w-20 object-cover rounded-full" :src="this.imageLink" alt />
         </div>
         <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
           <div>
             <div
               class="font-semibold text-gray-600 truncate group-hover:text-red-500"
-            >Instant Pot® Chicken and Wild Rice Soup</div>
+            >{{this.title}}</div>
             <div class="mt-2 flex items-center sm:text-sm sm:leading-5 text-gray-500">
               <svg
                 fill="none"
@@ -31,9 +27,10 @@
                   d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
                 />
               </svg>
-              <span
-                class="pl-1 truncate"
-              >https://www.bettycrocker.com/recipes/instant-pot-chicken-and-wild-rice-soup/8f631956-26b9-4353-8605-9f52cdde99db</span>
+              <a
+                :href="this.recipeSourceLink"
+                class="pl-1 truncate hover:underline"
+              >{{this.recipeSourceLink}}</a>
             </div>
           </div>
           <div class="hidden md:block">
@@ -131,6 +128,11 @@
 import Popper from "vue-popperjs";
 
 export default {
+  props: {
+    title: String,
+    imageLink: String,
+    recipeSourceLink: String
+  },
   components: {
     popper: Popper
   }
