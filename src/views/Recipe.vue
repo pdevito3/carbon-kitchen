@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div class="flex flex-col">
     <div
       class="border-b-2 border-gray-300 py-2 flex-col md:flex md:flex-row md:justify-between md:items-start"
     >
@@ -9,15 +9,14 @@
           :src="this.recipe.imageLink"
           alt="Recipe Image"
         />
-        <!-- {{this.recipe}} -->
       </div>
 
       <div
-        class="order-2 h-56 md:h-72 lg:h-64 md:flex-col md:justify-between md:order-1 md:w-1/2 lg:w-3/4"
+        class="order-2 flex flex-col px-2 h-56 md:h-72 lg:h-64 md:flex-col md:justify-between md:order-1 md:w-1/2 lg:w-3/4"
       >
         <div class="flex-1 min-w-0">
           <h1
-            class="pt-2 text-2xl font-bold leading-7 text-gray-900 md:pt-0 md:text-3xl md:leading-9 md:truncate"
+            class="pt-2 text-2xl font-bold leading-7 text-gray-900 md:pt-0 md:text-3xl md:leading-9 md:break-words"
           >{{this.recipe.title}}</h1>
           <a class="mt-2 pt-1 flex items-center hover:underline cursor-pointer">
             <svg
@@ -33,11 +32,13 @@
                 d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10M9 21h6"
               />
             </svg>
-            <p class="pl-1">{{getLinkHost(this.recipe.recipeSourceLink)}}</p>
+            <a
+              :href="this.recipe.recipeSourceLink"
+              target="_blank"
+              class="pl-1"
+            >{{getLinkHost(this.recipe.recipeSourceLink)}}</a>
           </a>
-          <p
-            class="py-3 text-sm leading-5 overflow-y-scroll min-h-12 max-h-16 sm:max-h-full"
-          >{{recipe.description}}</p>
+          <p class="py-3 text-sm leading-5 overflow-y-auto">{{recipe.description}}</p>
         </div>
         <div class="mt-3 flex lg:mt-2">
           <span class="hidden sm:block shadow-sm rounded-md">
