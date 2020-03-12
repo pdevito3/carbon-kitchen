@@ -184,7 +184,7 @@
           <h2
             class="pt-2 text-xl font-bold leading- text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
           >Ingredients</h2>
-          {{this.recipe.ingredientsId}}
+          {{this.recipeIngredients}}
         </div>
         <div class="w-1/2">
           <h2
@@ -204,7 +204,8 @@ export default {
   data() {
     return {
       open: false,
-      recipe: []
+      recipe: [],
+      recipeIngredients: []
     };
   },
 
@@ -215,6 +216,15 @@ export default {
       .then(res => res.json())
       .then(json => {
         this.recipe = json.recipe;
+      })
+      .then(() => {
+        // let recipeIngredientId = this.recipe.recipeIngredientId;
+
+        fetch(`/api/recipeingredients`)
+          .then(res => res.json())
+          .then(json => {
+            this.recipeIngredients = json.recipeIngredients;
+          });
       });
   },
   methods: {
