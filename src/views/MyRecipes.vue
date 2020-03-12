@@ -12,6 +12,9 @@
             :recipeSourceLink="recipe.recipeSourceLink"
             :imageLink="recipe.imageLink"
             :recipeId="recipe.recipeId"
+            :ingredientsId="recipe.ingredientsId"
+            :directionsId="recipe.directionsId"
+            :description="recipe.description"
           />
         </li>
       </ul>

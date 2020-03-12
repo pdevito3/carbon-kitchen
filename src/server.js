@@ -12,14 +12,20 @@ export function makeServer({ environment = "development" } = {}) {
     seeds(server) {
       server.create("recipe", {
         recipeId: 1
+        , ingredientsId: 1
+        , directionsId: 1
         , title: "Instant Pot® Chicken and Wild Rice Soup"
         , recipeSourceLink: "https://www.bettycrocker.com/recipes/instant-pot-chicken-and-wild-rice-soup/8f631956-26b9-4353-8605-9f52cdde99db"
+        , description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, explicabo. Nostrum rerum delectus itaque. Distinctio at atque laborum hic? Dicta sequi quisquam voluptatibus labore quibusdam, iste accusamus ex aperiam voluptate!"
         , imageLink: "https://images-gmi-pmc.edge-generalmills.com/60c3ebda-50a7-415e-8c66-14f6c9b93034.jpg"
       })
       server.create("recipe", {
         recipeId: 2
+        , ingredientsId: 2
+        , directionsId: 2
         , title: "The Only Red Velvet Cake Recipe You’ll Ever Need"
         , recipeSourceLink: "https://www.chefsteps.com/activities/the-only-red-velvet-cake-recipe-you-ll-ever-need"
+        , description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, explicabo. Nostrum rerum delectus itaque. Distinctio at atque laborum hic? Dicta sequi quisquam voluptatibus labore quibusdam, iste accusamus ex aperiam voluptate!"
         , imageLink: "https://cdn.copymethat.com/media/the_only_red_velvet_cake_recipe_youll_ev_20200214190801982058o69u7k.jpg"
       })
     },
