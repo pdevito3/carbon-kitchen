@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class>
     <div
       class="border-b-2 border-gray-300 py-2 flex-col md:flex md:flex-row md:justify-between md:items-start"
     >
@@ -35,7 +35,9 @@
             </svg>
             <p class="pl-1">{{getLinkHost(this.recipe.recipeSourceLink)}}</p>
           </a>
-          <p class="py-3 text-sm leading-5">{{recipe.description}}</p>
+          <p
+            class="py-3 text-sm leading-5 overflow-y-scroll min-h-12 max-h-16 sm:max-h-full"
+          >{{recipe.description}}</p>
         </div>
         <div class="mt-3 flex lg:mt-2">
           <span class="hidden sm:block shadow-sm rounded-md">
@@ -58,6 +60,28 @@
             </button>
           </span>
 
+          <span class="sm:ml-3 shadow-sm rounded-md">
+            <button
+              type="button"
+              class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+            >
+              <svg
+                class="-ml-1 mr-2 h-5 w-5 text-gray-500"
+                stroke="currentColor"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              Plan
+            </button>
+          </span>
+
           <span class="hidden sm:block ml-3 shadow-sm rounded-md">
             <button
               type="button"
@@ -76,27 +100,7 @@
             </button>
           </span>
 
-          <span class="hidden sm:block ml-3 shadow-sm rounded-md">
-            <button
-              type="button"
-              class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
-            >
-              <svg
-                class="-ml-1 mr-2 h-5 w-5 text-gray-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              View
-            </button>
-          </span>
-
-          <span class="sm:ml-3 shadow-sm rounded-md">
+          <span class="ml-3 shadow-sm rounded-md">
             <button
               type="button"
               class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700 transition duration-150 ease-in-out"
@@ -147,12 +151,37 @@
                 <div class="py-1 rounded-md bg-white shadow-xs">
                   <a
                     href="#"
-                    class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
-                  >Edit</a>
+                    class="flex justify-left block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                  >
+                    <svg
+                      class="-ml-1 mr-2 h-5 w-5 text-gray-500"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                      />
+                    </svg>
+                    Edit
+                  </a>
                   <a
                     href="#"
-                    class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
-                  >View</a>
+                    class="flex justify-left block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                  >
+                    <svg
+                      class="-ml-1 mr-2 h-5 w-5 text-gray-500"
+                      stroke="currentColor"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
+                    </svg>Plan
+                  </a>
                 </div>
               </div>
             </transition>

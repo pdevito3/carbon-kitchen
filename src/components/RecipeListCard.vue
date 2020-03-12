@@ -1,11 +1,13 @@
 <template>
-  <router-link
-    :to="`/myrecipes/recipe/${this.recipeId}`"
-    target="_blank"
+  <div
     class="group block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
   >
     <div class="flex items-center px-4 py-4">
-      <div class="min-w-0 flex-1 flex items-center">
+      <router-link
+        :to="`/myrecipes/recipe/${this.recipeId}`"
+        target="_blank"
+        class="min-w-0 flex-1 flex items-center"
+      >
         <div class="flex-shrink-0">
           <img class="h-20 w-20 object-cover rounded-full" :src="this.imageLink" alt />
         </div>
@@ -59,7 +61,7 @@
             </div>-->
           </div>
         </div>
-      </div>
+      </router-link>
       <popper
         trigger="clickToToggle"
         :options="{
@@ -122,7 +124,7 @@
         </button>
       </popper>
     </div>
-  </router-link>
+  </div>
 </template>
 
 <script>
