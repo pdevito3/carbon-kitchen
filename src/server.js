@@ -64,6 +64,71 @@ export function makeServer({ environment = "development" } = {}) {
         , ingredient: "butter"
         , note: ""
       })
+      server.create("ingredient", {
+        ingredientId: 5
+        , recipeId: 1
+        , amount: 1
+        , unit: "package"
+        , ingredient: "(20 oz) boneless skinless chicken thighs"
+        , note: "patted dry"
+      })
+      server.create("ingredient", {
+        ingredientId: 6
+        , recipeId: 1
+        , amount: 1
+        , unit: "teaspoon"
+        , ingredient: "salt"
+        , note: ""
+      })
+      server.create("ingredient", {
+        ingredientId: 7
+        , recipeId: 1
+        , amount: .5
+        , unit: "teaspoon"
+        , ingredient: "pepper"
+        , note: ""
+      })
+      server.create("ingredient", {
+        ingredientId: 8
+        , recipeId: 1
+        , amount: 2
+        , unit: "tablespoons"
+        , ingredient: "butter"
+        , note: ""
+      })
+
+      server.create("ingredient", {
+        ingredientId: 9
+        , recipeId: 1
+        , amount: 1
+        , unit: "package"
+        , ingredient: "(20 oz) boneless skinless chicken thighs"
+        , note: "patted dry"
+      })
+      server.create("ingredient", {
+        ingredientId: 10
+        , recipeId: 1
+        , amount: 1
+        , unit: "teaspoon"
+        , ingredient: "salt"
+        , note: ""
+      })
+      server.create("ingredient", {
+        ingredientId: 11
+        , recipeId: 1
+        , amount: .5
+        , unit: "teaspoon"
+        , ingredient: "pepper"
+        , note: ""
+      })
+      server.create("ingredient", {
+        ingredientId: 12
+        , recipeId: 1
+        , amount: 2
+        , unit: "tablespoons"
+        , ingredient: "butter"
+        , note: ""
+      })
     },
 
     routes() {
