@@ -8,6 +8,9 @@ module.exports = {
       },
     },
   },
+  variants: {
+    backgroundColor: ['responsive', 'hover', 'focus', 'odd'],
+  },
   plugins: [
     require('@tailwindcss/ui')({
       layout: 'sidebar',

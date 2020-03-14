@@ -180,13 +180,28 @@
 
     <div class="mt-2">
       <div class="flex flex-col md:flex-row w-full">
-        <div class="w-1/2">
+        <div class="w-full md:w-1/2 px-2">
           <h2
             class="pt-2 text-xl font-bold leading- text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
           >Ingredients</h2>
-          {{this.ingredients}}
+          <ul class="pt-2">
+            <li
+              v-for="ingredient in ingredients"
+              :key="ingredient.ingredientId"
+              class="px-2 odd:bg-gray-200"
+            >
+              <div class="grid grid-cols-10 gap-1">
+                <div class="py-2 lg:py-1 col-span-1">{{ingredient.amount}}</div>
+                <div class="py-2 lg:py-1 col-span-3 lg:col-span-2">{{ingredient.unit}}</div>
+                <div class="py-2 lg:py-1 col-span-6 lg:col-span-7">
+                  <div>{{ingredient.ingredient}}</div>
+                  <div>{{ingredient.notes}}</div>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
-        <div class="w-1/2">
+        <div class="w-full md:w-1/2 px-2">
           <h2
             class="pt-2 text-xl font-bold leading- text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
           >Directions</h2>
