@@ -8,20 +8,17 @@ export function makeServer({ environment = "development" } = {}) {
     models: {
       recipe: Model.extend({
         ingredient: hasMany(),
-        direction: hasMany(),
       }),
       ingredient: Model.extend({
         recipe: belongsTo(),
       }),
-      direction: Model.extend({
-        recipe: belongsTo(),
-      })
     },
 
     seeds(server) {
       server.create("recipe", {
         recipeId: 1
         , title: "Instant Pot® Chicken and Wild Rice Soup"
+        , directions: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio, molestias porro. Modi error iure facilis necessitatibus dolorum nam, \n \nitaque vero harum tenetur ullam officiis quo dolor porro voluptatibus inventore laboriosam, numquam at nobis ratione cupiditate? Ipsam, illo corporis. Quae harum quasi nostrum tempore\n \nmolestias error inventore assumenda animi, adipisci nam, tempora temporibus facere deleniti voluptatum non natus fugit ipsa porro quidem eaque minus. Facilis deleniti deserunt ullam! Aut quae debitis ea iusto minus mollitia modi nisi, aperiam quam iste qui, soluta a illum. Laudantium iure id voluptas itaque minima quisquam corporis quia vel fuga, iste nostrum omnis perspiciatis facere et dolore dolorem est deserunt sit, consectetur unde dolores expedita quas vitae. Hic nobis obcaecati animi illo, sint quo. Inventore natus quae similique ullam vero cumque nostrum culpa vitae blanditiis reiciendis, soluta incidunt, nam itaque facere autem labore iure numquam veritatis fuga perferendis. Excepturi laudantium magnam sed, tempore libero aliquam tenetur ea distinctio quam voluptate, repudiandae quo hic animi neque ducimus eaque blanditiis! Recusandae nam sed saepe odit sunt! Quisquam rerum ut beatae ratione quo odit consequatur dignissimos repudiandae, doloremque distinctio, saepe aliquid adipisci! Aliquid rerum repudiandae, esse animi quaerat ex quisquam nisi odit voluptate nobis, hic velit debitis est nam? Odit, nemo labore ducimus quibusdam qui soluta quis explicabo, commodi, cum aperiam impedit eveniet voluptatibus atque neque tempora cupiditate accusantium vel consectetur mollitia. Temporibus placeat quaerat, consectetur laborum est quia? A, corporis cum voluptates dignissimos, aliquam sapiente laboriosam aut possimus excepturi tempora temporibus nemo harum id recusandae. Libero adipisci quod cumque illo ratione odio. Commodi nulla accusamus quidem repudiandae delectus ipsum dicta ut repellat quibusdam amet nihil magnam vero dignissimos rem, eaque, consequatur placeat voluptatum ullam a quo, recusandae architecto nesciunt numquam ad. Aliquid, incidunt. Rem enim sint in quibusdam, magni est necessitatibus, impedit inventore molestias repellat consectetur aspernatur error dicta dolor perferendis debitis? Voluptatibus sit optio perferendis autem similique ratione totam saepe iusto debitis, et numquam ab quibusdam dicta voluptatem asperiores reprehenderit sapiente animi eligendi. Quibusdam vitae quam quasi nemo consequuntur cumque. Sapiente illum sunt corporis est recusandae adipisci, quisquam ex nisi voluptatum doloremque illo, praesentium et molestias vel quibusdam. Enim, cupiditate aperiam nemo quidem adipisci voluptate blanditiis officiis a cum sapiente distinctio, voluptatum ullam cumque commodi aliquam! Voluptatem veniam saepe, tenetur, ex cum eos at voluptates vitae, voluptatum repellat quia. Doloribus, cumque! Sit nihil odit libero, earum distinctio repellendus laudantium voluptas ipsum soluta! Doloremque aut quo eaque at nam excepturi repellendus velit eligendi animi eveniet necessitatibus tempora voluptas, recusandae ipsum veritatis accusamus minus. Ullam at quidem beatae rerum tempora. Odio possimus eos provident repudiandae molestiae eius quidem aspernatur alias recusandae nesciunt dolorum qui facere, distinctio, delectus, aliquam temporibus odit mollitia. Sequi incidunt aliquid aut libero ipsam aliquam. Fuga ex suscipit sit, consectetur esse voluptas, dicta repudiandae quos ratione perspiciatis nisi magnam! Quo quos voluptatem mollitia similique recusandae! Similique cupiditate vero distinctio hic officia! Reprehenderit aliquam officia voluptatibus vel doloremque pariatur numquam vero expedita! Dolore libero, saepe perspiciatis inventore provident maiores sunt odit. Repellendus eos dolorem ea alias harum."
         , recipeSourceLink: "https://www.bettycrocker.com/recipes/instant-pot-chicken-and-wild-rice-soup/8f631956-26b9-4353-8605-9f52cdde99db"
         , description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, explicabo. Nostrum rerum delectus itaque. Distinctio at atque laborum hic? Dicta sequi quisquam voluptatibus labore quibusdam, iste accusamus ex aperiam voluptate!"
         , imageLink: "https://images-gmi-pmc.edge-generalmills.com/60c3ebda-50a7-415e-8c66-14f6c9b93034.jpg"
@@ -29,6 +26,7 @@ export function makeServer({ environment = "development" } = {}) {
       server.create("recipe", {
         recipeId: 2
         , title: "The Only Red Velvet Cake Recipe You’ll Ever Need"
+        , directions: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio, molestias porro. Modi error iure facilis necessitatibus dolorum nam, \n \nitaque vero harum tenetur ullam officiis quo dolor porro voluptatibus inventore laboriosam, numquam at nobis ratione cupiditate? Ipsam, illo corporis. Quae harum quasi nostrum tempore\n \nmolestias error inventore assumenda animi, adipisci nam, tempora temporibus facere deleniti voluptatum non natus fugit ipsa porro quidem eaque minus. Facilis deleniti deserunt ullam! Aut quae debitis ea iusto minus mollitia modi nisi, aperiam quam iste qui, soluta a illum. Laudantium iure id voluptas itaque minima quisquam corporis quia vel fuga, iste nostrum omnis perspiciatis facere et dolore dolorem est deserunt sit, consectetur unde dolores expedita quas vitae. Hic nobis obcaecati animi illo, sint quo. Inventore natus quae similique ullam vero cumque nostrum culpa vitae blanditiis reiciendis, soluta incidunt, nam itaque facere autem labore iure numquam veritatis fuga perferendis. Excepturi laudantium magnam sed, tempore libero aliquam tenetur ea distinctio quam voluptate, repudiandae quo hic animi neque ducimus eaque blanditiis! Recusandae nam sed saepe odit sunt! Quisquam rerum ut beatae ratione quo odit consequatur dignissimos repudiandae, doloremque distinctio, saepe aliquid adipisci! Aliquid rerum repudiandae, esse animi quaerat ex quisquam nisi odit voluptate nobis, hic velit debitis est nam? Odit, nemo labore ducimus quibusdam qui soluta quis explicabo, commodi, cum aperiam impedit eveniet voluptatibus atque neque tempora cupiditate accusantium vel consectetur mollitia. Temporibus placeat quaerat, consectetur laborum est quia? A, corporis cum voluptates dignissimos, aliquam sapiente laboriosam aut possimus excepturi tempora temporibus nemo harum id recusandae. Libero adipisci quod cumque illo ratione odio. Commodi nulla accusamus quidem repudiandae delectus ipsum dicta ut repellat quibusdam amet nihil magnam vero dignissimos rem, eaque, consequatur placeat voluptatum ullam a quo, recusandae architecto nesciunt numquam ad. Aliquid, incidunt. Rem enim sint in quibusdam, magni est necessitatibus, impedit inventore molestias repellat consectetur aspernatur error dicta dolor perferendis debitis? Voluptatibus sit optio perferendis autem similique ratione totam saepe iusto debitis, et numquam ab quibusdam dicta voluptatem asperiores reprehenderit sapiente animi eligendi. Quibusdam vitae quam quasi nemo consequuntur cumque. Sapiente illum sunt corporis est recusandae adipisci, quisquam ex nisi voluptatum doloremque illo, praesentium et molestias vel quibusdam. Enim, cupiditate aperiam nemo quidem adipisci voluptate blanditiis officiis a cum sapiente distinctio, voluptatum ullam cumque commodi aliquam! Voluptatem veniam saepe, tenetur, ex cum eos at voluptates vitae, voluptatum repellat quia. Doloribus, cumque! Sit nihil odit libero, earum distinctio repellendus laudantium voluptas ipsum soluta! Doloremque aut quo eaque at nam excepturi repellendus velit eligendi animi eveniet necessitatibus tempora voluptas, recusandae ipsum veritatis accusamus minus. Ullam at quidem beatae rerum tempora. Odio possimus eos provident repudiandae molestiae eius quidem aspernatur alias recusandae nesciunt dolorum qui facere, distinctio, delectus, aliquam temporibus odit mollitia. Sequi incidunt aliquid aut libero ipsam aliquam. Fuga ex suscipit sit, consectetur esse voluptas, dicta repudiandae quos ratione perspiciatis nisi magnam! Quo quos voluptatem mollitia similique recusandae! Similique cupiditate vero distinctio hic officia! Reprehenderit aliquam officia voluptatibus vel doloremque pariatur numquam vero expedita! Dolore libero, saepe perspiciatis inventore provident maiores sunt odit. Repellendus eos dolorem ea alias harum."
         , recipeSourceLink: "https://www.chefsteps.com/activities/the-only-red-velvet-cake-recipe-you-ll-ever-need"
         , description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, explicabo. Nostrum rerum delectus itaque. Distinctio at atque laborum hic? Dicta sequi quisquam voluptatibus labore quibusdam, iste accusamus ex aperiam voluptate!"
         , imageLink: "https://cdn.copymethat.com/media/the_only_red_velvet_cake_recipe_youll_ev_20200214190801982058o69u7k.jpg"
@@ -66,30 +64,6 @@ export function makeServer({ environment = "development" } = {}) {
         , ingredient: "butter"
         , note: ""
       })
-
-
-
-      server.create("direction", {
-        directionId: 1
-        , recipeId: 1
-        , direction: "1) Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci aliquam nostrum cum praesentium eaque, modi omnis doloremque ab fugiat molestias accusamus ad. Nihil tempora quisquam in iste aliquid est nam!"
-      })
-      server.create("direction", {
-        directionId: 2
-        , recipeId: 1
-        , direction: "2) Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci aliquam nostrum cum praesentium eaque, modi omnis doloremque ab fugiat molestias accusamus ad. Nihil tempora quisquam in iste aliquid est nam!"
-      })
-      server.create("direction", {
-        directionId: 3
-        , recipeId: 1
-        , direction: "3) Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci aliquam nostrum cum praesentium eaque, modi omnis doloremque ab fugiat molestias accusamus ad. Nihil tempora quisquam in iste aliquid est nam!"
-      })
-      server.create("direction", {
-        directionId: 4
-        , recipeId: 1
-        , direction: "4) Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci aliquam nostrum cum praesentium eaque, modi omnis doloremque ab fugiat molestias accusamus ad. Nihil tempora quisquam in iste aliquid est nam!"
-      })
-
     },
 
     routes() {
@@ -122,24 +96,6 @@ export function makeServer({ environment = "development" } = {}) {
         }
 
         return ingredients;
-      });
-
-      this.get("/recipes/:id/directions", schema => {
-        return schema.directions.all();
-      })
-
-      this.get('/directions', function (db, request) {
-        let directions = [];
-
-        if (Object.keys(request.queryParams).length === 0) {
-          directions = db.directions.all();
-        } else {
-          let filteredRecipeId = new URLSearchParams(request.queryParams.recipeId).toString().replace('=', '');
-
-          directions = db.directions.where({ recipeId: parseInt(filteredRecipeId) });
-        }
-
-        return directions;
       });
     },
   })

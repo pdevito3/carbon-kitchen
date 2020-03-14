@@ -205,7 +205,7 @@
           <h2
             class="pt-2 text-xl font-bold leading- text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
           >Directions</h2>
-          {{this.directions}}
+          <div class="whitespace-pre-wrap">{{this.recipe.directions}}</div>
         </div>
       </div>
     </div>
@@ -220,8 +220,7 @@ export default {
     return {
       open: false,
       recipe: [],
-      ingredients: [],
-      directions: []
+      ingredients: []
     };
   },
 
@@ -240,15 +239,6 @@ export default {
           .then(res => res.json())
           .then(json => {
             this.ingredients = json.ingredients;
-          });
-      })
-      .then(() => {
-        // let recipeIngredientId = this.recipe.recipeIngredientId;
-
-        fetch(`/api/directions?recipeId=${id}`)
-          .then(res => res.json())
-          .then(json => {
-            this.directions = json.directions;
           });
       });
   },
