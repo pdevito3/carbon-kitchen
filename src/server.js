@@ -81,22 +81,23 @@ export function makeServer({ environment = "development" } = {}) {
         return schema.recipes.find(id)
       })
 
-      this.get("/ingredients", schema => {
-        return schema.ingredients.all()
+      this.get("/recipes/:id/ingredients", schema => {
+        return schema.ingredients.all();
       })
 
-      // this.get('/ingredients', function (db, request) {
-      //   let recipeingredients = [];
+      this.get('/ingredients', function (db, request) {
+        let ingredients = [];
 
-      //   if (Object.keys(request.queryParams).length === 0) {
-      //     recipeingredients = db.recipeingredient.all();
-      //   } else {
-      //     let filteredCategory = request.queryParams['filter[recipeingredientListId]'];
-      //     recipeingredients = db.recipeingredient.where({ recipeingredientListId: filteredCategory });
-      //   }
+        if (Object.keys(request.queryParams).length === 0) {
+          ingredients = db.ingredients.all();
+        } else {
+          let filteredRecipeId = new URLSearchParams(request.queryParams.recipeId).toString().replace('=', '');
 
-      //   return recipeingredients;
-      // });
+          ingredients = db.ingredients.where({ recipeId: parseInt(filteredRecipeId) });
+        }
+
+        return ingredients;
+      });
     },
   })
 

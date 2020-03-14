@@ -220,7 +220,7 @@ export default {
       .then(() => {
         // let recipeIngredientId = this.recipe.recipeIngredientId;
 
-        fetch(`/api/ingredients`)
+        fetch(`/api/ingredients?recipeId=${id}`)
           .then(res => res.json())
           .then(json => {
             this.ingredients = json.ingredients;
