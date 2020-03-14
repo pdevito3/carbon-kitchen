@@ -14,7 +14,16 @@
           class="order-2 flex flex-col px-2 h-56 md:h-72 lg:h-64 md:flex-col md:justify-between md:order-1 md:w-1/2 lg:w-3/4"
         >
           <div class="flex-1 min-w-0">
+            <div v-if="pageState=='edit'">
+              <label for="title" class="sr-only">title</label>
+              <input
+                id="title"
+                v-model="this.recipe.title"
+                class="form-input block w-full sm:text-sm sm:leading-5 py-2 px-2 mt-1 lg:py-1 rounded-md truncate shadow-sm"
+              />
+            </div>
             <h1
+              v-else
               class="pt-2 text-2xl font-bold leading-7 text-gray-900 truncate md:pt-0 md:text-3xl md:leading-9 md:break-words"
             >{{this.recipe.title}}</h1>
             <a class="mt-2 pt-1 flex items-center hover:underline cursor-pointer">
@@ -32,13 +41,26 @@
                 />
               </svg>
               <a
-                :href="this.recipe.recipeSourceLink"
+                :href="recipe.recipeSourceLink"
                 target="_blank"
                 class="pl-1"
-              >{{getLinkHost(this.recipe.recipeSourceLink)}}</a>
+              >{{getLinkHost(recipe.recipeSourceLink)}}</a>
             </a>
+            <div v-if="pageState=='edit'">
+              <label
+                for="description"
+                class="mt-3 block font-medium leading-5 text-gray-700"
+              >Description</label>
+              <textarea
+                rows="3"
+                id="description"
+                v-model="recipe.description"
+                class="mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
+              />
+            </div>
             <p
-              class="mt-3 text-sm leading-5 overflow-y-auto max-h-24 sm:max-h-full"
+              v-else
+              class="mt-3 text-sm leading-5 overflow-y-auto max-h-24 md:max-h-32"
             >{{recipe.description}}</p>
           </div>
 
@@ -59,8 +81,12 @@
               </button>
             </span>
 
-            <span class="ml-1 sm:ml-2 md:ml-1 lg:ml-2 shadow-sm rounded-md">
+            <span
+              v-if="pageState=='view'"
+              class="ml-1 sm:ml-2 md:ml-1 lg:ml-2 shadow-sm rounded-md"
+            >
               <button
+                @click="updatePageState('edit')"
                 type="button"
                 class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
               >
@@ -75,6 +101,53 @@
                   />
                 </svg>
                 <p class="hidden sm:block sm:pl-2 md:hidden lg:block">Edit</p>
+              </button>
+            </span>
+
+            <span
+              v-if="pageState=='edit'"
+              class="ml-1 sm:ml-2 md:ml-1 lg:ml-2 shadow-sm rounded-l-md"
+            >
+              <button
+                @click="updatePageState('saving')"
+                type="button"
+                class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-l-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+              >
+                <svg class="h-5 w-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <p
+                  v-if="pageState=='saving'"
+                  class="hidden sm:block sm:pl-2 md:hidden lg:block"
+                >Saving</p>
+                <p v-else class="hidden sm:block sm:pl-2 md:hidden lg:block">Save</p>
+              </button>
+            </span>
+
+            <span v-if="pageState=='edit'" class="shadow-sm rounded-r-md">
+              <button
+                @click="updatePageState('view')"
+                type="button"
+                class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-r-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+              >
+                <svg class="h-5 w-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <p class="hidden sm:block sm:pl-2 md:hidden lg:block">Cancel</p>
               </button>
             </span>
 
@@ -203,9 +276,40 @@
       <div class="flex flex-col md:flex-row w-full">
         <div class="w-full md:w-1/2 px-2">
           <h2
-            class="pt-2 text-xl font-bold leading- text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
+            class="pt-2 text-xl font-bold leading-7 text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
           >Ingredients</h2>
-          <ul class="pt-2">
+          <form v-if="pageState=='edit'">
+            <div v-for="ingredient in ingredients" :key="ingredient.ingredientId" class="px-2">
+              <div class="grid grid-cols-10 gap-1">
+                <label for="amount" class="sr-only">amount</label>
+                <input
+                  id="amount"
+                  v-model="ingredient.amount"
+                  class="form-input block w-full sm:text-sm sm:leading-5 py-2 px-2 mt-1 lg:py-1 col-span-1 rounded-md truncate shadow-sm"
+                />
+                <label for="unit" class="sr-only">unit</label>
+                <input
+                  id="unit"
+                  v-model="ingredient.unit"
+                  class="form-input block w-full sm:text-sm sm:leading-5 py-2 px-2 mt-1 lg:py-1 col-span-3 lg:col-span-2 rounded-md truncate shadow-sm"
+                />
+                <label for="ingredient" class="sr-only">ingredient</label>
+                <input
+                  id="ingredient"
+                  v-model="ingredient.ingredient"
+                  class="form-input block w-full sm:text-sm sm:leading-5 py-2 px-2 mt-1 lg:py-1 col-span-3 lg:col-span-3 rounded-md truncate shadow-sm"
+                />
+                <label for="notes" class="sr-only">notes</label>
+                <input
+                  id="notes"
+                  v-model="ingredient.notes"
+                  class="form-input block w-full sm:text-sm sm:leading-5 py-2 px-2 mt-1 lg:py-1 col-span-3 lg:col-span-3 rounded-md truncate shadow-sm"
+                />
+              </div>
+            </div>
+          </form>
+
+          <ul v-if="pageState=='view'" class="pt-2">
             <li
               v-for="ingredient in ingredients"
               :key="ingredient.ingredientId"
@@ -224,9 +328,18 @@
         </div>
         <div class="w-full md:w-1/2 px-2">
           <h2
-            class="pt-2 text-xl font-bold leading- text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
+            class="pt-2 text-xl font-bold leading-7 text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
           >Directions</h2>
-          <div class="whitespace-pre-wrap">{{this.recipe.directions}}</div>
+          <div class v-if="pageState=='edit'">
+            <label for="directions" class="sr-only">Directions</label>
+            <textarea
+              rows="8"
+              id="directions"
+              v-model="recipe.directions"
+              class="mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
+            />
+          </div>
+          <div v-else class="whitespace-pre-wrap">{{recipe.directions}}</div>
         </div>
       </div>
     </div>
@@ -240,6 +353,7 @@ export default {
   data() {
     return {
       open: false,
+      pageState: "view",
       recipe: [],
       ingredients: []
     };
@@ -266,6 +380,19 @@ export default {
   methods: {
     getLinkHost(url) {
       return new URL(url).host;
+    },
+    updatePageState(state) {
+      // const pageStates = {
+      //   View: 'view',
+      //   Edit: 'edit'
+      // }
+
+      // switch(state){
+      //   case pageStates.View:
+      //     return
+      // }
+
+      this.pageState = state;
     }
   }
 };
