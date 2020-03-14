@@ -8,8 +8,12 @@ export function makeServer({ environment = "development" } = {}) {
     models: {
       recipe: Model.extend({
         ingredient: hasMany(),
+        direction: hasMany(),
       }),
       ingredient: Model.extend({
+        recipe: belongsTo(),
+      }),
+      direction: Model.extend({
         recipe: belongsTo(),
       })
     },
@@ -17,7 +21,6 @@ export function makeServer({ environment = "development" } = {}) {
     seeds(server) {
       server.create("recipe", {
         recipeId: 1
-        , directionsId: 1
         , title: "Instant Pot® Chicken and Wild Rice Soup"
         , recipeSourceLink: "https://www.bettycrocker.com/recipes/instant-pot-chicken-and-wild-rice-soup/8f631956-26b9-4353-8605-9f52cdde99db"
         , description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, explicabo. Nostrum rerum delectus itaque. Distinctio at atque laborum hic? Dicta sequi quisquam voluptatibus labore quibusdam, iste accusamus ex aperiam voluptate!"
@@ -25,7 +28,6 @@ export function makeServer({ environment = "development" } = {}) {
       })
       server.create("recipe", {
         recipeId: 2
-        , directionsId: 2
         , title: "The Only Red Velvet Cake Recipe You’ll Ever Need"
         , recipeSourceLink: "https://www.chefsteps.com/activities/the-only-red-velvet-cake-recipe-you-ll-ever-need"
         , description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, explicabo. Nostrum rerum delectus itaque. Distinctio at atque laborum hic? Dicta sequi quisquam voluptatibus labore quibusdam, iste accusamus ex aperiam voluptate!"
@@ -65,6 +67,29 @@ export function makeServer({ environment = "development" } = {}) {
         , note: ""
       })
 
+
+
+      server.create("direction", {
+        directionId: 1
+        , recipeId: 1
+        , direction: "1) Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci aliquam nostrum cum praesentium eaque, modi omnis doloremque ab fugiat molestias accusamus ad. Nihil tempora quisquam in iste aliquid est nam!"
+      })
+      server.create("direction", {
+        directionId: 2
+        , recipeId: 1
+        , direction: "2) Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci aliquam nostrum cum praesentium eaque, modi omnis doloremque ab fugiat molestias accusamus ad. Nihil tempora quisquam in iste aliquid est nam!"
+      })
+      server.create("direction", {
+        directionId: 3
+        , recipeId: 1
+        , direction: "3) Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci aliquam nostrum cum praesentium eaque, modi omnis doloremque ab fugiat molestias accusamus ad. Nihil tempora quisquam in iste aliquid est nam!"
+      })
+      server.create("direction", {
+        directionId: 4
+        , recipeId: 1
+        , direction: "4) Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci aliquam nostrum cum praesentium eaque, modi omnis doloremque ab fugiat molestias accusamus ad. Nihil tempora quisquam in iste aliquid est nam!"
+      })
+
     },
 
     routes() {
@@ -97,6 +122,24 @@ export function makeServer({ environment = "development" } = {}) {
         }
 
         return ingredients;
+      });
+
+      this.get("/recipes/:id/directions", schema => {
+        return schema.directions.all();
+      })
+
+      this.get('/directions', function (db, request) {
+        let directions = [];
+
+        if (Object.keys(request.queryParams).length === 0) {
+          directions = db.directions.all();
+        } else {
+          let filteredRecipeId = new URLSearchParams(request.queryParams.recipeId).toString().replace('=', '');
+
+          directions = db.directions.where({ recipeId: parseInt(filteredRecipeId) });
+        }
+
+        return directions;
       });
     },
   })
