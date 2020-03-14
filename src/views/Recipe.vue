@@ -55,11 +55,30 @@
                     clip-rule="evenodd"
                   />
                 </svg>
-                <p class="hidden sm:block sm:pl-2">Back</p>
+                <p class="hidden sm:block sm:pl-2 md:hidden lg:block">Back</p>
               </button>
             </span>
 
-            <span class="sm:ml-3 shadow-sm rounded-md">
+            <span class="ml-1 sm:ml-2 md:ml-1 lg:ml-2 shadow-sm rounded-md">
+              <button
+                type="button"
+                class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+              >
+                <svg class="h-5 w-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <p class="hidden sm:block sm:pl-2 md:hidden lg:block">Edit</p>
+              </button>
+            </span>
+
+            <span class="ml-1 sm:ml-2 md:ml-1 lg:ml-2 shadow-sm rounded-md">
               <button
                 type="button"
                 class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
@@ -77,11 +96,11 @@
                     d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                   />
                 </svg>
-                <p class="hidden sm:block sm:pl-2">Plan</p>
+                <p class="hidden sm:block sm:pl-2 md:hidden lg:block">Plan</p>
               </button>
             </span>
 
-            <span class="sm:ml-3 shadow-sm rounded-md">
+            <span class="ml-1 sm:ml-2 md:ml-1 lg:ml-2 shadow-sm rounded-md">
               <button
                 type="button"
                 class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
@@ -99,11 +118,13 @@
                     stroke-linejoin="round"
                   />
                 </svg>
-                <p class="hidden sm:block sm:pl-2">Shop</p>
+                <p class="hidden sm:block sm:pl-2 md:hidden lg:block">Shop</p>
               </button>
             </span>
 
-            <span class="ml-3 relative shadow-sm rounded-md sm:hidden">
+            <span
+              class="ml-1 sm:ml-2 md:ml-1 lg:ml-2 relative shadow-sm rounded-md sm:hidden md:block lg:hidden"
+            >
               <button
                 @click="open = !open"
                 type="button"
