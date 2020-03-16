@@ -1,10 +1,10 @@
 <template>
   <div class="-mt-4 sm:-mt-0">
-    <div class="border-b-2 border-gray-300 py-2">
+    <div class="min-h-142 md:min-h-0 border-b-2 border-gray-300 py-2">
       <div class="flex-col md:flex md:flex-row md:justify-between md:items-start">
         <div class="order-1 md:order-2">
           <img
-            class="w-full h-56 md:h-72 md:w-72 lg:w-96 lg:h-64 object-cover"
+            class="w-full h-56 md:h-72 md:w-72 lg:w-96 lg:h-64 object-cover rounded-lg"
             :src="this.recipe.imageLink"
             alt="Recipe Image"
           />
@@ -55,7 +55,7 @@
                 rows="3"
                 id="description"
                 v-model="recipe.description"
-                class="mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
+                class="h-28 md:h-24 mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
               />
             </div>
             <p
@@ -130,13 +130,13 @@
           <h2
             class="pt-2 text-xl font-bold leading-7 text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
           >Directions</h2>
-          <div class v-if="pageState=='edit'">
+          <div class="h-full" v-if="pageState=='edit'">
             <label for="directions" class="sr-only">Directions</label>
             <textarea
-              rows="8"
+              rows="16"
               id="directions"
               v-model="recipe.directions"
-              class="mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
+              class="h-full mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
             />
           </div>
           <div v-else class="whitespace-pre-wrap">{{recipe.directions}}</div>
