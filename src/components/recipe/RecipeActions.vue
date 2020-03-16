@@ -1,7 +1,8 @@
 <template>
   <div class="flex">
     <span class="shadow-sm rounded-md">
-      <button
+      <router-link
+        to="/myrecipes"
         type="button"
         class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
       >
@@ -13,7 +14,7 @@
           />
         </svg>
         <p class="hidden sm:block sm:pl-2 md:hidden lg:block">Back</p>
-      </button>
+      </router-link>
     </span>
 
     <span v-if="pageState=='view'" class="ml-1 sm:ml-2 md:ml-1 lg:ml-2 shadow-sm rounded-md">

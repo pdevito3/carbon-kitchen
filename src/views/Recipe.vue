@@ -43,7 +43,7 @@
               <a
                 :href="recipe.recipeSourceLink"
                 target="_blank"
-                class="pl-1"
+                class="text-sm pl-1"
               >{{getLinkHost(recipe.recipeSourceLink)}}</a>
             </a>
             <div v-if="pageState=='edit'">
