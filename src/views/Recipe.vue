@@ -26,7 +26,15 @@
               v-else
               class="pt-2 text-2xl font-bold leading-7 text-gray-900 truncate md:pt-0 md:text-3xl md:leading-9 md:break-words"
             >{{this.recipe.title}}</h1>
-            <a class="mt-2 pt-1 flex items-center hover:underline cursor-pointer">
+            <div v-if="pageState=='edit'">
+              <label for="recipeSourceLink" class="sr-only">recipe source link</label>
+              <input
+                id="recipeSourceLink"
+                v-model="this.recipe.recipeSourceLink"
+                class="form-input block w-full sm:text-sm sm:leading-5 py-2 px-2 mt-2 lg:py-1 rounded-md truncate shadow-sm"
+              />
+            </div>
+            <a v-else class="mt-2 pt-1 flex items-center hover:underline cursor-pointer">
               <svg
                 class="flex-shrink-0 h-5 w-5 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150"
                 stroke="currentColor"
@@ -40,6 +48,7 @@
                   d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10M9 21h6"
                 />
               </svg>
+
               <a
                 :href="recipe.recipeSourceLink"
                 target="_blank"
