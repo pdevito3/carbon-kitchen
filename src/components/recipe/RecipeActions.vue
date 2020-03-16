@@ -18,7 +18,7 @@
 
     <span v-if="pageState=='view'" class="ml-1 sm:ml-2 md:ml-1 lg:ml-2 shadow-sm rounded-md">
       <button
-        @click="updatePageState('edit')"
+        @click="emitRecipeAction('edit')"
         type="button"
         class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
       >
@@ -36,34 +36,37 @@
 
     <span v-if="pageState=='edit'" class="ml-1 sm:ml-2 md:ml-1 lg:ml-2 shadow-sm rounded-l-md">
       <button
-        @click="updatePageState('saving')"
+        @click="saveRecipe()"
         type="button"
-        class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-l-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+        class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
       >
-        <svg class="h-5 w-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 448 512"
+          class="h-5 w-5"
+          fill="currentColor"
+        >
           <path
-            fill-rule="evenodd"
-            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-            clip-rule="evenodd"
+            fill="currentColor"
+            d="M433.941 129.941l-83.882-83.882A48 48 0 0 0 316.118 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V163.882a48 48 0 0 0-14.059-33.941zM272 80v80H144V80h128zm122 352H54a6 6 0 0 1-6-6V86a6 6 0 0 1 6-6h42v104c0 13.255 10.745 24 24 24h176c13.255 0 24-10.745 24-24V83.882l78.243 78.243a6 6 0 0 1 1.757 4.243V426a6 6 0 0 1-6 6zM224 232c-48.523 0-88 39.477-88 88s39.477 88 88 88 88-39.477 88-88-39.477-88-88-88zm0 128c-22.056 0-40-17.944-40-40s17.944-40 40-40 40 17.944 40 40-17.944 40-40 40z"
+            class
           />
         </svg>
-        <p v-if="pageState=='saving'" class="hidden sm:block sm:pl-2 md:hidden lg:block">Saving</p>
+        <p v-if="saving" class="hidden sm:block sm:pl-2 md:hidden lg:block">Saving...</p>
         <p v-else class="hidden sm:block sm:pl-2 md:hidden lg:block">Save</p>
       </button>
     </span>
 
     <span v-if="pageState=='edit'" class="shadow-sm rounded-r-md">
       <button
-        @click="updatePageState('view')"
+        @click="cancelUpdate()"
         type="button"
         class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-r-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
       >
         <svg class="h-5 w-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
           <path
             fill-rule="evenodd"
-            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
             clip-rule="evenodd"
           />
         </svg>
@@ -75,6 +78,7 @@
       <button
         type="button"
         class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+        :class="pageState != 'view' ? 'opacity-50 cursor-not-allowed' : ''"
       >
         <svg class="h-5 w-5 text-gray-500" stroke="currentColor" fill="none" viewBox="0 0 24 24">
           <path
@@ -92,6 +96,7 @@
       <button
         type="button"
         class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+        :class="pageState != 'view' ? 'opacity-50 cursor-not-allowed' : ''"
       >
         <svg class="h-5 w-5 text-gray-500" stroke="currentColor" fill="none" viewBox="0 0 24 24">
           <path
@@ -183,14 +188,34 @@ export default {
   data() {
     return {
       open: false,
-      pageState: "view"
+      pageState: "view",
+      saving: false
     };
   },
   methods: {
-    updatePageState(state) {
+    emitRecipeAction(state) {
       this.pageState = state;
 
-      this.$emit("updatePageState", state);
+      this.$emit("emitRecipeAction", state);
+    },
+    cancelUpdate() {
+      this.emitRecipeAction("view");
+    },
+    saveRecipe() {
+      this.saving = true;
+
+      //simulate pause
+      this.simulateSave();
+      this.saving = false;
+
+      this.emitRecipeAction("view");
+    },
+    simulateSave() {
+      const date = Date.now();
+      let currentDate = null;
+      do {
+        currentDate = Date.now();
+      } while (currentDate - date < 1000);
     }
   },
   created() {

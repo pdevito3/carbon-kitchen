@@ -66,7 +66,7 @@
           <recipe-actions
             class="mt-3 lg:mt-2"
             :pageStateProp="'view'"
-            @updatePageState="updatePageState"
+            @emitRecipeAction="performRecipeAction"
           />
         </div>
       </div>
@@ -185,18 +185,20 @@ export default {
     getLinkHost(url) {
       return new URL(url).host;
     },
-    updatePageState(state) {
-      // const pageStates = {
-      //   View: 'view',
-      //   Edit: 'edit'
-      // }
+    performRecipeAction(action) {
+      const pageStates = {
+        View: "view",
+        Edit: "edit"
+      };
 
-      // switch(state){
-      //   case pageStates.View:
-      //     return
-      // }
-
-      this.pageState = state;
+      switch (action) {
+        case "view":
+          this.pageState = "view";
+          return "view";
+        case "edit":
+          this.pageState = "edit";
+          return "edit";
+      }
     }
   }
 };
