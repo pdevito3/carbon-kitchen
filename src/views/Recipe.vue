@@ -216,10 +216,10 @@ export default {
       }
     },
     setRecipe(recipe) {
-      this.$store.commit("SET_RECIPE", recipe);
+      this.$store.dispatch("setRecipe", recipe);
     },
     setIngredients(ingredients) {
-      this.$store.commit("SET_INGREDIENTS", ingredients);
+      this.$store.dispatch("setIngredients", ingredients);
     }
   }
 };

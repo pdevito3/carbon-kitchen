@@ -8,7 +8,8 @@ export default new Vuex.Store({
     recipe: [],
     ingredients: []
   },
-  //update state
+  //update state synchronously 
+  //**mutations should always be abstracted out and put into actions**
   mutations: {
     SET_RECIPE(state, recipe) {
       state.recipe = recipe;
@@ -23,7 +24,18 @@ export default new Vuex.Store({
       return state.ingredients.length;
     }
   },
+  //asynchronously wrap business logic around mutations. 
   actions: {
+    // state and commit are parts of the context object (state, commit, getters, etc.), recipe is a passed in param/payload
+    setRecipe({ commit }, recipe) {
+      commit('SET_RECIPE', recipe)
+    },
+    setIngredients({ commit }, ingredients) {
+      commit('SET_INGREDIENTS', ingredients)
+    },
+    updateRecipe({ commit }, recipe) {
+      commit('SET_RECIPE', recipe)
+    },
   },
   modules: {
   },
