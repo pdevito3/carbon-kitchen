@@ -2,7 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import './registerServiceWorker';
 import router from './router';
-import store from './store/index.js';
+import store from './store/index';
 import './assets/styles/tailwind.css';
 import { makeServer } from "./server";
 

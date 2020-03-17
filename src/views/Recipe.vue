@@ -192,8 +192,8 @@ export default {
   computed: {
     // use object spread operator for mapstate with vuex so we can use locally computed properties
     ...mapState({
-      recipe: "recipe",
-      ingredients: "ingredients"
+      recipe: state => state.recipe.recipe,
+      ingredients: state => state.recipe.ingredients
     })
   },
   methods: {
