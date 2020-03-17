@@ -158,6 +158,7 @@
 
 <script>
 import RecipeActions from "@/components/recipe/RecipeActions.vue";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -166,9 +167,7 @@ export default {
   data() {
     return {
       open: false,
-      pageState: "view",
-      recipe: [],
-      ingredients: []
+      pageState: "view"
     };
   },
 
@@ -178,17 +177,24 @@ export default {
     fetch(`/api/recipes/${id}`)
       .then(res => res.json())
       .then(json => {
-        this.recipe = json.recipe;
+        this.$store.state.recipe = json.recipe;
       })
       .then(() => {
-        // let recipeIngredientId = this.recipe.recipeIngredientId;
+        // let recipeIngredientId = this.$store.state.recipeIngredientId;
 
         fetch(`/api/ingredients?recipeId=${id}`)
           .then(res => res.json())
           .then(json => {
-            this.ingredients = json.ingredients;
+            this.$store.state.ingredients = json.ingredients;
           });
       });
+  },
+  computed: {
+    // use object spread operator for mapstate with vuex so we can use locally computed properties
+    ...mapState({
+      recipe: "recipe",
+      ingredients: "ingredients"
+    })
   },
   methods: {
     getLinkHost(url) {
