@@ -10,10 +10,10 @@ export default new Vuex.Store({
   },
   //update state
   mutations: {
-    setRecipe(recipe) {
+    SET_RECIPE(state, recipe) {
       state.recipe = recipe;
     },
-    setIngredients(ingredients) {
+    SET_INGREDIENTS(state, ingredients) {
       state.ingredients = ingredients;
     }
   },

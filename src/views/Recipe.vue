@@ -177,7 +177,7 @@ export default {
     fetch(`/api/recipes/${id}`)
       .then(res => res.json())
       .then(json => {
-        this.$store.state.recipe = json.recipe;
+        this.setRecipe(json.recipe);
       })
       .then(() => {
         // let recipeIngredientId = this.$store.state.recipeIngredientId;
@@ -185,7 +185,7 @@ export default {
         fetch(`/api/ingredients?recipeId=${id}`)
           .then(res => res.json())
           .then(json => {
-            this.$store.state.ingredients = json.ingredients;
+            this.setIngredients(json.ingredients);
           });
       });
   },
@@ -214,6 +214,12 @@ export default {
           this.pageState = "edit";
           return "edit";
       }
+    },
+    setRecipe(recipe) {
+      this.$store.commit("SET_RECIPE", recipe);
+    },
+    setIngredients(ingredients) {
+      this.$store.commit("SET_INGREDIENTS", ingredients);
     }
   }
 };
