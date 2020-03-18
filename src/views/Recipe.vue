@@ -83,6 +83,14 @@
           <h2
             class="pt-2 text-xl font-bold leading-7 text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
           >Ingredients</h2>
+          <button
+            @click="addIngredient()"
+            type="button"
+            class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+          >
+            <p class="hidden sm:block sm:pl-2 md:hidden lg:block">Add Ingredient</p>
+          </button>
+
           <form v-if="pageState=='edit'">
             <div v-for="ingredient in ingredients" :key="ingredient.ingredientId" class="px-2">
               <div class="grid grid-cols-10 gap-1">
@@ -226,16 +234,21 @@ export default {
       this.$store.dispatch("setPageState", pageState);
     },
     saveRecipe() {
-      this.$store.dispatch("setSaving", true);
-      const date = Date.now();
-      let currentDate = null;
-      do {
-        currentDate = Date.now();
-      } while (currentDate - date < 1000);
+      // this.$store.dispatch("setSaving", true);
 
-      this.$store.dispatch("setSaving", false);
+      // this.$store.dispatch("setSaving", false);
       this.setPageState("view");
       // this.$store.dispatch("saveRecipe", recipe);
+    },
+    addIngredient() {
+      this.$store.dispatch("addIngredient", {
+        ingredientId: 1,
+        recipeId: 1,
+        amount: 1,
+        unit: "new unit",
+        ingredient: "new ingredient",
+        note: "new note"
+      });
     }
   }
 };

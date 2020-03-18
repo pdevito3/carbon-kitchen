@@ -162,6 +162,11 @@ export function makeServer({ environment = "development" } = {}) {
 
         return ingredients;
       });
+
+      this.post("/ingredients", (schema, request) => {
+        let attrs = JSON.parse(request.requestBody)
+        return schema.ingredients.create(attrs)
+      })
     },
   })
 

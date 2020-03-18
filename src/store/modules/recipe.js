@@ -19,6 +19,9 @@ export const mutations = {
   SET_INGREDIENTS(state, ingredients) {
     state.ingredients = ingredients;
   },
+  ADD_INGREDIENT(state, ingredient) {
+    state.ingredients.push(ingredient);
+  },
   SET_SAVING(state, value) {
     state.saving = value;
   },
@@ -42,6 +45,26 @@ export const actions = {
   },
   setIngredients({ commit }, ingredients) {
     commit('SET_INGREDIENTS', ingredients)
+  },
+  addIngredient({ commit }, ingredient) {
+    commit('SET_SAVING', true)
+
+    fetch(`/api/ingredients`, {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(ingredient)
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(() =>
+        commit('ADD_INGREDIENT', ingredient))
+      .then(() => commit('SET_SAVING', false)
+      )
+      .catch(console.log("problem adding ingredient"));
   },
   updateRecipe({ commit }, recipe) {
     commit('SET_SAVING', true);
