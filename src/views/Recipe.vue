@@ -83,18 +83,18 @@
           <h2
             class="pt-2 text-xl font-bold leading-7 text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
           >Ingredients</h2>
-          <button
-            @click="addIngredient()"
-            type="button"
-            class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
-          >
-            <p class="hidden sm:block sm:pl-2 md:hidden lg:block">Add Ingredient</p>
-          </button>
 
-          <form v-if="pageState=='edit'">
-            <div v-for="ingredient in ingredients" :key="ingredient.ingredientId" class="px-2">
+          <form class="px-2" v-if="pageState=='edit'">
+            <div v-for="ingredient in ingredients" :key="ingredient.ingredientId">
               <ingredient-record :ingredient="ingredient" />
             </div>
+            <button
+              @click="addIngredient()"
+              type="button"
+              class="mt-1 inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+            >
+              <p class="hidden sm:block sm:pl-2 md:hidden lg:block">Add Ingredient</p>
+            </button>
           </form>
 
           <ul v-if="pageState=='view'" class="pt-2">
@@ -142,7 +142,8 @@ import { mapState } from "vuex";
 
 export default {
   components: {
-    RecipeActions
+    RecipeActions,
+    IngredientRecord
   },
   data() {
     return {
@@ -217,14 +218,7 @@ export default {
       // this.$store.dispatch("saveRecipe", recipe);
     },
     addIngredient() {
-      this.$store.dispatch("addIngredient", {
-        ingredientId: 1,
-        recipeId: 1,
-        amount: 1,
-        unit: "new unit",
-        ingredient: "new ingredient",
-        note: "new note"
-      });
+      this.$store.dispatch("addIngredient", []);
     }
   }
 };
