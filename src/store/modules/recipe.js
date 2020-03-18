@@ -5,7 +5,9 @@ Vue.use(Vuex);
 
 export const state = {
   recipe: [],
-  ingredients: []
+  ingredients: [],
+  saving: false,
+  pageState: "view"
 }
 
 //update state synchronously 
@@ -16,6 +18,12 @@ export const mutations = {
   },
   SET_INGREDIENTS(state, ingredients) {
     state.ingredients = ingredients;
+  },
+  SET_SAVING(state, value) {
+    state.saving = value;
+  },
+  SET_PAGESTATE(state, pageState) {
+    state.pageState = pageState;
   }
 }
 
@@ -37,6 +45,12 @@ export const actions = {
   },
   updateRecipe({ commit }, recipe) {
     commit('SET_RECIPE', recipe)
+  },
+  setSaving({ commit }, value) {
+    commit('SET_SAVING', value)
+  },
+  setPageState({ commit }, pageState) {
+    commit('SET_PAGESTATE', pageState)
   },
 }
 

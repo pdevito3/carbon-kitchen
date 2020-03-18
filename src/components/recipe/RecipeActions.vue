@@ -183,44 +183,39 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
-  props: ["pageStateProp"],
   components: {},
   data() {
     return {
-      open: false,
-      pageState: "view",
-      saving: false
+      open: false
     };
   },
+  computed: {
+    // use object spread operator for mapstate with vuex so we can use locally computed properties
+    ...mapState({
+      pageState: state => state.recipe.pageState
+    })
+  },
   methods: {
+    setPageState(pageState) {
+      this.$store.dispatch("setPageState", pageState);
+    },
     emitRecipeAction(state) {
-      this.pageState = state;
-
+      this.setPageState(state);
       this.$emit("emitRecipeAction", state);
     },
     cancelUpdate() {
+      this.setPageState("view");
       this.emitRecipeAction("view");
     },
     saveRecipe() {
-      this.saving = true;
-
-      //simulate pause
-      this.simulateSave();
-      this.saving = false;
-
-      this.emitRecipeAction("view");
-    },
-    simulateSave() {
-      const date = Date.now();
-      let currentDate = null;
-      do {
-        currentDate = Date.now();
-      } while (currentDate - date < 1000);
+      this.emitRecipeAction("save");
     }
   },
   created() {
-    this.pageState = pageStateProp;
+    // this.pageState = pageStateProp;
   }
 };
 </script>

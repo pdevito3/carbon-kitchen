@@ -74,7 +74,7 @@
           </div>
           <recipe-actions
             class="mt-3 lg:mt-2"
-            :pageStateProp="'view'"
+            :pageStateProp="pageState"
             @emitRecipeAction="performRecipeAction"
           />
         </div>
@@ -166,8 +166,7 @@ export default {
   },
   data() {
     return {
-      open: false,
-      pageState: "view"
+      open: false
     };
   },
 
@@ -193,7 +192,8 @@ export default {
     // use object spread operator for mapstate with vuex so we can use locally computed properties
     ...mapState({
       recipe: state => state.recipe.recipe,
-      ingredients: state => state.recipe.ingredients
+      ingredients: state => state.recipe.ingredients,
+      pageState: state => state.recipe.pageState
     })
   },
   methods: {
@@ -208,11 +208,13 @@ export default {
 
       switch (action) {
         case "view":
-          this.pageState = "view";
+          this.setPageState("view");
           return "view";
         case "edit":
-          this.pageState = "edit";
+          this.setPageState("edit");
           return "edit";
+        case "save":
+          this.saveRecipe();
       }
     },
     setRecipe(recipe) {
@@ -220,6 +222,21 @@ export default {
     },
     setIngredients(ingredients) {
       this.$store.dispatch("setIngredients", ingredients);
+    },
+    setPageState(pageState) {
+      this.$store.dispatch("setPageState", pageState);
+    },
+    saveRecipe() {
+      this.$store.dispatch("setSaving", true);
+      const date = Date.now();
+      let currentDate = null;
+      do {
+        currentDate = Date.now();
+      } while (currentDate - date < 1000);
+
+      this.$store.dispatch("setSaving", false);
+      this.setPageState("view");
+      // this.$store.dispatch("saveRecipe", recipe);
     }
   }
 };
