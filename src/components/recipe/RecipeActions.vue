@@ -19,7 +19,7 @@
 
     <span v-if="pageState=='view'" class="ml-1 sm:ml-2 md:ml-1 lg:ml-2 shadow-sm rounded-md">
       <button
-        @click="emitRecipeAction('edit')"
+        @click="editRecipe()"
         type="button"
         class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
       >
@@ -53,7 +53,7 @@
             class
           />
         </svg>
-        <p v-if="saving" class="hidden sm:block sm:pl-2 md:hidden lg:block">Saving...</p>
+        <p v-if="this.saving" class="hidden sm:block sm:pl-2 md:hidden lg:block">Saving...</p>
         <p v-else class="hidden sm:block sm:pl-2 md:hidden lg:block">Save</p>
       </button>
     </span>
@@ -195,7 +195,8 @@ export default {
   computed: {
     // use object spread operator for mapstate with vuex so we can use locally computed properties
     ...mapState({
-      pageState: state => state.recipe.pageState
+      pageState: state => state.recipe.pageState,
+      saving: state => state.recipe.saving
     })
   },
   methods: {
@@ -203,15 +204,17 @@ export default {
       this.$store.dispatch("setPageState", pageState);
     },
     emitRecipeAction(state) {
-      this.setPageState(state);
       this.$emit("emitRecipeAction", state);
     },
     cancelUpdate() {
-      this.setPageState("view");
-      this.emitRecipeAction("view");
+      // this.setPageState("view");
+      this.emitRecipeAction("cancel");
     },
     saveRecipe() {
       this.emitRecipeAction("save");
+    },
+    editRecipe() {
+      this.emitRecipeAction("edit");
     }
   },
   created() {

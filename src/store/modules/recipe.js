@@ -44,7 +44,12 @@ export const actions = {
     commit('SET_INGREDIENTS', ingredients)
   },
   updateRecipe({ commit }, recipe) {
-    commit('SET_RECIPE', recipe)
+    commit('SET_SAVING', true);
+
+    //post here
+
+    commit('SET_RECIPE', recipe);
+    commit('SET_SAVING', false);
   },
   setSaving({ commit }, value) {
     commit('SET_SAVING', value)

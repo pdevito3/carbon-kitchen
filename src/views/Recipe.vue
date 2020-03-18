@@ -72,11 +72,7 @@
               class="mt-3 text-sm leading-5 overflow-y-auto max-h-24 md:max-h-32"
             >{{recipe.description}}</p>
           </div>
-          <recipe-actions
-            class="mt-3 lg:mt-2"
-            :pageStateProp="pageState"
-            @emitRecipeAction="performRecipeAction"
-          />
+          <recipe-actions class="mt-3 lg:mt-2" @emitRecipeAction="performRecipeAction" />
         </div>
       </div>
     </div>
@@ -213,6 +209,9 @@ export default {
         case "edit":
           this.setPageState("edit");
           return "edit";
+        case "cancel":
+          this.setPageState("view");
+          return "cancel";
         case "save":
           this.saveRecipe();
       }
