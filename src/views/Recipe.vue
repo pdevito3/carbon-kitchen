@@ -1,7 +1,7 @@
 <template>
   <div class="-mt-4 sm:-mt-0">
-    <div class="min-h-142 md:min-h-0 border-b-2 border-gray-300 py-2">
-      <div class="flex-col md:flex md:flex-row md:justify-between md:items-start">
+    <div class="border-b-2 border-gray-300 py-2">
+      <div class="h-full flex-col md:flex md:flex-row md:justify-between md:items-start">
         <div class="order-1 md:order-2">
           <img
             class="w-full h-56 md:h-72 md:w-72 lg:w-96 lg:h-64 object-cover rounded-lg"
@@ -11,7 +11,7 @@
         </div>
 
         <div
-          class="order-2 flex flex-col px-2 h-56 md:h-72 lg:h-64 md:flex-col md:justify-between md:order-1 md:w-1/2 lg:w-3/4"
+          class="order-2 flex flex-col flex-1 px-2 h-full md:h-72 lg:h-64 md:flex-col md:justify-between md:order-1 md:w-1/2 lg:w-3/4"
         >
           <div class="flex-1 min-w-0">
             <div v-if="pageState=='edit'">
@@ -84,16 +84,23 @@
             class="pt-2 text-xl font-bold leading-7 text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
           >Ingredients</h2>
 
-          <form class="px-2" v-if="pageState=='edit'">
+          <form class="px-0 sm:px-2" v-if="pageState=='edit'">
             <div v-for="ingredient in ingredients" :key="ingredient.ingredientId">
               <ingredient-record :ingredient="ingredient" />
             </div>
             <button
               @click="addIngredient()"
               type="button"
-              class="mt-1 inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+              class="w-full sm:w-auto flex items-center justify-center mt-1 inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
             >
-              <p class="hidden sm:block sm:pl-2 md:hidden lg:block">Add Ingredient</p>
+              <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <p class="pl-2">Add Ingredient</p>
             </button>
           </form>
 

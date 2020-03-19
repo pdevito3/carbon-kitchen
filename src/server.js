@@ -1,9 +1,14 @@
 // src/server.js
-import { Server, Model, belongsTo, hasMany } from "miragejs"
+import { Server, Model, belongsTo, hasMany, IdentityManager } from "miragejs"
 
 export function makeServer({ environment = "development" } = {}) {
   let server = new Server({
     environment,
+
+    identityManagers: {
+      recipe: IdentityManager,
+      ingredient: IdentityManager
+    },
 
     models: {
       recipe: Model.extend({
@@ -167,8 +172,15 @@ export function makeServer({ environment = "development" } = {}) {
         let attrs = JSON.parse(request.requestBody)
         return schema.ingredients.create(attrs)
       })
+
+      this.delete("/ingredients/:id", (schema, request) => {
+        let id = request.params.id
+        console.log('delete id:', id)
+
+        return schema.ingredients.find(id).destroy()
+      })
     },
-  })
+  });
 
   return server
 }

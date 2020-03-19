@@ -22,6 +22,15 @@ export const mutations = {
   ADD_INGREDIENT(state, ingredient) {
     state.ingredients.push(ingredient);
   },
+  DELETE_INGREDIENT(state, ingredientId) {
+    let index = state.ingredients.map(e => e.ingredientId).indexOf(ingredientId);
+
+    if (index !== -1) state.ingredients.splice(index, 1);
+
+    // state.ingredients.splice(state.ingredients.findIndex(state.ingredients, function (ingredient) {
+    //   return ingredient.ingredientId === ingredientId;
+    // }), 1);
+  },
   SET_SAVING(state, value) {
     state.saving = value;
   },
@@ -60,11 +69,27 @@ export const actions = {
       .then(function (response) {
         return response.json();
       })
-      .then(() =>
-        commit('ADD_INGREDIENT', ingredient))
+      .then((response) => {
+        response.ingredient.ingredientId = response.ingredient.id; //mirage uses 'id' for primary key
+        commit('ADD_INGREDIENT', response.ingredient);
+      })
       .then(() => commit('SET_SAVING', false)
       )
       .catch(console.log("problem adding ingredient"));
+  },
+  deleteIngredient({ commit }, ingredientId) {
+    commit('SET_SAVING', true)
+
+    console.log('deleteid:', ingredientId);
+    fetch(`/api/ingredients/${ingredientId}`, {
+      method: 'delete'
+    })
+      .then(() => {
+        commit('DELETE_INGREDIENT', ingredientId)
+      })
+      .then(() => commit('SET_SAVING', false)
+      )
+      .catch(console.log("problem deleting ingredient"));
   },
   updateRecipe({ commit }, recipe) {
     commit('SET_SAVING', true);
