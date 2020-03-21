@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export const state = {
   recipe: [],
   ingredients: [],
+  ingredientsBeforeEdits: null,
   saving: false,
   pageState: "view"
 }
@@ -17,7 +18,20 @@ export const mutations = {
     state.recipe = recipe;
   },
   SET_INGREDIENTS(state, ingredients) {
+    console.log('hey', state.ingredientsBeforeEdits);
+    if (state.ingredientsBeforeEdits === null) {
+      state.ingredientsBeforeEdits = ingredients;
+    }
+    else {
+      state.ingredientsBeforeEdits = state.ingredients;
+    }
     state.ingredients = ingredients;
+  },
+  UNDO_SET_INGREDIENTS(state) {
+    if (state.ingredientsBeforeEdits !== null) {
+      state.ingredients = state.ingredientsBeforeEdits
+      // state.ingredientsBeforeEdits = null
+    }
   },
   ADD_INGREDIENT(state, ingredient) {
     state.ingredients.push(ingredient);
@@ -26,10 +40,6 @@ export const mutations = {
     let index = state.ingredients.map(e => e.ingredientId).indexOf(ingredientId);
 
     if (index !== -1) state.ingredients.splice(index, 1);
-
-    // state.ingredients.splice(state.ingredients.findIndex(state.ingredients, function (ingredient) {
-    //   return ingredient.ingredientId === ingredientId;
-    // }), 1);
   },
   SET_SAVING(state, value) {
     state.saving = value;
@@ -54,6 +64,9 @@ export const actions = {
   },
   setIngredients({ commit }, ingredients) {
     commit('SET_INGREDIENTS', ingredients)
+  },
+  undoSetIngredients({ commit }) {
+    commit('UNDO_SET_INGREDIENTS')
   },
   addIngredient({ commit }, ingredient) {
     commit('SET_SAVING', true)
@@ -87,8 +100,7 @@ export const actions = {
       .then(() => {
         commit('DELETE_INGREDIENT', ingredientId)
       })
-      .then(() => commit('SET_SAVING', false)
-      )
+      .then(() => commit('SET_SAVING', false))
       .catch(console.log("problem deleting ingredient"));
   },
   updateRecipe({ commit }, recipe) {

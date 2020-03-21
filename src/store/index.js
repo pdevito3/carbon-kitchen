@@ -9,7 +9,5 @@ export default new Vuex.Store({
     recipe
   },
   state: {
-    recipe: [],
-    ingredients: []
   },
 });

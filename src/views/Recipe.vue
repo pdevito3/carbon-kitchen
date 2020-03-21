@@ -202,8 +202,7 @@ export default {
           this.setPageState("edit");
           return "edit";
         case "cancel":
-          this.setPageState("view");
-          return "cancel";
+          this.cancelRecipe();
         case "save":
           this.saveRecipe();
       }
@@ -216,6 +215,11 @@ export default {
     },
     setPageState(pageState) {
       this.$store.dispatch("setPageState", pageState);
+    },
+    cancelRecipe() {
+      // this.$store.dispatch("setIngredients", this.ingredients);
+      this.$store.dispatch("undoSetIngredients");
+      this.setPageState("view");
     },
     saveRecipe() {
       // this.$store.dispatch("setSaving", true);
