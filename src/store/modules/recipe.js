@@ -18,7 +18,7 @@ export const mutations = {
     state.recipe = recipe;
   },
   SET_INGREDIENTS(state, ingredients) {
-    console.log('hey', state.ingredientsBeforeEdits);
+    // console.log('hey', state.ingredientsBeforeEdits);
     if (state.ingredientsBeforeEdits === null) {
       state.ingredientsBeforeEdits = ingredients;
     }
@@ -106,7 +106,15 @@ export const actions = {
   updateRecipe({ commit }, recipe) {
     commit('SET_SAVING', true);
 
-    //post here
+    console.log(recipe);
+    fetch(`/api/recipes/${recipe.recipeId}`, {
+      method: 'put',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(recipe)
+    })
 
     commit('SET_RECIPE', recipe);
     commit('SET_SAVING', false);
