@@ -5,7 +5,7 @@
         <div class="order-1 md:order-2">
           <img
             class="w-full h-56 md:h-72 md:w-72 lg:w-96 lg:h-64 object-cover rounded-lg"
-            :src="this.recipe.imageLink"
+            :src="recipe.imageLink"
             alt="Recipe Image"
           />
         </div>
@@ -18,19 +18,19 @@
               <label for="title" class="sr-only">title</label>
               <input
                 id="title"
-                v-model="this.recipe.title"
+                v-model="editableRecipe.title"
                 class="form-input block w-full sm:text-sm sm:leading-5 py-2 px-2 mt-1 lg:py-1 rounded-md truncate shadow-sm"
               />
             </div>
             <h1
               v-else
               class="pt-2 text-2xl font-bold leading-7 text-gray-900 truncate md:pt-0 md:text-3xl md:leading-9 md:break-words"
-            >{{this.recipe.title}}</h1>
+            >{{recipe.title}}</h1>
             <div v-if="pageState=='edit'">
               <label for="recipeSourceLink" class="sr-only">recipe source link</label>
               <input
                 id="recipeSourceLink"
-                v-model="this.recipe.recipeSourceLink"
+                v-model="editableRecipe.recipeSourceLink"
                 class="form-input block w-full sm:text-sm sm:leading-5 py-2 px-2 mt-2 lg:py-1 rounded-md truncate shadow-sm"
               />
             </div>
@@ -63,7 +63,7 @@
               <textarea
                 rows="3"
                 id="description"
-                v-model="recipe.description"
+                v-model="editableRecipe.description"
                 class="h-28 md:h-24 mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
               />
             </div>
@@ -130,7 +130,7 @@
             <textarea
               rows="16"
               id="directions"
-              v-model="recipe.directions"
+              v-model="editableRecipe.directions"
               class="h-full mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
             />
           </div>
@@ -154,27 +154,15 @@ export default {
   },
   data() {
     return {
-      open: false
+      open: false,
+      editableRecipe: null
     };
   },
 
   created() {
     let id = this.$route.params.id;
 
-    fetch(`/api/recipes/${id}`)
-      .then(res => res.json())
-      .then(json => {
-        this.setRecipe(json.recipe);
-      })
-      .then(() => {
-        // let recipeIngredientId = this.$store.state.recipeIngredientId;
-
-        fetch(`/api/ingredients?recipeId=${id}`)
-          .then(res => res.json())
-          .then(json => {
-            this.setIngredients(json.ingredients);
-          });
-      });
+    this.getRecipe(id);
   },
   computed: {
     // use object spread operator for mapstate with vuex so we can use locally computed properties
@@ -207,8 +195,28 @@ export default {
           this.saveRecipe();
       }
     },
+    getRecipe(id) {
+      fetch(`/api/recipes/${id}`)
+      .then(res => res.json())
+      .then(json => {
+        this.setRecipe(json.recipe);
+      })
+      .then(() => {
+        // let recipeIngredientId = this.$store.state.recipeIngredientId;
+
+        fetch(`/api/ingredients?recipeId=${id}`)
+          .then(res => res.json())
+          .then(json => {
+            this.setIngredients(json.ingredients);
+          });
+      });
+    },
     setRecipe(recipe) {
       this.$store.dispatch("setRecipe", recipe);
+
+			// javascript uses assign by reference for objects so it auto links the stupid objects. need to do the below to 
+			// copy the values of all enumerable own properties from one or more source objects to a target object
+      this.editableRecipe = Object.assign({},recipe); 
     },
     setIngredients(ingredients) {
       this.$store.dispatch("setIngredients", ingredients);
@@ -224,9 +232,11 @@ export default {
     saveRecipe() {
       // this.$store.dispatch("setSaving", true);
 
-      // this.$store.dispatch("setSaving", false);
+      this.$store.dispatch("updateRecipe", this.editableRecipe);
+        this.setRecipe(this.editableRecipe); // load the recipe again for good measure
       this.setPageState("view");
-      // this.$store.dispatch("saveRecipe", recipe);
+
+      // this.$store.dispatch("setSaving", false);
     },
     addIngredient() {
       this.$store.dispatch("addIngredient", []);
