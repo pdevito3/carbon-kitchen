@@ -14,10 +14,10 @@ export const state = {
 //update state synchronously 
 //**mutations should always be abstracted out and put into actions**
 export const mutations = {
-  SET_RECIPE(state, recipe) {
+  UPDATE_RECIPE(state, recipe) {
     state.recipe = recipe;
   },
-  SET_INGREDIENTS(state, ingredients) {
+  UPDATE_INGREDIENTS(state, ingredients) {
     // console.log('hey', state.ingredientsBeforeEdits);
     if (state.ingredientsBeforeEdits === null) {
       state.ingredientsBeforeEdits = ingredients;
@@ -27,7 +27,7 @@ export const mutations = {
     }
     state.ingredients = ingredients;
   },
-  UNDO_SET_INGREDIENTS(state) {
+  UNDO_UPDATE_INGREDIENTS(state) {
     if (state.ingredientsBeforeEdits !== null) {
       state.ingredients = state.ingredientsBeforeEdits
       // state.ingredientsBeforeEdits = null
@@ -59,18 +59,18 @@ export const getters = {
 //asynchronously wrap business logic around mutations. 
 export const actions = {
   // state and commit are parts of the context object (state, commit, getters, etc.), recipe is a passed in param/payload
-  setRecipe({ commit }, recipe) {
-    commit('SET_RECIPE', recipe)
+  updateRecipe({ commit }, recipe) {
+    commit('UPDATE_RECIPE', recipe)
   },
-  setIngredients({ commit }, ingredients) {
-    commit('SET_INGREDIENTS', ingredients)
+  updateIngredients({ commit }, ingredients) {
+    commit('UPDATE_INGREDIENTS', ingredients)
   },
-  undoSetIngredients({ commit }) {
-    commit('UNDO_SET_INGREDIENTS')
+  undoUpdateIngredients({ commit }) {
+    commit('UNDO_UPDATE_INGREDIENTS')
   },
   addIngredient({ commit }, ingredient) {
     commit('SET_SAVING', true)
-
+    
     fetch(`/api/ingredients`, {
       method: 'post',
       headers: {
@@ -116,7 +116,7 @@ export const actions = {
       body: JSON.stringify(recipe)
     })
 
-    commit('SET_RECIPE', recipe);
+    commit('UPDATE_RECIPE', recipe);
     commit('SET_SAVING', false);
   },
   setSaving({ commit }, value) {

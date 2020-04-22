@@ -13,7 +13,7 @@
     "core-js": "^3.6.4",
     "postcss-cli": "^7.1.0",
     "register-service-worker": "^1.6.2",
-    "tailwindcss": "^1.2.0",
+    "tailwindcss": "^1.x",
     "vue": "^2.6.11",
     "vue-popperjs": "^2.3.0",
     "vue-router": "^3.1.5",

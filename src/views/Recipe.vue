@@ -88,20 +88,22 @@
             <div v-for="ingredient in ingredients" :key="ingredient.ingredientId">
               <ingredient-record :ingredient="ingredient" />
             </div>
-            <button
-              @click="addIngredient()"
-              type="button"
-              class="w-full sm:w-auto flex items-center justify-center mt-1 inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
-            >
-              <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-                <path
-                  fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              <p class="pl-2">Add Ingredient</p>
-            </button>
+            <div class="mt-2">
+              <button
+                @click="addIngredient()"
+                type="button"
+                class="w-full sm:w-auto flex items-center justify-center inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+              >
+                <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <p class="pl-2">Add Ingredient</p>
+              </button>
+            </div>
           </form>
 
           <ul v-if="pageState=='view'" class="pt-2">
@@ -199,7 +201,7 @@ export default {
       fetch(`/api/recipes/${id}`)
       .then(res => res.json())
       .then(json => {
-        this.setRecipe(json.recipe);
+        this.updateRecipe(json.recipe);
       })
       .then(() => {
         // let recipeIngredientId = this.$store.state.recipeIngredientId;
@@ -207,19 +209,22 @@ export default {
         fetch(`/api/ingredients?recipeId=${id}`)
           .then(res => res.json())
           .then(json => {
-            this.setIngredients(json.ingredients);
+            this.updateIngredients(json.ingredients);
           });
       });
     },
-    setRecipe(recipe) {
-      this.$store.dispatch("setRecipe", recipe);
+    updateRecipe(recipe) {
+      this.$store.dispatch("updateRecipe", recipe);
 
 			// javascript uses assign by reference for objects so it auto links the stupid objects. need to do the below to 
 			// copy the values of all enumerable own properties from one or more source objects to a target object
       this.editableRecipe = Object.assign({},recipe); 
     },
-    setIngredients(ingredients) {
-      this.$store.dispatch("setIngredients", ingredients);
+    updateIngredients(ingredients) {
+      this.$store.dispatch("updateIngredients", ingredients);
+    },
+    undoIngredient() {
+      this.$store.dispatch("undoIngredient", ingredients);
     },
     setPageState(pageState) {
       this.$store.dispatch("setPageState", pageState);
@@ -233,7 +238,7 @@ export default {
       // this.$store.dispatch("setSaving", true);
 
       this.$store.dispatch("updateRecipe", this.editableRecipe);
-        this.setRecipe(this.editableRecipe); // load the recipe again for good measure
+        this.updateRecipe(this.editableRecipe); // load the recipe again for good measure
       this.setPageState("view");
 
       // this.$store.dispatch("setSaving", false);
