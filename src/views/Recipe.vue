@@ -165,6 +165,7 @@ export default {
     let id = this.$route.params.id;
 
     this.getRecipe(id);
+    this.getIngredients(id);
   },
   computed: {
     // use object spread operator for mapstate with vuex so we can use locally computed properties
@@ -173,6 +174,8 @@ export default {
       ingredients: state => state.recipe.ingredients,
       pageState: state => state.recipe.pageState
     })
+  },
+  calculated: {
   },
   methods: {
     getLinkHost(url) {
@@ -197,21 +200,11 @@ export default {
           this.saveRecipe();
       }
     },
-    getRecipe(id) {
-      fetch(`/api/recipes/${id}`)
-      .then(res => res.json())
-      .then(json => {
-        this.updateRecipe(json.recipe);
-      })
-      .then(() => {
-        // let recipeIngredientId = this.$store.state.recipeIngredientId;
-
-        fetch(`/api/ingredients?recipeId=${id}`)
-          .then(res => res.json())
-          .then(json => {
-            this.updateIngredients(json.ingredients);
-          });
-      });
+    getRecipe(recipeId) {
+      this.$store.dispatch("getRecipe", recipeId);
+    },
+    getIngredients(recipeId) {
+      this.$store.dispatch("getIngredients", recipeId);
     },
     updateRecipe(recipe) {
       this.$store.dispatch("updateRecipe", recipe);

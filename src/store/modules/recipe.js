@@ -10,6 +10,7 @@ export const state = {
   pageState: "view"
 }
 
+
 //update state synchronously 
 //**mutations should always be abstracted out and put into actions**
 export const mutations = {
@@ -17,20 +18,13 @@ export const mutations = {
     state.recipe = recipe;
   },
   UPDATE_INGREDIENTS(state, ingredients) {
-    // console.log('hey', state.ingredientsBeforeEdits);
-    if (state.ingredientsBeforeEdits === null) {
-      state.ingredientsBeforeEdits = ingredients;
-    }
-    else {
-      state.ingredientsBeforeEdits = state.ingredients;
-    }
     state.ingredients = ingredients;
   },
   ADD_INGREDIENT(state, ingredient) {
     state.ingredients.push(ingredient);
   },
   DELETE_INGREDIENT(state, ingredientId) {
-    let index = state.ingredients.map(e => e.ingredientId).indexOf(ingredientId);
+    let index = state.ingredients.map(i => i.ingredientId).indexOf(ingredientId);
 
     if (index !== -1) state.ingredients.splice(index, 1);
   },
@@ -57,6 +51,20 @@ export const actions = {
   },
   updateIngredients({ commit }, ingredients) {
     commit('UPDATE_INGREDIENTS', ingredients)
+  },
+  getIngredients({dispatch}, recipeId) {
+    fetch(`/api/ingredients?recipeId=${recipeId}`)
+      .then(res => res.json())
+      .then(json => {
+        dispatch('updateIngredients', json.ingredients)
+      });
+  },
+  getRecipe({dispatch}, recipeId) {
+    fetch(`/api/recipes/${recipeId}`)
+      .then(res => res.json())
+      .then(json => {
+        dispatch('updateRecipe', json.recipe)
+      });
   },
   addIngredient({ commit }, ingredient) {
     commit('SET_SAVING', true)
@@ -95,7 +103,6 @@ export const actions = {
   updateRecipe({ commit }, recipe) {
     commit('SET_SAVING', true);
 
-    console.log(recipe);
     fetch(`/api/recipes/${recipe.recipeId}`, {
       method: 'put',
       headers: {
