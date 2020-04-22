@@ -6,7 +6,6 @@ Vue.use(Vuex);
 export const state = {
   recipe: [],
   ingredients: [],
-  ingredientsBeforeEdits: null,
   saving: false,
   pageState: "view"
 }
@@ -26,12 +25,6 @@ export const mutations = {
       state.ingredientsBeforeEdits = state.ingredients;
     }
     state.ingredients = ingredients;
-  },
-  UNDO_UPDATE_INGREDIENTS(state) {
-    if (state.ingredientsBeforeEdits !== null) {
-      state.ingredients = state.ingredientsBeforeEdits
-      // state.ingredientsBeforeEdits = null
-    }
   },
   ADD_INGREDIENT(state, ingredient) {
     state.ingredients.push(ingredient);
@@ -65,9 +58,6 @@ export const actions = {
   updateIngredients({ commit }, ingredients) {
     commit('UPDATE_INGREDIENTS', ingredients)
   },
-  undoUpdateIngredients({ commit }) {
-    commit('UNDO_UPDATE_INGREDIENTS')
-  },
   addIngredient({ commit }, ingredient) {
     commit('SET_SAVING', true)
     
@@ -93,7 +83,6 @@ export const actions = {
   deleteIngredient({ commit }, ingredientId) {
     commit('SET_SAVING', true)
 
-    console.log('deleteid:', ingredientId);
     fetch(`/api/ingredients/${ingredientId}`, {
       method: 'delete'
     })
