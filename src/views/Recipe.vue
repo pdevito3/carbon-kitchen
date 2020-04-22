@@ -225,8 +225,8 @@ export default {
       this.$store.dispatch("setPageState", pageState);
     },
     cancelRecipe() {
-      // this.$store.dispatch("setIngredients", this.ingredients);
-      this.$store.dispatch("undoSetIngredients");
+      this.editableRecipe = this.recipe;
+      
       this.setPageState("view");
     },
     saveRecipe() {
