@@ -7,6 +7,7 @@ module.exports = {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
       spacing: {
+        "3px": "3px",
         "72": "18rem",
         "84": "21rem",
         "96": "24rem",
@@ -36,6 +37,7 @@ module.exports = {
   },
   variants: {
     backgroundColor: ['responsive', 'hover', 'focus', 'odd'],
+    boxShadow: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
   },
   plugins: [
     require('@tailwindcss/ui')({
