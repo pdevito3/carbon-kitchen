@@ -143,11 +143,18 @@ export function makeServer({ environment = "development" } = {}) {
         return schema.recipes.all()
       })
 
-      this.put("/recipe/:id", function (schema, request) {
+      this.put("/recipes/:id", function (schema, request) {
         let id = request.params.id
         let attrs = this.normalizedRequestAttrs()
       
         return schema.recipes.find(id).update(attrs)
+      })
+
+      this.put("/ingredients/:id", function (schema, request) {
+        let id = request.params.id
+        let attrs = this.normalizedRequestAttrs()
+      
+        return schema.ingredients.find(id).update(attrs)
       })
 
       this.get("/recipes/:id", (schema, request) => {

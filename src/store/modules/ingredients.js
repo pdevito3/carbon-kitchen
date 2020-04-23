@@ -35,7 +35,21 @@ export const getters = {
 export const actions = {
   // state and commit are parts of the context object (state, commit, getters, etc.), recipe is a passed in param/payload
   updateIngredients({ commit }, ingredients) {
+    commit('SET_SAVING', true);
+
+    for (let ingredient = 0; ingredient < ingredients.length; ingredient++) {
+      fetch(`/api/ingredients/${ingredient.ingredientId}`, {
+        method: 'put',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(ingredient)
+      })
+    }
+
     commit('UPDATE_INGREDIENTS', ingredients)
+    commit('SET_SAVING', false);
   },
   getIngredients({dispatch}, recipeId) {
     fetch(`/api/ingredients?recipeId=${recipeId}`)

@@ -104,7 +104,7 @@
 
                   <!-- list view -->
         <form class="mt-1 px-0 sm:px-2" v-if="pageState=='edit' && ingredientView == LISTVIEW">
-          <div class="" v-for="ingredient in ingredients" :key="ingredient.ingredientId">
+          <div class="" v-for="ingredient in editableIngredients" :key="ingredient.ingredientId">
             <ingredient-record :ingredient="ingredient" />
           </div>
           <div class="mt-2">
@@ -190,6 +190,7 @@ export default {
     return {
       open: false,
       editableRecipe: null,
+      editableIngredients: null,
       ingredientView: listView
     };
   },
@@ -257,6 +258,10 @@ export default {
     },
     updateIngredients(ingredients) {
       this.$store.dispatch("updateIngredients", ingredients);
+
+			// javascript uses assign by reference for objects so it auto links the stupid objects. need to do the below to 
+			// copy the values of all enumerable own properties from one or more source objects to a target object
+      this.editableIngredients = ingredients.map(i => ({...i})); //this also works [...ingredients.map(o=>Object.assign({},o))]
     },
     undoIngredient() {
       this.$store.dispatch("undoIngredient", ingredients);
@@ -266,17 +271,18 @@ export default {
     },
     cancelRecipe() {
       this.editableRecipe = this.recipe;
+      this.editableIngredients = this.ingredients;
       
       this.setPageState("view");
     },
     saveRecipe() {
-      // this.$store.dispatch("setSaving", true);
-
       this.$store.dispatch("updateRecipe", this.editableRecipe);
-        this.updateRecipe(this.editableRecipe); // load the recipe again for good measure
-      this.setPageState("view");
+      this.updateRecipe(this.editableRecipe); // load the recipe again for good measure
+      
+      this.$store.dispatch("updateRecipe", this.editableRecipe);
+      this.updateIngredients(this.editableIngredients); // load the recipe again for good measure
 
-      // this.$store.dispatch("setSaving", false);
+      this.setPageState("view");
     },
     addIngredient() {
       this.$store.dispatch("addIngredient", []);
