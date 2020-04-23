@@ -135,22 +135,22 @@
           </div>
         </form>
 
-          <ul v-if="pageState=='view'" class="pt-2">
-            <li
-              v-for="ingredient in ingredients"
-              :key="ingredient.ingredientId"
-              class="px-2 odd:bg-gray-200"
-            >
-              <div class="grid grid-cols-10 gap-1">
-                <div class="py-2 lg:py-1 col-span-1">{{ingredient.amount}}</div>
-                <div class="py-2 lg:py-1 col-span-3 lg:col-span-2">{{ingredient.unit}}</div>
-                <div class="py-2 lg:py-1 col-span-6 lg:col-span-7">
-                  <div>{{ingredient.ingredient}}</div>
-                  <div>{{ingredient.notes}}</div>
-                </div>
+        <ul v-if="pageState=='view'" class="pt-2">
+          <li
+            v-for="ingredient in ingredients"
+            :key="ingredient.ingredientId"
+            class="px-2 odd:bg-gray-200"
+          >
+            <div class="grid grid-cols-10 gap-1">
+              <div class="py-2 lg:py-1 col-span-1">{{ingredient.amount}}</div>
+              <div class="py-2 lg:py-1 col-span-3 lg:col-span-2">{{ingredient.unit}}</div>
+              <div class="py-2 lg:py-1 col-span-6 lg:col-span-7">
+                <div>{{ingredient.ingredient}}</div>
+                <div class="text-sm text-gray-900 italic">{{ingredient.notes}}</div>
               </div>
-            </li>
-          </ul>
+            </div>
+          </li>
+        </ul>
         </div>
         <div class="w-full md:w-1/2 px-2">
           <h2
@@ -207,7 +207,7 @@ export default {
     // use object spread operator for mapstate with vuex so we can use locally computed properties
     ...mapState({
       recipe: state => state.recipe.recipe,
-      ingredients: state => state.recipe.ingredients,
+      ingredients: state => state.ingredients.ingredients,
       pageState: state => state.recipe.pageState
     })
   },
