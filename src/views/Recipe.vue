@@ -80,27 +80,9 @@
     <div class="mt-2">
       <div class="flex flex-col md:flex-row w-full">
         <div class="w-full md:w-1/2 px-2">
-        <div class="flex justify-between items-center">
           <h2
             class="pt-2 text-xl font-bold leading-7 text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
           >Ingredients</h2>
-
-          <span class="p-3px inline-flex bg-gray-200 border rounded-md">
-            <button 
-              @click="ingredientView = LISTVIEW" 
-              class="px-2 py-1 rounded focus:outline-none"
-              :class="ingredientView == LISTVIEW ? 'bg-white shadow' : ''">
-              <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
-            </button>
-            
-            <button 
-              @click="ingredientView = BATCHVIEW" 
-              class="px-2 py-1 rounded focus:outline-none"
-              :class="ingredientView == BATCHVIEW ? 'bg-white shadow' : ''">
-              <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-            </button>
-          </span>
-        </div>
 
           <form class="px-0 sm:px-2" v-if="pageState=='edit'">
             <div v-for="ingredient in ingredients" :key="ingredient.ingredientId">
@@ -167,9 +149,6 @@ import RecipeActions from "@/components/recipe/RecipeActions.vue";
 import IngredientRecord from "@/components/recipe/IngredientRecord.vue";
 import { mapState } from "vuex";
 
-const listView = 'list';
-const batchView = 'batch';
-
 export default {
   components: {
     RecipeActions,
@@ -178,8 +157,7 @@ export default {
   data() {
     return {
       open: false,
-      editableRecipe: null,
-      ingredientView: listView
+      editableRecipe: null
     };
   },
 
@@ -188,9 +166,6 @@ export default {
 
     this.getRecipe(id);
     this.getIngredients(id);
-
-    this.LISTVIEW = listView;
-    this.BATCHVIEW = batchView;
   },
   computed: {
     // use object spread operator for mapstate with vuex so we can use locally computed properties
@@ -199,8 +174,6 @@ export default {
       ingredients: state => state.recipe.ingredients,
       pageState: state => state.recipe.pageState
     })
-  },
-  calculated: {
   },
   methods: {
     getLinkHost(url) {
@@ -225,12 +198,19 @@ export default {
           this.saveRecipe();
       }
     },
-    getRecipe(recipeId) {
-      this.editableRecipe = this.recipe;
-      this.$store.dispatch("getRecipe", recipeId);
+    getRecipe(id) {
+      fetch(`/api/recipes/${id}`)
+      .then(res => res.json())
+      .then(json => {
+        this.updateRecipe(json.recipe);
+      })
     },
-    getIngredients(recipeId) {
-      this.$store.dispatch("getIngredients", recipeId);
+    getIngredients(id) {
+      fetch(`/api/ingredients?recipeId=${id}`)
+          .then(res => res.json())
+          .then(json => {
+            this.updateIngredients(json.ingredients);
+          });
     },
     updateRecipe(recipe) {
       this.$store.dispatch("updateRecipe", recipe);
