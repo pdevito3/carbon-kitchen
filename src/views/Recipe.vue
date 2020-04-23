@@ -80,31 +80,60 @@
     <div class="mt-2">
       <div class="flex flex-col md:flex-row w-full">
         <div class="w-full md:w-1/2 px-2">
+        <div class="flex justify-between items-center">
           <h2
             class="pt-2 text-xl font-bold leading-7 text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
           >Ingredients</h2>
 
-          <form class="px-0 sm:px-2" v-if="pageState=='edit'">
-            <div v-for="ingredient in ingredients" :key="ingredient.ingredientId">
-              <ingredient-record :ingredient="ingredient" />
+           <span class="p-3px inline-flex bg-gray-200 border rounded-md" v-if="pageState=='edit'">
+            <button 
+              @click="ingredientView = LISTVIEW" 
+              class="px-2 py-1 rounded focus:outline-none"
+              :class="ingredientView == LISTVIEW ? 'bg-white shadow' : ''">
+              <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+            </button>
+            
+            <button 
+              @click="ingredientView = BATCHVIEW" 
+              class="px-2 py-1 rounded focus:outline-none"
+              :class="ingredientView == BATCHVIEW ? 'bg-white shadow' : ''">
+              <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+            </button>
+          </span>
+        </div>
+
+                  <!-- list view -->
+        <form class="mt-1 px-0 sm:px-2" v-if="pageState=='edit' && ingredientView == LISTVIEW">
+          <div class="" v-for="ingredient in ingredients" :key="ingredient.ingredientId">
+            <ingredient-record :ingredient="ingredient" />
+          </div>
+          <div class="mt-2">
+            <button
+              @click="addIngredient()"
+              type="button"
+              class="w-full sm:w-auto flex items-center justify-center inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+            >
+              <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <p class="pl-2">Add Ingredient</p>
+            </button>
+          </div>
+        </form>
+
+        <!-- batch view -->
+        <form class="px-0 sm:px-2" v-if="pageState=='edit' && ingredientView == BATCHVIEW">
+          <div class="mt-2 sm:col-span-2">
+            <div class="max-w-lg flex rounded-md shadow-sm">
+              <textarea id="batchIngredients" rows="3" class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
             </div>
-            <div class="mt-2">
-              <button
-                @click="addIngredient()"
-                type="button"
-                class="w-full sm:w-auto flex items-center justify-center inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
-              >
-                <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <p class="pl-2">Add Ingredient</p>
-              </button>
-            </div>
-          </form>
+            <!-- <p class="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p> -->
+          </div>
+        </form>
 
           <ul v-if="pageState=='view'" class="pt-2">
             <li
@@ -149,6 +178,9 @@ import RecipeActions from "@/components/recipe/RecipeActions.vue";
 import IngredientRecord from "@/components/recipe/IngredientRecord.vue";
 import { mapState } from "vuex";
 
+const listView = 'list';
+const batchView = 'batch';
+
 export default {
   components: {
     RecipeActions,
@@ -157,7 +189,8 @@ export default {
   data() {
     return {
       open: false,
-      editableRecipe: null
+      editableRecipe: null,
+      ingredientView: listView
     };
   },
 
@@ -166,6 +199,9 @@ export default {
 
     this.getRecipe(id);
     this.getIngredients(id);
+
+    this.LISTVIEW = listView;
+    this.BATCHVIEW = batchView;
   },
   computed: {
     // use object spread operator for mapstate with vuex so we can use locally computed properties

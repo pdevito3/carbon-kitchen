@@ -32,6 +32,9 @@ module.exports = {
         "178": "42rem",
         "190": "45rem",
         "202": "48rem"
+      },
+      gridTemplateColumns: {
+       '16': 'repeat(16, minmax(0, 1fr))',
       }
     },
   },
