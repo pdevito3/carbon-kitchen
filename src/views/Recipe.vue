@@ -129,9 +129,14 @@
         <form class="px-0 sm:px-2" v-if="pageState=='edit' && ingredientView == BATCHVIEW">
           <div class="mt-2 sm:col-span-2">
             <div class="max-w-lg flex rounded-md shadow-sm">
-              <textarea id="batchIngredients" rows="3" class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+              <textarea
+              rows="16"
+              id="batchIngredients"
+              v-model="this.batchCalc"
+              class="mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
+            />
             </div>
-            <!-- <p class="mt-2 text-sm text-gray-500">Write a few sentences about yourself.</p> -->
+            <!-- <p class="mt-2 text-sm text-gray-500">Format[Amount] [Unit] [Ingredient] ([Notes])</p> -->
           </div>
         </form>
 
@@ -156,13 +161,13 @@
           <h2
             class="pt-2 text-xl font-bold leading-7 text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
           >Directions</h2>
-          <div class="h-full" v-if="pageState=='edit'">
+          <div class="h-full pt-2" v-if="pageState=='edit'">
             <label for="directions" class="sr-only">Directions</label>
             <textarea
               rows="16"
               id="directions"
               v-model="editableRecipe.directions"
-              class="h-full mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
+              class="mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
             />
           </div>
           <div v-else class="whitespace-pre-wrap">{{recipe.directions}}</div>
@@ -210,7 +215,20 @@ export default {
       recipe: state => state.recipe.recipe,
       ingredients: state => state.ingredients.ingredients,
       pageState: state => state.recipe.pageState
-    })
+    }),
+    batchCalc: function () {
+      let amountArr = this.editableIngredients.map(i => i.amount);
+      let unitArr = this.editableIngredients.map(i => i.unit);
+      let ingredientArr = this.editableIngredients.map(i => i.ingredient);
+      let noteArr = this.editableIngredients.map(i => i.note);
+
+      let uniqueDelimter = "&&&&&&&";
+      let newArray = amountArr.map(function(value, index) {
+        return `${value} ${unitArr[index]} ${ingredientArr[index]} (${noteArr[index]})${uniqueDelimter}`;
+      });
+
+      return newArray.toString().replace(/&&&&&&&,/g,"\n").replace(/&&&&&&&/g,"");
+    }
   },
   methods: {
     getLinkHost(url) {
@@ -261,7 +279,7 @@ export default {
 
 			// javascript uses assign by reference for objects so it auto links the stupid objects. need to do the below to 
 			// copy the values of all enumerable own properties from one or more source objects to a target object
-      this.editableIngredients = ingredients.map(i => ({...i})); //this also works [...ingredients.map(o=>Object.assign({},o))]
+      this.editableIngredients = ingredients.map(i => ({...i})); //this also works ingredients.map(o=>Object.assign({},o)) or [...ingredients.map(o=>Object.assign({},o))]
     },
     undoIngredient() {
       this.$store.dispatch("undoIngredient", ingredients);
