@@ -151,7 +151,7 @@
               <div class="py-2 lg:py-1 col-span-3 lg:col-span-2">{{ingredient.unit}}</div>
               <div class="py-2 lg:py-1 col-span-6 lg:col-span-7">
                 <div>{{ingredient.ingredient}}</div>
-                <div class="text-sm text-gray-900 italic">{{ingredient.notes}}</div>
+                <!-- <div class="text-sm text-gray-900 italic">{{ingredient.notes}}</div> -->
               </div>
             </div>
           </li>
