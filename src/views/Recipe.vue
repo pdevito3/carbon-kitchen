@@ -132,7 +132,7 @@
               <textarea
               rows="16"
               id="batchIngredients"
-              v-model="this.batchCalc"
+              v-model="batchCalc"
               class="mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
             />
             </div>
@@ -216,18 +216,40 @@ export default {
       ingredients: state => state.ingredients.ingredients,
       pageState: state => state.recipe.pageState
     }),
-    batchCalc: function () {
-      let amountArr = this.editableIngredients.map(i => i.amount);
-      let unitArr = this.editableIngredients.map(i => i.unit);
-      let ingredientArr = this.editableIngredients.map(i => i.ingredient);
-      let noteArr = this.editableIngredients.map(i => i.note);
+    batchCalc: {
+      // getter
+      get: function () {
+        let amountArr = this.editableIngredients.map(i => i.amount);
+        let unitArr = this.editableIngredients.map(i => i.unit);
+        let ingredientArr = this.editableIngredients.map(i => i.ingredient);
+        let noteArr = this.editableIngredients.map(i => i.notes);
 
-      let uniqueDelimter = "&&&&&&&";
-      let newArray = amountArr.map(function(value, index) {
-        return `${value} ${unitArr[index]} ${ingredientArr[index]} (${noteArr[index]})${uniqueDelimter}`;
-      });
+        let newArray = amountArr.map(function(value, index) {
+          return `${value} ${unitArr[index]} ${ingredientArr[index]} (${noteArr[index]})`;
+        });
+        
+        return newArray.join("\n")
+      },
+      // setter
+      set: function (ingredientsString) {
+        this.editableIngredients = [];
+        let stringArr = ingredientsString.split('\n')
 
-      return newArray.toString().replace(/&&&&&&&,/g,"\n").replace(/&&&&&&&/g,"");
+        stringArr.forEach(eachIngredient => {
+          let amount = eachIngredient.substr(0, eachIngredient.indexOf(" "));
+          eachIngredient = eachIngredient.splice(eachIngredient.indexOf(" "), 1);
+          console.log("eachIngredient")
+
+          this.editableIngredients.push(
+            {
+              recipeId: this.recipe.recipeId
+              , amount: amount
+              , unit: "tablespoon" // eachIngredient.substr(getPosition(eachIngredient," ",2), eachIngredient.indexOf(" "))
+              , ingredient: "pepper"
+              // , notes: ""
+            }
+          )});
+      },      
     }
   },
   methods: {
