@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios'
 
 Vue.use(Vuex);
 
@@ -37,31 +38,30 @@ export const actions = {
   updateIngredients({ commit }, ingredients) {
     commit('SET_SAVING', true);
 
-    for (let ingredient = 0; ingredient < ingredients.length; ingredient++) {
-      fetch(`/api/ingredients/${ingredient.ingredientId}`, {
-        method: 'put',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(ingredient)
-      })
-    }
+    // for (let ingredient = 0; ingredient < ingredients.length; ingredient++) {
+    //   fetch(`/ingredients/${ingredient.ingredientId}`, {
+    //     method: 'put',
+    //     headers: {
+    //       'Accept': 'application/json',
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(ingredient)
+    //   })
+    // }
 
     commit('UPDATE_INGREDIENTS', ingredients)
     commit('SET_SAVING', false);
   },
-  getIngredients({dispatch}, recipeId) {
-    fetch(`/api/ingredients?recipeId=${recipeId}`)
-      .then(res => res.json())
-      .then(json => {
-        dispatch('updateIngredients', json.ingredients)
-      });
+  getIngredients({dispatch, commit}, recipeId) {
+    axios.get(`http://localhost:5000/api/v1/ingredients?recipeId=${recipeId}`)
+    .then(res => {
+      commit('UPDATE_INGREDIENTS', res.data);
+    });
   },
   addIngredient({ commit }, ingredient) {
     commit('SET_SAVING', true)
     
-    fetch(`/api/ingredients`, {
+    fetch(`/ingredients`, {
       method: 'post',
       headers: {
         'Accept': 'application/json',
@@ -83,7 +83,7 @@ export const actions = {
   deleteIngredient({ commit }, ingredientId) {
     commit('SET_SAVING', true)
 
-    fetch(`/api/ingredients/${ingredientId}`, {
+    fetch(`/ingredients/${ingredientId}`, {
       method: 'delete'
     })
       .then(() => {

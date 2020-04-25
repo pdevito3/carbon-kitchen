@@ -152,6 +152,8 @@
               <div class="py-2 lg:py-1 col-span-6 lg:col-span-7">
                 <div>{{ingredient.ingredient}}</div>
                 <!-- <div class="text-sm text-gray-900 italic">{{ingredient.notes}}</div> -->
+                <div>{{ingredient.name}}</div>
+                <div class="text-sm text-gray-900 italic">{{ingredient.notes}}</div>
               </div>
             </div>
           </li>
@@ -182,6 +184,7 @@
 import RecipeActions from "@/components/recipe/RecipeActions.vue";
 import IngredientRecord from "@/components/recipe/IngredientRecord.vue";
 import { mapState } from "vuex";
+import axios from 'axios';
 
 const listView = 'list';
 const batchView = 'batch';
@@ -276,18 +279,26 @@ export default {
       }
     },
     getRecipe(id) {
-      fetch(`/api/recipes/${id}`)
-      .then(res => res.json())
-      .then(json => {
-        this.updateRecipe(json.recipe);
-      })
+      // axios.get(`http://localhost:5001/api/v1/recipes/1`)
+      // .then(res => {
+      //   this.updateRecipe(res.data)
+      // });
+      
+      this.$store.dispatch("getRecipe", id);
     },
     getIngredients(id) {
-      fetch(`/api/ingredients?recipeId=${id}`)
-          .then(res => res.json())
-          .then(json => {
-            this.updateIngredients(json.ingredients);
-          });
+      // fetch(`/api/ingredients?recipeId=${id}`)
+      //     .then(res => res.json())
+      //     .then(json => {
+      //       this.updateIngredients(json.ingredients);
+      //     });
+      
+      this.$store.dispatch("getIngredients", 1);
+
+      // axios.get(`http://localhost:5000/api/v1/ingredients?recipeId=1`)
+      // .then(res => {
+      //   this.updateIngredients(res.data)
+      // });
     },
     updateRecipe(recipe) {
       this.$store.dispatch("updateRecipe", recipe);

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios';
 
 Vue.use(Vuex);
 
@@ -33,11 +34,10 @@ export const actions = {
   // updateRecipe({ commit }, recipe) {
   //   commit('UPDATE_RECIPE', recipe)
   // },
-  getRecipe({dispatch}, recipeId) {
-    fetch(`/api/recipes/${recipeId}`)
-      .then(res => res.json())
-      .then(json => {
-        dispatch('updateRecipe', json.recipe)
+  getRecipe({dispatch, commit}, recipeId) {
+      axios.get(`http://localhost:5001/api/v1/recipes/${recipeId}`)
+      .then(res => {
+        commit('UPDATE_RECIPE', res.data);
       });
   },
   updateRecipe({ commit }, recipe) {

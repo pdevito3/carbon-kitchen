@@ -37,103 +37,103 @@ export function makeServer({ environment = "development" } = {}) {
         , imageLink: "https://cdn.copymethat.com/media/the_only_red_velvet_cake_recipe_youll_ev_20200214190801982058o69u7k.jpg"
       })
 
-      server.create("ingredient", {
-        ingredientId: 1
-        , recipeId: 1
-        , amount: 1
-        , unit: "package"
-        , ingredient: "(20 oz) boneless skinless chicken thighs"
-        , notes: "patted dry"
-      })
-      server.create("ingredient", {
-        ingredientId: 2
-        , recipeId: 1
-        , amount: 1
-        , unit: "teaspoon"
-        , ingredient: "salt"
-        , notes: ""
-      })
-      server.create("ingredient", {
-        ingredientId: 3
-        , recipeId: 1
-        , amount: .5
-        , unit: "teaspoon"
-        , ingredient: "pepper"
-        , notes: ""
-      })
-      server.create("ingredient", {
-        ingredientId: 4
-        , recipeId: 1
-        , amount: 2
-        , unit: "tablespoons"
-        , ingredient: "butter"
-        , notes: ""
-      })
-      server.create("ingredient", {
-        ingredientId: 5
-        , recipeId: 1
-        , amount: 1
-        , unit: "package"
-        , ingredient: "(20 oz) boneless skinless chicken thighs"
-        , notes: "patted dry"
-      })
-      server.create("ingredient", {
-        ingredientId: 6
-        , recipeId: 1
-        , amount: 1
-        , unit: "teaspoon"
-        , ingredient: "salt"
-        , notes: ""
-      })
-      server.create("ingredient", {
-        ingredientId: 7
-        , recipeId: 1
-        , amount: .5
-        , unit: "teaspoon"
-        , ingredient: "pepper"
-        , notes: ""
-      })
-      server.create("ingredient", {
-        ingredientId: 8
-        , recipeId: 1
-        , amount: 2
-        , unit: "tablespoons"
-        , ingredient: "butter"
-        , notes: ""
-      })
+      // server.create("ingredient", {
+      //   ingredientId: 1
+      //   , recipeId: 1
+      //   , amount: 1
+      //   , unit: "package"
+      //   , ingredient: "(20 oz) boneless skinless chicken thighs"
+      //   , note: "patted dry"
+      // })
+      // server.create("ingredient", {
+      //   ingredientId: 2
+      //   , recipeId: 1
+      //   , amount: 1
+      //   , unit: "teaspoon"
+      //   , ingredient: "salt"
+      //   , note: ""
+      // })
+      // server.create("ingredient", {
+      //   ingredientId: 3
+      //   , recipeId: 1
+      //   , amount: .5
+      //   , unit: "teaspoon"
+      //   , ingredient: "pepper"
+      //   , note: ""
+      // })
+      // server.create("ingredient", {
+      //   ingredientId: 4
+      //   , recipeId: 1
+      //   , amount: 2
+      //   , unit: "tablespoons"
+      //   , ingredient: "butter"
+      //   , note: ""
+      // })
+      // server.create("ingredient", {
+      //   ingredientId: 5
+      //   , recipeId: 1
+      //   , amount: 1
+      //   , unit: "package"
+      //   , ingredient: "(20 oz) boneless skinless chicken thighs"
+      //   , note: "patted dry"
+      // })
+      // server.create("ingredient", {
+      //   ingredientId: 6
+      //   , recipeId: 1
+      //   , amount: 1
+      //   , unit: "teaspoon"
+      //   , ingredient: "salt"
+      //   , note: ""
+      // })
+      // server.create("ingredient", {
+      //   ingredientId: 7
+      //   , recipeId: 1
+      //   , amount: .5
+      //   , unit: "teaspoon"
+      //   , ingredient: "pepper"
+      //   , note: ""
+      // })
+      // server.create("ingredient", {
+      //   ingredientId: 8
+      //   , recipeId: 1
+      //   , amount: 2
+      //   , unit: "tablespoons"
+      //   , ingredient: "butter"
+      //   , note: ""
+      // })
 
-      server.create("ingredient", {
-        ingredientId: 9
-        , recipeId: 1
-        , amount: 1
-        , unit: "package"
-        , ingredient: "(20 oz) boneless skinless chicken thighs"
-        , notes: "patted dry"
-      })
-      server.create("ingredient", {
-        ingredientId: 10
-        , recipeId: 1
-        , amount: 1
-        , unit: "teaspoon"
-        , ingredient: "salt"
-        , notes: ""
-      })
-      server.create("ingredient", {
-        ingredientId: 11
-        , recipeId: 1
-        , amount: .5
-        , unit: "teaspoon"
-        , ingredient: "pepper"
-        , notes: ""
-      })
-      server.create("ingredient", {
-        ingredientId: 12
-        , recipeId: 1
-        , amount: 2
-        , unit: "tablespoons"
-        , ingredient: "butter"
-        , notes: ""
-      })
+      // server.create("ingredient", {
+      //   ingredientId: 9
+      //   , recipeId: 1
+      //   , amount: 1
+      //   , unit: "package"
+      //   , ingredient: "(20 oz) boneless skinless chicken thighs"
+      //   , note: "patted dry"
+      // })
+      // server.create("ingredient", {
+      //   ingredientId: 10
+      //   , recipeId: 1
+      //   , amount: 1
+      //   , unit: "teaspoon"
+      //   , ingredient: "salt"
+      //   , note: ""
+      // })
+      // server.create("ingredient", {
+      //   ingredientId: 11
+      //   , recipeId: 1
+      //   , amount: .5
+      //   , unit: "teaspoon"
+      //   , ingredient: "pepper"
+      //   , note: ""
+      // })
+      // server.create("ingredient", {
+      //   ingredientId: 12
+      //   , recipeId: 1
+      //   , amount: 2
+      //   , unit: "tablespoons"
+      //   , ingredient: "butter"
+      //   , note: ""
+      // })
     },
 
     routes() {

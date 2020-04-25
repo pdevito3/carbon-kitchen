@@ -4,12 +4,12 @@ import './registerServiceWorker';
 import router from './router';
 import store from './store/index';
 import './assets/styles/tailwind.css';
-import { makeServer } from "./server";
+// import { makeServer } from "./server";
 
 Vue.config.productionTip = false;
 
 if (process.env.NODE_ENV === "development") {
-  makeServer()
+  // makeServer()
 }
 
 new Vue({

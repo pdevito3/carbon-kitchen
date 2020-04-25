@@ -12,11 +12,17 @@
       v-model="ingredient.unit"
       class="col-span-5 py-2 px-2 mt-1 form-input block w-full sm:text-sm sm:leading-5 lg:py-1 rounded-md truncate shadow-sm"
     />
-    <label for="ingredient" class="sr-only">ingredient</label>
+    <label for="name" class="sr-only">name</label>
     <input
-      id="ingredient"
-      v-model="ingredient.ingredient"
-      class="col-span-8 py-2 px-2 mt-1 form-input block w-full sm:text-sm sm:leading-5 lg:py-1 rounded-md truncate shadow-sm"
+      id="name"
+      v-model="ingredient.name"
+      class="col-span-6 py-2 px-2 mt-1 form-input block w-full sm:text-sm sm:leading-5 lg:py-1 rounded-md truncate shadow-sm"
+    />
+    <label for="notes" class="sr-only">notes</label>
+    <input
+      id="notes"
+      v-model="ingredient.notes"
+      class=" col-span-4 py-2 px-2 mt-1 form-input block w-full sm:text-sm sm:leading-5 lg:py-1 rounded-md truncate shadow-sm"
     />
     <button
       @click="deleteIngredient(ingredient.ingredientId)"
