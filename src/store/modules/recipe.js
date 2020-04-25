@@ -38,19 +38,18 @@ export const actions = {
       axios.get(`http://localhost:5001/api/v1/recipes/${recipeId}`)
       .then(res => {
         commit('UPDATE_RECIPE', res.data);
+        return res.data;
       });
   },
   updateRecipe({ commit }, recipe) {
     commit('SET_SAVING', true);
-
-    fetch(`/api/recipes/${recipe.recipeId}`, {
-      method: 'put',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(recipe)
-    })
+    
+    // axios.put(`http://localhost:5001/api/v1/recipes/${recipeId}`, {
+    //   body: JSON.stringify(recipe)
+    // })
+    // .then(res => {
+    //   commit('UPDATE_RECIPE', res.data);
+    // });
 
     commit('UPDATE_RECIPE', recipe);
     commit('SET_SAVING', false);

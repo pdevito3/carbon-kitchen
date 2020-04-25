@@ -128,14 +128,14 @@
         <!-- batch view -->
         <form class="px-0 sm:px-2" v-if="pageState=='edit' && ingredientView == BATCHVIEW">
           <div class="mt-2 sm:col-span-2">
-            <div class="max-w-lg flex rounded-md shadow-sm">
+            <!-- <div class="max-w-lg flex rounded-md shadow-sm">
               <textarea
               rows="16"
               id="batchIngredients"
               v-model="batchCalc"
               class="mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
             />
-            </div>
+            </div> -->
             <!-- <p class="mt-2 text-sm text-gray-500">Format[Amount] [Unit] [Ingredient] ([Notes])</p> -->
           </div>
         </form>
@@ -153,7 +153,7 @@
                 <div>{{ingredient.ingredient}}</div>
                 <!-- <div class="text-sm text-gray-900 italic">{{ingredient.notes}}</div> -->
                 <div>{{ingredient.name}}</div>
-                <div class="text-sm text-gray-900 italic">{{ingredient.notes}}</div>
+                <!-- <div class="text-sm text-gray-900 italic">{{ingredient.notes}}</div> -->
               </div>
             </div>
           </li>
@@ -168,11 +168,11 @@
             <textarea
               rows="16"
               id="directions"
-              v-model="editableRecipe.directions"
+              v-model="this.editableRecipe.directions"
               class="mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
             />
           </div>
-          <div v-else class="whitespace-pre-wrap">{{recipe.directions}}</div>
+          <div v-else class="whitespace-pre-wrap">{{this.recipe.directions}}</div>
         </div>
       </div>
     </div>
@@ -219,45 +219,47 @@ export default {
       ingredients: state => state.ingredients.ingredients,
       pageState: state => state.recipe.pageState
     }),
-    batchCalc: {
-      // getter
-      get: function () {
-        let amountArr = this.editableIngredients.map(i => i.amount);
-        let unitArr = this.editableIngredients.map(i => i.unit);
-        let ingredientArr = this.editableIngredients.map(i => i.ingredient);
-        let noteArr = this.editableIngredients.map(i => i.notes);
+    // batchCalc: {
+      // // getter
+      // get: function () {
+      //   let amountArr = this.editableIngredients.map(i => i.amount);
+      //   let unitArr = this.editableIngredients.map(i => i.unit);
+      //   let ingredientArr = this.editableIngredients.map(i => i.ingredient);
+      //   let noteArr = this.editableIngredients.map(i => i.notes);
 
-        let newArray = amountArr.map(function(value, index) {
-          return `${value} ${unitArr[index]} ${ingredientArr[index]} (${noteArr[index]})`;
-        });
+      //   let newArray = amountArr.map(function(value, index) {
+      //     return `${value} ${unitArr[index]} ${ingredientArr[index]} (${noteArr[index]})`;
+      //   });
         
-        return newArray.join("\n")
-      },
-      // setter
-      set: function (ingredientsString) {
-        this.editableIngredients = [];
-        let stringArr = ingredientsString.split('\n')
+      //   return newArray.join("\n")
+      // },
+      // // setter
+      // set: function (ingredientsString) {
+      //   this.editableIngredients = [];
+      //   let stringArr = ingredientsString.split('\n')
 
-        stringArr.forEach(eachIngredient => {
-          let amount = eachIngredient.substr(0, eachIngredient.indexOf(" "));
-          eachIngredient = eachIngredient.splice(eachIngredient.indexOf(" "), 1);
-          console.log("eachIngredient")
+      //   stringArr.forEach(eachIngredient => {
+      //     let amount = eachIngredient.substr(0, eachIngredient.indexOf(" "));
+      //     eachIngredient = eachIngredient.splice(eachIngredient.indexOf(" "), 1);
+      //     console.log("eachIngredient")
 
-          this.editableIngredients.push(
-            {
-              recipeId: this.recipe.recipeId
-              , amount: amount
-              , unit: "tablespoon" // eachIngredient.substr(getPosition(eachIngredient," ",2), eachIngredient.indexOf(" "))
-              , ingredient: "pepper"
-              // , notes: ""
-            }
-          )});
-      },      
-    }
+      //     this.editableIngredients.push(
+      //       {
+      //         recipeId: this.recipe.recipeId
+      //         , amount: amount
+      //         , unit: "tablespoon" // eachIngredient.substr(getPosition(eachIngredient," ",2), eachIngredient.indexOf(" "))
+      //         , ingredient: "pepper"
+      //         // , notes: ""
+      //       }
+      //     )});
+      // },      
+    // }
   },
   methods: {
     getLinkHost(url) {
-      return new URL(url).host;
+      if(url != null){
+        return new URL(url).host;
+      }
     },
     performRecipeAction(action) {
       const pageStates = {
@@ -270,42 +272,26 @@ export default {
           this.setPageState("view");
           return "view";
         case "edit":
-          this.setPageState("edit");
+          this.startEdit();
           return "edit";
         case "cancel":
           this.cancelRecipe();
+          return "cancel";
         case "save":
           this.saveRecipe();
+          return "save";
       }
     },
     getRecipe(id) {
-      // axios.get(`http://localhost:5001/api/v1/recipes/1`)
-      // .then(res => {
-      //   this.updateRecipe(res.data)
-      // });
-      
       this.$store.dispatch("getRecipe", id);
     },
     getIngredients(id) {
-      // fetch(`/api/ingredients?recipeId=${id}`)
-      //     .then(res => res.json())
-      //     .then(json => {
-      //       this.updateIngredients(json.ingredients);
-      //     });
-      
-      this.$store.dispatch("getIngredients", 1);
-
-      // axios.get(`http://localhost:5000/api/v1/ingredients?recipeId=1`)
-      // .then(res => {
-      //   this.updateIngredients(res.data)
-      // });
+      this.$store.dispatch("getIngredients", id);
     },
     updateRecipe(recipe) {
       this.$store.dispatch("updateRecipe", recipe);
 
-			// javascript uses assign by reference for objects so it auto links the stupid objects. need to do the below to 
-			// copy the values of all enumerable own properties from one or more source objects to a target object
-      this.editableRecipe = Object.assign({},recipe); 
+			this.updateRecipe()
     },
     updateIngredients(ingredients) {
       this.$store.dispatch("updateIngredients", ingredients);
@@ -319,6 +305,12 @@ export default {
     },
     setPageState(pageState) {
       this.$store.dispatch("setPageState", pageState);
+    },
+    startEdit() {      
+      this.setPageState("edit");
+
+      this.editableRecipe = this.recipe;
+      this.editableIngredients = this.ingredients;
     },
     cancelRecipe() {
       this.editableRecipe = this.recipe;
