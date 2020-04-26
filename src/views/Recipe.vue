@@ -282,14 +282,13 @@ export default {
           return "save";
       }
     },
-    setPageState(pageState) {
-      this.$store.dispatch("setPageState", pageState);
-    },
     startEdit() {      
       this.setPageState("edit");
 
-      this.editableRecipe = this.recipe;
-      this.editableIngredients = this.ingredients;
+      this.editableRecipe = Object.assign({},this.recipe); 
+      // javascript uses assign by reference for objects so it auto links the stupid objects. need to do the below to 
+			// copy the values of all enumerable own properties from one or more source objects to a target object
+      this.editableIngredients = this.ingredients.map(i => ({...i})); //this also works ingredients.map(o=>Object.assign({},o)) or [...ingredients.map(o=>Object.assign({},o))]
     },
     cancelEdit() {
       this.editableRecipe = this.recipe;
@@ -312,7 +311,7 @@ export default {
     updateRecipe(recipe) {
       this.$store.dispatch("updateRecipe", recipe);
 
-			this.updateRecipe()
+			// this.updateRecipe()
     },
     getIngredients(id) {
       this.$store.dispatch("getIngredients", id);
@@ -323,6 +322,9 @@ export default {
 			// javascript uses assign by reference for objects so it auto links the stupid objects. need to do the below to 
 			// copy the values of all enumerable own properties from one or more source objects to a target object
       this.editableIngredients = ingredients.map(i => ({...i})); //this also works ingredients.map(o=>Object.assign({},o)) or [...ingredients.map(o=>Object.assign({},o))]
+    },
+    setPageState(pageState) {
+      this.$store.dispatch("setPageState", pageState);
     },
     addEditableIngredient() {
       this.editableIngredients.push([]);

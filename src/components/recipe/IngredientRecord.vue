@@ -34,10 +34,6 @@
 export default {
   props: ["ingredient"],
   methods: {
-    deleteIngredient(ingredientId) {
-      console.log(ingredientId);
-      // this.$store.dispatch("deleteIngredient", ingredientId);
-    },
     removeIngredient(ingredientId) {
       this.$emit("removeIngredient", ingredientId);
     }
