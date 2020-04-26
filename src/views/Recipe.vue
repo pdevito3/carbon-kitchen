@@ -300,8 +300,8 @@ export default {
       this.$store.dispatch("updateRecipe", this.editableRecipe);
       // this.updateRecipe(this.editableRecipe); // load the recipe again for good measure
       
-      this.$store.dispatch("updateRecipe", this.editableRecipe);
-      // this.updateIngredients(this.editableIngredients); // load the recipe again for good measure
+      // this.$store.dispatch("updateRecipe", this.editableRecipe);
+      // this.updateIngredients(this.editableIngredients); 
 
       this.setPageState("view");
     },

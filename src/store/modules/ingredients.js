@@ -37,19 +37,14 @@ export const actions = {
   // state and commit are parts of the context object (state, commit, getters, etc.), recipe is a passed in param/payload
   updateIngredients({ commit }, ingredients) {
     commit('SET_SAVING', true);
+    
+    console.log(recipe);
+    axios.put(`http://localhost:5000/api/v1/ingredients/${recipe.recipeId}`, {
+      body: JSON.stringify(recipe)
+    })
+    .then(res => {});
 
-    // for (let ingredient = 0; ingredient < ingredients.length; ingredient++) {
-    //   fetch(`/ingredients/${ingredient.ingredientId}`, {
-    //     method: 'put',
-    //     headers: {
-    //       'Accept': 'application/json',
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(ingredient)
-    //   })
-    // }
-
-    commit('UPDATE_INGREDIENTS', ingredients)
+    commit('UPDATE_RECIPE', ingredients);
     commit('SET_SAVING', false);
   },
   getIngredients({dispatch, commit}, recipeId) {

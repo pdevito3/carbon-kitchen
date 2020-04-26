@@ -55,13 +55,10 @@ export const actions = {
   updateRecipe({ commit }, recipe) {
     commit('SET_SAVING', true);
     
-    // console.log(recipe);
-    // axios.put(`http://localhost:5001/api/v1/recipes/${recipe.recipeId}`, {
-    //   body: JSON.stringify(recipe)
-    // })
-    // .then(res => {
-    //   commit('UPDATE_RECIPE', res.data);
-    // });
+    axios.put(`http://localhost:5001/api/v1/recipes/${recipe.recipeId}`, {
+      body: JSON.stringify(recipe)
+    })
+    .then(res => {    });
 
     commit('UPDATE_RECIPE', recipe);
     commit('SET_SAVING', false);
