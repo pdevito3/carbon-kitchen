@@ -6,6 +6,7 @@ Vue.use(Vuex);
 
 export const state = {
   recipe: [],
+  recipes: null,
   saving: false,
   pageState: "view"
 }
@@ -16,6 +17,9 @@ export const state = {
 export const mutations = {
   UPDATE_RECIPE(state, recipe) {
     state.recipe = recipe;
+  },
+  UPDATE_RECIPES(state, recipes) {
+    state.recipes = recipes;
   },
   SET_SAVING(state, value) {
     state.saving = value;
@@ -41,15 +45,23 @@ export const actions = {
         return res.data;
       });
   },
+  getRecipes({dispatch, commit}) {
+      axios.get(`http://localhost:5001/api/v1/recipes/`)
+      .then(res => {
+        commit('UPDATE_RECIPES', res.data);
+        return res.data;
+      });
+  },
   updateRecipe({ commit }, recipe) {
     commit('SET_SAVING', true);
     
-    // axios.put(`http://localhost:5001/api/v1/recipes/${recipeId}`, {
-    //   body: JSON.stringify(recipe)
-    // })
-    // .then(res => {
-    //   commit('UPDATE_RECIPE', res.data);
-    // });
+    console.log(recipe);
+    axios.put(`http://localhost:5001/api/v1/recipes/${recipe.recipeId}`, {
+      body: JSON.stringify(recipe)
+    })
+    .then(res => {
+      commit('UPDATE_RECIPE', res.data);
+    });
 
     commit('UPDATE_RECIPE', recipe);
     commit('SET_SAVING', false);

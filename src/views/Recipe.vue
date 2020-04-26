@@ -102,14 +102,14 @@
           </span>
         </div>
 
-                  <!-- list view -->
+        <!-- list view -->
         <form class="mt-1 px-0 sm:px-2" v-if="pageState=='edit' && ingredientView == LISTVIEW">
           <div class="" v-for="ingredient in editableIngredients" :key="ingredient.ingredientId">
-            <ingredient-record :ingredient="ingredient" />
+            <ingredient-record :ingredient="ingredient" @removeIngredient="removeIngredient" />
           </div>
           <div class="mt-2">
             <button
-              @click="addIngredient()"
+              @click="addEditableIngredient()"
               type="button"
               class="w-full sm:w-auto flex items-center justify-center inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
             >
@@ -275,33 +275,12 @@ export default {
           this.startEdit();
           return "edit";
         case "cancel":
-          this.cancelRecipe();
+          this.cancelEdit();
           return "cancel";
         case "save":
           this.saveRecipe();
           return "save";
       }
-    },
-    getRecipe(id) {
-      this.$store.dispatch("getRecipe", id);
-    },
-    getIngredients(id) {
-      this.$store.dispatch("getIngredients", id);
-    },
-    updateRecipe(recipe) {
-      this.$store.dispatch("updateRecipe", recipe);
-
-			this.updateRecipe()
-    },
-    updateIngredients(ingredients) {
-      this.$store.dispatch("updateIngredients", ingredients);
-
-			// javascript uses assign by reference for objects so it auto links the stupid objects. need to do the below to 
-			// copy the values of all enumerable own properties from one or more source objects to a target object
-      this.editableIngredients = ingredients.map(i => ({...i})); //this also works ingredients.map(o=>Object.assign({},o)) or [...ingredients.map(o=>Object.assign({},o))]
-    },
-    undoIngredient() {
-      this.$store.dispatch("undoIngredient", ingredients);
     },
     setPageState(pageState) {
       this.$store.dispatch("setPageState", pageState);
@@ -312,7 +291,7 @@ export default {
       this.editableRecipe = this.recipe;
       this.editableIngredients = this.ingredients;
     },
-    cancelRecipe() {
+    cancelEdit() {
       this.editableRecipe = this.recipe;
       this.editableIngredients = this.ingredients;
       
@@ -320,15 +299,39 @@ export default {
     },
     saveRecipe() {
       this.$store.dispatch("updateRecipe", this.editableRecipe);
-      this.updateRecipe(this.editableRecipe); // load the recipe again for good measure
+      // this.updateRecipe(this.editableRecipe); // load the recipe again for good measure
       
       this.$store.dispatch("updateRecipe", this.editableRecipe);
-      this.updateIngredients(this.editableIngredients); // load the recipe again for good measure
+      // this.updateIngredients(this.editableIngredients); // load the recipe again for good measure
 
       this.setPageState("view");
     },
-    addIngredient() {
-      this.$store.dispatch("addIngredient", []);
+    getRecipe(id) {
+      this.$store.dispatch("getRecipe", id);
+    },
+    updateRecipe(recipe) {
+      this.$store.dispatch("updateRecipe", recipe);
+
+			this.updateRecipe()
+    },
+    getIngredients(id) {
+      this.$store.dispatch("getIngredients", id);
+    },
+    updateIngredients(ingredients) {
+      this.$store.dispatch("updateIngredients", ingredients);
+
+			// javascript uses assign by reference for objects so it auto links the stupid objects. need to do the below to 
+			// copy the values of all enumerable own properties from one or more source objects to a target object
+      this.editableIngredients = ingredients.map(i => ({...i})); //this also works ingredients.map(o=>Object.assign({},o)) or [...ingredients.map(o=>Object.assign({},o))]
+    },
+    addEditableIngredient() {
+      this.editableIngredients.push([]);
+    },
+    removeIngredient(ingredientId) {
+      var removeIndex = this.editableIngredients.map(function(ingredient) { return ingredient.ingredientId; }).indexOf(ingredientId);
+      
+      // remove object
+      this.editableIngredients.splice(removeIndex, 1);
     }
   }
 };

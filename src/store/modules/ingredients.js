@@ -59,26 +59,26 @@ export const actions = {
     });
   },
   addIngredient({ commit }, ingredient) {
-    commit('SET_SAVING', true)
+    // commit('SET_SAVING', true)
     
-    fetch(`/ingredients`, {
-      method: 'post',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(ingredient)
-    })
-      .then(function (response) {
-        return response.json();
-      })
-      .then((response) => {
-        response.ingredient.ingredientId = response.ingredient.id; //mirage uses 'id' for primary key
-        commit('ADD_INGREDIENT', response.ingredient);
-      })
-      .then(() => commit('SET_SAVING', false)
-      )
-      .catch(console.log("problem adding ingredient"));
+    // fetch(`/ingredients`, {
+    //   method: 'post',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(ingredient)
+    // })
+    //   .then(function (response) {
+    //     return response.json();
+    //   })
+    //   .then((response) => {
+    //     response.ingredient.ingredientId = response.ingredient.id; //mirage uses 'id' for primary key
+    //     commit('ADD_INGREDIENT', response.ingredient);
+    //   })
+    //   .then(() => commit('SET_SAVING', false)
+    //   )
+    //   .catch(console.log("problem adding ingredient"));
   },
   deleteIngredient({ commit }, ingredientId) {
     commit('SET_SAVING', true)

@@ -6,7 +6,7 @@
 
     <div class="mt-5 bg-white shadow overflow-hidden sm:rounded-md md:mx-8">
       <ul>
-        <li v-for="recipe in recipes" :key="recipe.recipeId" class>
+        <li v-for="recipe in this.recipes" :key="recipe.recipeId" class>
           <recipe-list-card
             :title="recipe.title"
             :recipeSourceLink="recipe.recipeSourceLink"
@@ -41,25 +41,30 @@
 
 <script>
 import RecipeListCard from "@/components/RecipeListCard";
+import { mapState } from "vuex";
 
 export default {
   components: {
     RecipeListCard
   },
   data() {
-    return {
-      recipes: []
-    };
+    return {};
   },
-
   created() {
-    fetch("/api/recipes")
-      .then(res => res.json())
-      .then(json => {
-        this.recipes = json.recipes;
-      });
+    this.getRecipes()
+  },
+  computed: {
+    // use object spread operator for mapstate with vuex so we can use locally computed properties
+    ...mapState({
+      recipes: state => state.recipe.recipes,
+    }),
+  },
+  methods: {
+    getRecipes() {
+      this.$store.dispatch("getRecipes");
+    },
   }
-};
+}
 </script>
 
 <style>
