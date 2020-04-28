@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import axios from 'axios'
+import axios from 'axios';
 
 Vue.use(Vuex);
 
@@ -38,15 +38,14 @@ export const actions = {
   updateIngredients({ commit }, {recipeId, ingredients}) {
     commit('SET_SAVING', true);
     
-    // axios.put(`http://localhost:5000/api/v1/ingredients/list/${recipe.recipeId}`, {
-    //   body: JSON.stringify(recipe)
-    // })
-    // .then(res => {});
-    let a =  JSON.stringify(ingredients);
-    console.log(a)
-    axios.post(`http://localhost:5000/api/v1/ingredients/list/${recipeId}`, {
-      body: JSON.stringify(ingredients)
-    })
+    axios.post(
+      `http://localhost:5000/api/v1/ingredients/list/${recipeId}`,
+      JSON.stringify(ingredients),
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
     .then(res => {
       commit('UPDATE_INGREDIENTS', res.data);
     });

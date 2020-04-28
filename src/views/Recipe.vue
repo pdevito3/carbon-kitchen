@@ -314,7 +314,7 @@ export default {
 			// this.updateRecipe()
     },
     getIngredients(id) {
-      this.$store.dispatch("getIngredients", id);
+      this.$store.dispatch("getIngredients", id, this.editableIngredients);
     },
     updateIngredients(recipeId, ingredients) {
       this.$store.dispatch("updateIngredients", { recipeId, ingredients} );
