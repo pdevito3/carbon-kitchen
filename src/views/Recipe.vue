@@ -297,9 +297,6 @@ export default {
       this.setPageState("view");
     },
     saveRecipe() {
-      // this.$store.dispatch("updateRecipe", this.editableRecipe);
-      // this.updateRecipe(this.editableRecipe); // load the recipe again for good measure
-      
       this.updateRecipe(this.editableRecipe); 
       this.updateIngredients(this.recipe.recipeId, this.editableIngredients); 
 
@@ -310,24 +307,18 @@ export default {
     },
     updateRecipe(recipe) {
       this.$store.dispatch("updateRecipe", recipe);
-
-			// this.updateRecipe()
     },
     getIngredients(id) {
       this.$store.dispatch("getIngredients", id, this.editableIngredients);
     },
     updateIngredients(recipeId, ingredients) {
       this.$store.dispatch("updateIngredients", { recipeId, ingredients} );
-
-			// javascript uses assign by reference for objects so it auto links the stupid objects. need to do the below to 
-			// copy the values of all enumerable own properties from one or more source objects to a target object
-      this.editableIngredients = ingredients.map(i => ({...i})); //this also works ingredients.map(o=>Object.assign({},o)) or [...ingredients.map(o=>Object.assign({},o))]
     },
     setPageState(pageState) {
       this.$store.dispatch("setPageState", pageState);
     },
     addEditableIngredient() {
-      this.editableIngredients.push([]);
+      this.editableIngredients.push({recipeId: this.recipe.recipeId});
     },
     removeIngredient(ingredientId) {
       var removeIndex = this.editableIngredients.map(function(ingredient) { return ingredient.ingredientId; }).indexOf(ingredientId);
