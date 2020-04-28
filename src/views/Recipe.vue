@@ -297,11 +297,11 @@ export default {
       this.setPageState("view");
     },
     saveRecipe() {
-      this.$store.dispatch("updateRecipe", this.editableRecipe);
+      // this.$store.dispatch("updateRecipe", this.editableRecipe);
       // this.updateRecipe(this.editableRecipe); // load the recipe again for good measure
       
       // this.$store.dispatch("updateRecipe", this.editableRecipe);
-      // this.updateIngredients(this.editableIngredients); 
+      this.updateIngredients(this.recipe.recipeId, this.editableIngredients); 
 
       this.setPageState("view");
     },
@@ -316,8 +316,8 @@ export default {
     getIngredients(id) {
       this.$store.dispatch("getIngredients", id);
     },
-    updateIngredients(ingredients) {
-      this.$store.dispatch("updateIngredients", ingredients);
+    updateIngredients(recipeId, ingredients) {
+      this.$store.dispatch("updateIngredients", { recipeId, ingredients} );
 
 			// javascript uses assign by reference for objects so it auto links the stupid objects. need to do the below to 
 			// copy the values of all enumerable own properties from one or more source objects to a target object

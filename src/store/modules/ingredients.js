@@ -35,16 +35,22 @@ export const getters = {
 //asynchronously wrap business logic around mutations. 
 export const actions = {
   // state and commit are parts of the context object (state, commit, getters, etc.), recipe is a passed in param/payload
-  updateIngredients({ commit }, ingredients) {
+  updateIngredients({ commit }, {recipeId, ingredients}) {
     commit('SET_SAVING', true);
     
-    console.log(recipe);
-    axios.put(`http://localhost:5000/api/v1/ingredients/${recipe.recipeId}`, {
-      body: JSON.stringify(recipe)
+    // axios.put(`http://localhost:5000/api/v1/ingredients/list/${recipe.recipeId}`, {
+    //   body: JSON.stringify(recipe)
+    // })
+    // .then(res => {});
+    let a =  JSON.stringify(ingredients);
+    console.log(a)
+    axios.post(`http://localhost:5000/api/v1/ingredients/list/${recipeId}`, {
+      body: JSON.stringify(ingredients)
     })
-    .then(res => {});
-
-    commit('UPDATE_RECIPE', ingredients);
+    .then(res => {
+      commit('UPDATE_INGREDIENTS', res.data);
+    });
+    
     commit('SET_SAVING', false);
   },
   getIngredients({dispatch, commit}, recipeId) {
