@@ -52,16 +52,25 @@ export const actions = {
         return res.data;
       });
   },
-  updateRecipe({ commit }, recipe) {
+  updateRecipe({ dispatch, commit }, recipe) {
     commit('SET_SAVING', true);
-    
-    axios.put(`http://localhost:5001/api/v1/recipes/${recipe.recipeId}`, {
-      body: JSON.stringify(recipe)
+  
+    axios.put(
+      `http://localhost:5001/api/v1/recipes/${recipe.recipeId}`,
+      JSON.stringify(recipe),
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+    .then(() => {
+      // var addedRecipe = dispatch('getRecipe', recipe.recipeId); // this guarantees accuracy, but is causing flicker
+      commit('UPDATE_RECIPE', recipe);
+      commit('SET_SAVING', false);
     })
-    .then(res => {    });
-
-    commit('UPDATE_RECIPE', recipe);
-    commit('SET_SAVING', false);
+    .then(() => {
+      // commit('UPDATE_RECIPE', recipe);
+    });
   },
   setSaving({ commit }, value) {
     commit('SET_SAVING', value)
