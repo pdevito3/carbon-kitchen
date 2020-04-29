@@ -81,9 +81,21 @@
       <div class="flex flex-col md:flex-row w-full">
         <div class="w-full md:w-1/2 px-2">
         <div class="flex justify-between items-center">
-          <h2
-            class="pt-2 text-xl font-bold leading-7 text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
-          >Ingredients</h2>
+          <div class="space-x-4 flex items-center">
+            <h2
+              class="pt-2 text-xl font-bold leading-7 text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
+            >Ingredients</h2>
+            <div class="mt-1 relative rounded-md shadow-sm">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2 11C2 10.4477 2.44772 10 3 10H5C5.55228 10 6 10.4477 6 11V16C6 16.5523 5.55228 17 5 17H3C2.44772 17 2 16.5523 2 16V11Z" fill="#4B5563"/>
+                  <path d="M8 7C8 6.44772 8.44772 6 9 6H11C11.5523 6 12 6.44772 12 7V16C12 16.5523 11.5523 17 11 17H9C8.44772 17 8 16.5523 8 16V7Z" fill="#4B5563"/>
+                  <path d="M14 4C14 3.44772 14.4477 3 15 3H17C17.5523 3 18 3.44772 18 4V16C18 16.5523 17.5523 17 17 17H15C14.4477 17 14 16.5523 14 16V4Z" fill="#4B5563"/>
+                </svg>
+              </div>
+              <input v-model="scale"  id="scale" class="form-input block w-20 pl-10 sm:text-sm sm:leading-5" />
+            </div>
+          </div>
 
            <span class="p-3px inline-flex bg-gray-200 border rounded-md" v-if="pageState=='edit'">
             <button 
@@ -142,7 +154,7 @@
 
         <ul v-if="pageState=='view'" class="pt-2">
           <li
-            v-for="ingredient in ingredients"
+            v-for="ingredient in scalableIngredients"
             :key="ingredient.ingredientId"
             class="px-2 odd:bg-gray-200"
           >
@@ -199,7 +211,8 @@ export default {
       open: false,
       editableRecipe: null,
       editableIngredients: null,
-      ingredientView: listView
+      ingredientView: listView,
+      scale: 1
     };
   },
 
@@ -219,6 +232,18 @@ export default {
       ingredients: state => state.ingredients.ingredients,
       pageState: state => state.recipe.pageState
     }),
+    scalableIngredients() {
+      if(this.scale > 0) {
+        let scalable = this.ingredients.map(i => ({...i}));
+        scalable.forEach(ingredient => {
+          ingredient.amount = ingredient.amount * this.scale;
+        })
+        return scalable;
+      }
+      else {
+        return this.ingredients;
+      }
+    },
     // batchCalc: {
       // // getter
       // get: function () {
