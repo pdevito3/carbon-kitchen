@@ -180,7 +180,7 @@
             <textarea
               rows="16"
               id="directions"
-              v-model="this.editableRecipe.directions"
+              v-model="editableRecipe.directions"
               class="mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
             />
           </div>
