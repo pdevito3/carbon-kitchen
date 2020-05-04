@@ -52,6 +52,27 @@ export const actions = {
         return res.data;
       });
   },
+  createNewRecipe({ dispatch, commit }, recipe) {
+    commit('SET_SAVING', true);
+  
+    axios.post(
+      `http://localhost:5001/api/v1/recipes/`,
+      JSON.stringify(recipe),
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(res => {
+        let response = res.data;
+        commit('UPDATE_RECIPE', response);
+        dispatch("getRecipes");
+        commit('SET_SAVING', false);
+        
+        console.log( response.recipeId);
+        return response.recipeId;
+      });
+  },
   updateRecipe({ dispatch, commit }, recipe) {
     commit('SET_SAVING', true);
   
