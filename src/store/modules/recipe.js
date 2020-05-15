@@ -10,6 +10,7 @@ export const state = {
   recipes: null,
   saving: false,
   pageState: "view",
+  editableRecipe: null
 }
 
 
@@ -27,6 +28,9 @@ export const mutations = {
   },
   SET_PAGESTATE(state, pageState) {
     state.pageState = pageState;
+  },
+  SET_EDITABLERECIPE(state, editableRecipe) {
+    state.editableRecipe = editableRecipe;
   }
 }
 
@@ -71,10 +75,19 @@ export const actions = {
         dispatch("getRecipes");
         commit('SET_SAVING', false);
         
+        dispatch("startEdit");  
         router.push(`/myrecipes/recipe/${response.recipeId}`);
 
         return response.recipeId;
       });
+  },
+  startEdit({ commit, dispatch, rootState, state }) {      
+    commit('SET_PAGESTATE', 'edit');
+
+    dispatch("setEditableRecipe", Object.assign({},state.recipe)); 
+    // javascript uses assign by reference for objects so it auto links the stupid objects. need to do the below to 
+    // copy the values of all enumerable own properties from one or more source objects to a target object  
+    // dispatch("setEditableIngredient", rootState.ingredients.ingredients.map(i => ({...i})), {root:true}); 
   },
   updateRecipe({ dispatch, commit }, recipe) {
     commit('SET_SAVING', true);
@@ -101,6 +114,9 @@ export const actions = {
   },
   setPageState({ commit }, pageState) {
     commit('SET_PAGESTATE', pageState)
+  },
+  setEditableRecipe({ commit }, editableRecipe) {
+    commit('SET_EDITABLERECIPE', editableRecipe)
   },
 }
 

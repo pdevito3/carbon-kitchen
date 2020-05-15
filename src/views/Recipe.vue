@@ -209,7 +209,6 @@ export default {
   data() {
     return {
       open: false,
-      editableRecipe: null,
       editableIngredients: null,
       ingredientView: listView,
       scale: 1
@@ -229,6 +228,7 @@ export default {
     // use object spread operator for mapstate with vuex so we can use locally computed properties
     ...mapState({
       recipe: state => state.recipe.recipe,
+      editableRecipe: state => state.recipe.editableRecipe,
       ingredients: state => state.ingredients.ingredients,
       pageState: state => state.recipe.pageState,
     }),
@@ -302,16 +302,13 @@ export default {
           return "save";
       }
     },
-    startEdit() {      
-      this.setPageState("edit");
-
-      this.editableRecipe = Object.assign({},this.recipe); 
-      // javascript uses assign by reference for objects so it auto links the stupid objects. need to do the below to 
-			// copy the values of all enumerable own properties from one or more source objects to a target object
+    startEdit() {    
+      this.$store.dispatch("startEdit");  
+      
       this.editableIngredients = this.ingredients.map(i => ({...i})); //this also works ingredients.map(o=>Object.assign({},o)) or [...ingredients.map(o=>Object.assign({},o))]
     },
     cancelEdit() {
-      this.editableRecipe = this.recipe;
+      this.editableRecipe = this.$store.dispatch("setEditableRecipe", this.recipe);
       this.editableIngredients = this.ingredients;
       
       this.setPageState("view");
