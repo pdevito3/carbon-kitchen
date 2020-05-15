@@ -197,6 +197,7 @@ import RecipeActions from "@/components/recipe/RecipeActions.vue";
 import IngredientRecord from "@/components/recipe/IngredientRecord.vue";
 import { mapState } from "vuex";
 import axios from 'axios';
+import {fraction} from 'mathjs';
 
 const listView = 'list';
 const batchView = 'batch';
@@ -233,10 +234,13 @@ export default {
       pageState: state => state.recipe.pageState
     }),
     scalableIngredients() {
-      if(this.scale > 0) {
+      let scaleVal = this.scale;
+
+      if(fraction(scaleVal) > 0) {
         let scalable = this.ingredients.map(i => ({...i}));
+
         scalable.forEach(ingredient => {
-          ingredient.amount = ingredient.amount * this.scale;
+          ingredient.amount = ingredient.amount * Math.round(fraction(scaleVal) * 1000)/1000;
         })
         return scalable;
       }
