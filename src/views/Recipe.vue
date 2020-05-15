@@ -85,7 +85,7 @@
             <h2
               class="pt-2 text-xl font-bold leading-7 text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
             >Ingredients</h2>
-            <div class="mt-1 relative rounded-md shadow-sm">
+            <div v-if="pageState=='view'" class="mt-1 relative rounded-md shadow-sm">
               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2 11C2 10.4477 2.44772 10 3 10H5C5.55228 10 6 10.4477 6 11V16C6 16.5523 5.55228 17 5 17H3C2.44772 17 2 16.5523 2 16V11Z" fill="#4B5563"/>
@@ -322,6 +322,7 @@ export default {
     cancelEdit() {
       this.editableRecipe = this.recipe;
       this.editableIngredients = this.ingredients;
+      this.scale = 1; // reset to 1 to eliminate 'cancel' not reverting page view state
       
       this.setPageState("view");
     },
