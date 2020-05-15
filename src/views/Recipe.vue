@@ -230,7 +230,7 @@ export default {
     ...mapState({
       recipe: state => state.recipe.recipe,
       ingredients: state => state.ingredients.ingredients,
-      pageState: state => state.recipe.pageState
+      pageState: state => state.recipe.pageState,
     }),
     scalableIngredients() {
       if(this.scale > 0) {
@@ -287,11 +287,6 @@ export default {
       }
     },
     performRecipeAction(action) {
-      const pageStates = {
-        View: "view",
-        Edit: "edit"
-      };
-
       switch (action) {
         case "view":
           this.setPageState("view");

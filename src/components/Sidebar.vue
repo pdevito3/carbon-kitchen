@@ -170,15 +170,7 @@ export default {
       this.$emit("closeSidebar", false);
     },
     createNewRecipe() {
-      return  this.$store.dispatch("createNewRecipe", {title: "New Recipe"})
-        .then((result) => {
-          console.log(result)
-          });
-          // this.$router.push(`/myrecipes/recipe/${this.recipe.recipeId}`)
-        // this.$router.push(`/myrecipes/recipe/1`)
-    },
-    getRecipes() {
-      this.$store.dispatch("getRecipes");
+      this.$store.dispatch("createNewRecipe", {title: "New Recipe"});
     },
   }
 };

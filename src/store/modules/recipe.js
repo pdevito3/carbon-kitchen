@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import router from '@/router';
 
 Vue.use(Vuex);
 
@@ -8,7 +9,7 @@ export const state = {
   recipe: [],
   recipes: null,
   saving: false,
-  pageState: "view"
+  pageState: "view",
 }
 
 
@@ -65,11 +66,13 @@ export const actions = {
       })
       .then(res => {
         let response = res.data;
+
         commit('UPDATE_RECIPE', response);
         dispatch("getRecipes");
         commit('SET_SAVING', false);
         
-        console.log( response.recipeId);
+        router.push(`/myrecipes/recipe/${response.recipeId}`);
+
         return response.recipeId;
       });
   },
