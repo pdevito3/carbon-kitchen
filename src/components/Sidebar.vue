@@ -187,6 +187,7 @@ export default {
     },
     createNewRecipe() {
       this.$store.dispatch("createNewBlankRecipe");
+      this.$emit("closeSidebar", false);
     },
   }
 };
