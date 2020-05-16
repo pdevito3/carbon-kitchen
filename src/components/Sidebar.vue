@@ -170,7 +170,7 @@ export default {
       this.$emit("closeSidebar", false);
     },
     createNewRecipe() {
-      this.$store.dispatch("createNewRecipe", {title: "New Recipe"});
+      this.$store.dispatch("createNewBlankRecipe");
     },
   }
 };

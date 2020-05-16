@@ -93,7 +93,7 @@ export default {
       this.$store.dispatch("getRecipes");
     },
     createNewRecipe() {
-      this.$store.dispatch("createNewRecipe", {title: "New Recipe"});
+      this.$store.dispatch("createNewBlankRecipe");
     },
   }
 }

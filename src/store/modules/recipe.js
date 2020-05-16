@@ -85,6 +85,9 @@ export const actions = {
         return response.recipeId;
       });
   },
+  createNewBlankRecipe({ dispatch }) {
+    dispatch("createNewRecipe", {});      
+  },
   startEdit({ commit, dispatch, rootState, state }) {      
     commit('SET_PAGESTATE', 'edit');
 
