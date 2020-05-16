@@ -3,18 +3,21 @@
     <label for="amount" class="sr-only">amount</label>
     <input
       id="amount"
+      placeholder="1" 
       v-model="ingredient.amount"
       class="col-span-2 py-2 px-2 mt-1 form-input block w-full sm:text-sm sm:leading-5 lg:py-1 rounded-md truncate shadow-sm"
     />
     <label for="unit" class="sr-only">unit</label>
     <input
       id="unit"
+      placeholder="cup" 
       v-model="ingredient.unit"
       class="col-span-5 py-2 px-2 mt-1 form-input block w-full sm:text-sm sm:leading-5 lg:py-1 rounded-md truncate shadow-sm"
     />
     <label for="name" class="sr-only">name</label>
     <input
       id="name"
+      placeholder="all purpose flour" 
       v-model="ingredient.name"
       class="col-span-8 py-2 px-2 mt-1 form-input block w-full sm:text-sm sm:leading-5 lg:py-1 rounded-md truncate shadow-sm"
     />
