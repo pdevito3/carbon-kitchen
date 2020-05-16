@@ -3,11 +3,12 @@
     <div class="border-b-2 border-gray-300 py-2">
       <div class="h-full flex-col md:flex md:flex-row md:justify-between md:items-start">
         <div class="order-1 md:order-2">
-          <img
-            class="w-full h-56 md:h-72 md:w-72 lg:w-96 lg:h-64 object-cover rounded-lg"
-            :src="recipe.imageLink"
-            alt="Recipe Image"
-          />
+          <span v-if="recipe.imageLink">
+            <img alt="Recipe Image" class="w-full h-56 md:h-72 md:w-72 lg:w-96 lg:h-64 object-cover rounded-lg" :src="recipe.imageLink" @error="(() => recipe.imageLink = null)"/>
+          </span>
+          <span v-else>
+            <img alt="Recipe Image" class="w-full h-56 md:h-72 md:w-72 lg:w-96 lg:h-64 object-cover rounded-lg" src="@/assets/images/recipe-placeholder.jpg"/>
+          </span>
         </div>
 
         <div
@@ -15,26 +16,58 @@
         >
           <div class="flex-1 min-w-0">
             <div v-if="pageState=='edit'">
-              <label for="title" class="sr-only">title</label>
-              <input
-                id="title"
-                v-model="editableRecipe.title"
-                class="form-input block w-full sm:text-sm sm:leading-5 py-2 px-2 mt-1 lg:py-1 rounded-md truncate shadow-sm"
-              />
+                <div class="mt-1 relative rounded-md shadow-sm">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg
+                      class="flex-shrink-0 h-5 w-5 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150"
+                      stroke="currentColor"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"></path>
+                    </svg>
+                  </div>
+                  <label for="title" class="sr-only">title</label>
+                  <input 
+                    id="title"
+                    v-model="editableRecipe.title"
+                    class="form-input block w-full pl-10 sm:text-sm sm:leading-5 py-2 mt-1 lg:py-1" 
+                    placeholder="The Best Recipe Ever" />
+                </div>
             </div>
             <h1
               v-else
               class="pt-2 text-2xl font-bold leading-7 text-gray-900 truncate md:pt-0 md:text-3xl md:leading-9 md:break-words"
             >{{recipe.title}}</h1>
             <div v-if="pageState=='edit'">
-              <label for="recipeSourceLink" class="sr-only">recipe source link</label>
-              <input
-                id="recipeSourceLink"
-                v-model="editableRecipe.recipeSourceLink"
-                class="form-input block w-full sm:text-sm sm:leading-5 py-2 px-2 mt-2 lg:py-1 rounded-md truncate shadow-sm"
-              />
+              <div class="mt-1 relative rounded-md shadow-sm">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg
+                    class="flex-shrink-0 h-5 w-5 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10M9 21h6"
+                    />
+                  </svg>
+                </div>
+                <label for="recipeSourceLink" class="sr-only">recipe source link</label>
+                <input 
+                  id="recipeSourceLink"
+                  v-model="editableRecipe.recipeSourceLink"
+                  class="form-input block w-full pl-10 sm:text-sm sm:leading-5 py-2 mt-1 lg:py-1" 
+                  placeholder="https://www.allrecipes.com" />
+              </div>
             </div>
-            <a v-else class="mt-2 pt-1 flex items-center hover:underline cursor-pointer">
+            <a v-else 
+            :href="recipe.recipeSourceLink"
+            target="_blank"
+            class="mt-2 pt-1 flex items-center hover:underline cursor-pointer">
               <svg
                 class="flex-shrink-0 h-5 w-5 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150"
                 stroke="currentColor"
@@ -49,11 +82,9 @@
                 />
               </svg>
 
-              <a
-                :href="recipe.recipeSourceLink"
-                target="_blank"
-                class="text-sm pl-1"
-              >{{getLinkHost(recipe.recipeSourceLink)}}</a>
+              <p class="pl-2 text-sm w-64 sm:w-154 truncate">
+                {{getLinkHost(recipe.recipeSourceLink)}}
+              </p>
             </a>
             <div v-if="pageState=='edit'">
               <label
@@ -63,6 +94,7 @@
               <textarea
                 rows="3"
                 id="description"
+                placeholder="Put whatever description you'd like to have for your recipe here."
                 v-model="editableRecipe.description"
                 class="h-28 md:h-24 mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
               />
@@ -180,6 +212,7 @@
             <textarea
               rows="16"
               id="directions"
+              placeholder="First do this, then do that, and finally, add just a bit of the other thing." 
               v-model="editableRecipe.directions"
               class="mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
             />
@@ -210,8 +243,7 @@ export default {
   data() {
     return {
       open: false,
-      editableRecipe: null,
-      editableIngredients: null,
+      editableIngredients: [],
       ingredientView: listView,
       scale: 1
     };
@@ -230,8 +262,9 @@ export default {
     // use object spread operator for mapstate with vuex so we can use locally computed properties
     ...mapState({
       recipe: state => state.recipe.recipe,
+      editableRecipe: state => state.recipe.editableRecipe,
       ingredients: state => state.ingredients.ingredients,
-      pageState: state => state.recipe.pageState
+      pageState: state => state.recipe.pageState,
     }),
     scalableIngredients() {
       let scaleVal = this.scale;
@@ -286,16 +319,16 @@ export default {
   },
   methods: {
     getLinkHost(url) {
-      if(url != null){
-        return new URL(url).host;
+      try{
+        if(url != null){
+          return new URL(url).host;
+        }
+      }
+      catch(_){
+        return url;
       }
     },
     performRecipeAction(action) {
-      const pageStates = {
-        View: "view",
-        Edit: "edit"
-      };
-
       switch (action) {
         case "view":
           this.setPageState("view");
@@ -311,16 +344,13 @@ export default {
           return "save";
       }
     },
-    startEdit() {      
-      this.setPageState("edit");
-
-      this.editableRecipe = Object.assign({},this.recipe); 
-      // javascript uses assign by reference for objects so it auto links the stupid objects. need to do the below to 
-			// copy the values of all enumerable own properties from one or more source objects to a target object
+    startEdit() {    
+      this.$store.dispatch("startEdit");  
+      
       this.editableIngredients = this.ingredients.map(i => ({...i})); //this also works ingredients.map(o=>Object.assign({},o)) or [...ingredients.map(o=>Object.assign({},o))]
     },
     cancelEdit() {
-      this.editableRecipe = this.recipe;
+      this.editableRecipe = this.$store.dispatch("setEditableRecipe", this.recipe);
       this.editableIngredients = this.ingredients;
       this.scale = 1; // reset to 1 to eliminate 'cancel' not reverting page view state
       

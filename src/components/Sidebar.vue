@@ -111,21 +111,36 @@
             <router-link
               to="/myrecipes"
               exact-active-class="group flex items-center px-2 py-2 text-sm leading-5 font-medium text-white rounded-md bg-red-900 focus:outline-none focus:bg-red-700 transition ease-in-out duration-150"
-              class="mt-1 group flex items-center px-2 py-2 text-sm leading-5 font-medium text-red-300 rounded-md hover:text-white hover:bg-red-700 focus:outline-none focus:text-white focus:bg-red-700 transition ease-in-out duration-150"
+              class="mt-1 group flex items-center justify-between px-2 py-2 text-sm leading-5 font-medium text-red-300 rounded-md hover:text-white hover:bg-red-700 focus:outline-none focus:text-white focus:bg-red-700 transition ease-in-out duration-150"
             >
-              <svg
-                class="mr-3 h-6 w-6 text-red-400 group-hover:text-red-300 group-focus:text-red-300 transition ease-in-out duration-150"
-                stroke="currentColor"
-                fill="none"
-                viewBox="0 0 24 24"
+              <div class="flex">
+                <svg
+                  class="mr-3 h-6 w-6 text-red-400 group-hover:text-red-300 group-focus:text-red-300 transition ease-in-out duration-150"
+                  stroke="currentColor"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                My Recipes
+              </div>
+              <button
+              @click="createNewRecipe()"
+                type="button"
+                class="sm:w-auto px-2 sm:px-2 py-1 opacity-75 border border-red-300 text-sm leading-5 font-medium rounded-md text-red-700 bg-white hover:text-red-500 hover:border-2 hover:border-red-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
               >
+              <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
                 <path
                   fill-rule="evenodd"
-                  d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
                   clip-rule="evenodd"
                 />
               </svg>
-              My Recipes
+            </button>
             </router-link>
           </nav>
         </div>
@@ -135,6 +150,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   props: ["sidebarOpen"],
   data() {
@@ -142,10 +159,19 @@ export default {
       // sidebarOpen: false
     };
   },
+  computed: {
+    // use object spread operator for mapstate with vuex so we can use locally computed properties
+    ...mapState({
+      recipe: state => state.recipe.recipe,
+    }),
+  },
   methods: {
     closeSidebar() {
       this.$emit("closeSidebar", false);
-    }
+    },
+    createNewRecipe() {
+      this.$store.dispatch("createNewRecipe", {title: "New Recipe"});
+    },
   }
 };
 </script>
