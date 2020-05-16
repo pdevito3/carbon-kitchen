@@ -7,7 +7,7 @@ Vue.use(Vuex);
 
 export const state = {
   recipe: [],
-  recipes: null,
+  recipes: [],
   saving: false,
   pageState: "view",
   editableRecipe: null
@@ -35,7 +35,11 @@ export const mutations = {
 }
 
 // acts like global computed methods
-export const getters = {}
+export const getters = {
+  recipeCount: state => {
+    return state.recipes.length;
+  }
+}
 
 //asynchronously wrap business logic around mutations. 
 export const actions = {
