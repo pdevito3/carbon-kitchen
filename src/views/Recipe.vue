@@ -69,6 +69,7 @@
             target="_blank"
             class="mt-2 pt-1 flex items-center hover:underline cursor-pointer">
               <svg
+              v-if="recipe.recipeSourceLink != null"
                 class="flex-shrink-0 h-5 w-5 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150"
                 stroke="currentColor"
                 fill="none"

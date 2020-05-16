@@ -74,6 +74,22 @@
               </svg>
               Recipes
             </router-link>
+            <button 
+              @click="createNewRecipe()"
+              type="button"
+              class="ml-6 w-full mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-red-300 hover:text-white hover:bg-red-700 focus:outline-none focus:text-white focus:bg-red-700 transition ease-in-out duration-150">
+                <svg viewBox="0 0 20 20" fill="currentColor" 
+                class="mr-4 h-6 w-6 text-red-400 group-hover:text-red-300 group-focus:text-red-300 transition ease-in-out duration-150">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <p>
+                  Add Recipe
+                </p>
+            </button>
           </nav>
         </div>
       </div>
