@@ -21,6 +21,12 @@ const routes = [
     name: 'Recipe',
     component: () => import('../views/Recipe.vue'),
   },
+  {
+    path: '/shoppinglist',
+    props: true,
+    name: 'ShoppingList',
+    component: () => import('../views/ShoppingList.vue'),
+  },
   // {
   //   path: '/about',
   //   name: 'About',

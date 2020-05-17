@@ -79,7 +79,6 @@ export default {
   },
   created() {
     this.getRecipes()
-    console.log(this.recipeCount)
   },
   computed: {
     // use object spread operator for mapstate with vuex so we can use locally computed properties
