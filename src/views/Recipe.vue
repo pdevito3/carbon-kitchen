@@ -386,11 +386,6 @@ export default {
       this.editableIngredients.push({recipeId: this.recipe.recipeId});
     },
     removeIngredient(ingredientIndex) {
-      // var removeIndex = this.editableIngredients.map(function(ingredient) { 
-      //   return ingredient.ingredientId; 
-      // }).indexOf(ingredientId);
-      
-      // remove object
       this.editableIngredients.splice(ingredientIndex, 1);
     }
   }

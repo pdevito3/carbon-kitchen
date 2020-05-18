@@ -44,7 +44,7 @@ export default {
   },
   data() {
     return {
-      addIngredientModalIsOpen: true
+      addIngredientModalIsOpen: false
     };
   },
   created() {
