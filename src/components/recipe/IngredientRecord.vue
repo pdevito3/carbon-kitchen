@@ -22,7 +22,7 @@
       class="col-span-8 py-2 px-2 mt-1 form-input block w-full sm:text-sm sm:leading-5 lg:py-1 rounded-md truncate shadow-sm"
     />
     <button
-      @click="removeIngredient(ingredient.ingredientId)"
+      @click="removeIngredient(ingredient)"
       type="button"
       class="col-span-1 inline-flex items-center justify-center text-gray-500 rounded hover:text-gray-500 focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
     >
@@ -35,10 +35,11 @@
 
 <script>
 export default {
-  props: ["ingredient"],
+  props: ["ingredient", "id"],
   methods: {
-    removeIngredient(ingredientId) {
-      this.$emit("removeIngredient", ingredientId);
+    removeIngredient() {
+      console.log(this.$props.id);
+      this.$emit("removeIngredient", this.$props.id);
     }
   }
 };

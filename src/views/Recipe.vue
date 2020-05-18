@@ -149,9 +149,13 @@
 
         <!-- list view -->
         <form class="mt-1 px-0 sm:px-2" v-if="pageState=='edit' && ingredientView == LISTVIEW">
-          <div class="" v-for="ingredient in editableIngredients" :key="ingredient.ingredientId">
-            <ingredient-record :ingredient="ingredient" @removeIngredient="removeIngredient" />
-          </div>
+          <ingredient-record 
+            v-for="(ingredient, index) in editableIngredients" 
+            :index="index"
+            :key="index"
+            :id="index"
+            :ingredient="ingredient" 
+            @removeIngredient="removeIngredient" />
           <div class="mt-2">
             <button
               @click="addEditableIngredient()"
@@ -381,11 +385,13 @@ export default {
     addEditableIngredient() {
       this.editableIngredients.push({recipeId: this.recipe.recipeId});
     },
-    removeIngredient(ingredientId) {
-      var removeIndex = this.editableIngredients.map(function(ingredient) { return ingredient.ingredientId; }).indexOf(ingredientId);
+    removeIngredient(ingredientIndex) {
+      // var removeIndex = this.editableIngredients.map(function(ingredient) { 
+      //   return ingredient.ingredientId; 
+      // }).indexOf(ingredientId);
       
       // remove object
-      this.editableIngredients.splice(removeIndex, 1);
+      this.editableIngredients.splice(ingredientIndex, 1);
     }
   }
 };
