@@ -38,7 +38,6 @@ export default {
   props: ["ingredient", "id"],
   methods: {
     removeIngredient() {
-      console.log(this.$props.id);
       this.$emit("removeIngredient", this.$props.id);
     }
   }
