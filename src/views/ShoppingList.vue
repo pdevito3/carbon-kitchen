@@ -1,45 +1,50 @@
 <template>
   <div class="w-full">
-      <div class="flex justify-between px-4 py-3 text-right sm:px-3">
-        <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">Shopping List</h1>
-        <button 
-          @click="open = true; setTimeout(() => open = true, 1000)" 
-          class="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 shadow-sm hover:bg-red-500 focus:outline-none focus:shadow-outline-blue focus:bg-red-500 active:bg-red-600 transition duration-150 ease-in-out">
-          Add Item To Shopping List
-        </button>
-      </div>
-      
-      <div class="grid grid-cols-2 gap-4">
-        <div >
-          <h2 class="p-2 bg-gray-300 text-gray-800 shadow rounded-md font-semibold">Produce</h2>
-          <div class="px-2">
-            <ul>
-              <li class="pt-4" v-for="item in shoppingListItems" :key="item.shoppingListItemId">
-                <div class="flex items-center rounded shadow-md px-4 py-2">
-                  <div class="absolute flex items-center h-5">
-                    <input id="acquired" type="checkbox" v-model="item.acquired" class="form-checkbox h-4 w-4 text-red-600 transition duration-150 ease-in-out" />
-                  </div>
-                  <div class="pl-7 text-md leading-7">
-                    <p class="font-medium text-gray-700">{{item.amount}} {{item.name}}</p>
-                  </div>
+    <div class="flex justify-between px-4 py-3 text-right sm:px-3">
+      <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">Shopping List</h1>
+      <button 
+        @click="addIngredientModalIsOpen = true;" 
+        class="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 shadow-sm hover:bg-red-500 focus:outline-none focus:shadow-outline-blue focus:bg-red-500 active:bg-red-600 transition duration-150 ease-in-out">
+        Add Item To Shopping List
+      </button>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-4">
+      <div >
+        <h2 class="p-2 bg-gray-300 text-gray-800 shadow rounded-md font-semibold">Produce</h2>
+        <div class="px-2">
+          <ul>
+            <li class="pt-4" v-for="item in shoppingListItems" :key="item.shoppingListItemId">
+              <div class="flex items-center rounded shadow-md px-4 py-2">
+                <div class="absolute flex items-center h-5">
+                  <input id="acquired" type="checkbox" v-model="item.acquired" class="form-checkbox h-4 w-4 text-red-600 transition duration-150 ease-in-out" />
                 </div>
-              </li>
-            </ul>
-          </div>
+                <div class="pl-7 text-md leading-7">
+                  <p class="font-medium text-gray-700">{{item.amount}} {{item.name}}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
+    </div>
+
+    <add-shopping-list-item class="mt-3 lg:mt-2" :open="addIngredientModalIsOpen" @toggleModal="toggleModal" />
 
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import AddShoppingListItem from "@/components/shoppinglist/AddShoppingListItem.vue";
 
 export default {
-  components: {},
+  components: {
+    AddShoppingListItem
+  },
   data() {
     return {
-      open: true
+      addIngredientModalIsOpen: true
     };
   },
   created() {
@@ -79,6 +84,9 @@ export default {
     createNewShoppingListItem() {
       this.$store.dispatch("createNewBlankShoppingListItem");
     },
+    toggleModal(displayModal) {
+      this.addIngredientModalIsOpen = displayModal;
+    }
   }
 }
 </script>
