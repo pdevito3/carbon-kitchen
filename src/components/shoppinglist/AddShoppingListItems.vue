@@ -24,38 +24,17 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
             </svg>
           </div>
-          <div class="mt-3 sm:mt-5">
-            <form class="mt-1 px-0 sm:px-2">
-              <ingredient-record 
-                v-for="(ingredient, index) in ingredientList" 
-                :index="index"
-                :key="index"
-                :id="index"
-                :ingredient="ingredient" 
-                @removeIngredient="removeIngredient" />
-              <div class="mt-2">
-                <button
-                  @click="addIngredient()"
-                  type="button"
-                  class="w-full sm:w-auto flex items-center justify-center inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
-                >
-                  <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-                    <path
-                      fill-rule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                  <p class="pl-2">Add Ingredient</p>
-                </button>
-              </div>
-            </form>
+          <div class="px-0 sm:px-2 mt-4 sm:mt-5">  
+            <IngredientList 
+              :ingredientList=ingredientList
+              @updateIngredient="updateIngredients" />
           </div>
+        </div>
         </div>
         <div class="mt-5 sm:mt-6">
           <span class="flex w-full rounded-md shadow-sm">
-            <button @click="toggleModal(false)" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-              Go back to dashboard
+            <button @click="toggleModal(false)" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+              Add To Shopping List
             </button>
           </span>
         </div>
@@ -65,12 +44,12 @@
 </template>
 
 <script>
-import IngredientRecord from "@/components/recipe/IngredientRecord.vue";
+import IngredientList from "@/components/global/IngredientList.vue";
 
 export default {
   props: ["open"],
   components: {
-    IngredientRecord
+    IngredientList
   },
   data() {
     return {
@@ -78,12 +57,11 @@ export default {
     };
   },
   methods: {
-    addIngredient() {
-      this.ingredientList.push({name: ""});
-      // this.$emit("toggleModal", displayModal);
+    updateIngredients(newList) {
+      this.ingredientList = newList;
     },
-    removeIngredient(ingredientIndex) {
-      this.ingredientList.splice(ingredientIndex, 1);
+    toggleModal(displayModal) {
+      this.$emit("toggleModal", displayModal);
     }
   }
 }

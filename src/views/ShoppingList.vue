@@ -29,18 +29,18 @@
       </div>
     </div>
 
-    <add-shopping-list-item class="mt-3 lg:mt-2" :open="addIngredientModalIsOpen" @toggleModal="toggleModal" />
+    <AddShoppingListItems class="mt-3 lg:mt-2" :open="addIngredientModalIsOpen" @toggleModal="toggleModal" />
 
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import AddShoppingListItem from "@/components/shoppinglist/AddShoppingListItem.vue";
+import AddShoppingListItems from "@/components/shoppinglist/AddShoppingListItems.vue";
 
 export default {
   components: {
-    AddShoppingListItem
+    AddShoppingListItems
   },
   data() {
     return {
@@ -73,7 +73,6 @@ export default {
 
       const grouped = groupBy(this.shoppingListItems, item => item.shoppingListId);
       let keys =  Array.from( grouped.keys() );
-      console.log(keys);
       return grouped;
     }
   },
