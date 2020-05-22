@@ -28,6 +28,7 @@
 
 <script>
 import IngredientRecord from "@/components/recipe/IngredientRecord.vue";
+import axios from 'axios';
 
 export default {
   props: ["ingredientList"],
@@ -40,11 +41,11 @@ export default {
   methods: {
     addIngredient() {
       this.$props.ingredientList.push({});
-      this.$emit("updateIngredient", this.$props.ingredientList);
+      this.$emit("updateIngredients", this.$props.ingredientList);
     },
     removeIngredient(ingredientIndex) {
       this.$props.ingredientList.splice(ingredientIndex, 1);
-      this.$emit("updateIngredient", this.$props.ingredientList);
+      this.$emit("updateIngredients", this.$props.ingredientList);
     }
   }
 }
