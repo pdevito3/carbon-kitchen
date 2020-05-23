@@ -38,7 +38,7 @@
             <div class="px-0 sm:px-2 mt-4 sm:mt-5">  
               <IngredientList 
                 :ingredientList=ingredientList
-                @updateIngredient="updateIngredients" />
+                @updateIngredients="updateIngredients" />
             </div>
           </div>
           <div class="mt-5 sm:mt-6">
@@ -76,6 +76,7 @@ export default {
     submitList(){
       this.toggleModal(false);
       this.$emit("AddIngredientsToList", this.ingredientList);
+      this.updateIngredients([{}]);
     }
   }
 }
