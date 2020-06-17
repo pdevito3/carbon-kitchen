@@ -355,7 +355,7 @@ export default {
       this.editableIngredients = this.ingredients.map(i => ({...i})); //this also works ingredients.map(o=>Object.assign({},o)) or [...ingredients.map(o=>Object.assign({},o))]
     },
     cancelEdit() {
-      this.editableRecipe = this.$store.dispatch("setEditableRecipe", this.recipe);
+      this.$store.dispatch("setEditableRecipe", this.recipe);
       this.editableIngredients = this.ingredients;
       this.scale = 1; // reset to 1 to eliminate 'cancel' not reverting page view state
       
