@@ -109,6 +109,22 @@
               </svg>
               Shopping List
             </router-link>
+            <button 
+              @click="toggleAddShoppingListItemsModal()"
+              type="button"
+              class="ml-6 w-full mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-red-300 hover:text-white hover:bg-red-700 focus:outline-none focus:text-white focus:bg-red-700 transition ease-in-out duration-150">
+                <svg viewBox="0 0 20 20" fill="currentColor" 
+                class="mr-4 h-6 w-6 text-red-400 group-hover:text-red-300 group-focus:text-red-300 transition ease-in-out duration-150">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <p>
+                  Add Items
+                </p>
+            </button>
           </nav>
         </div>
       </div>
@@ -195,7 +211,7 @@
                 Shopping List
               </div>
               <button
-              @click="createNewRecipe()"
+              @click="toggleAddShoppingListItemsModal()" 
                 type="button"
                 class="sm:w-auto px-1 py-1 border border-red-300 text-sm leading-5 font-medium rounded-full text-red-700 bg-gray-200 hover:text-red-500 hover:border-2 hover:border-red-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
               >
@@ -211,15 +227,19 @@
           </nav>
         </div>
       </div>
-    </div>
+    </div>    
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import AddShoppingListItems from "@/components/shoppinglist/AddShoppingListItems.vue";
 
 export default {
   props: ["sidebarOpen"],
+  components: {
+    AddShoppingListItems
+  },
   data() {
     return {
       // sidebarOpen: false
@@ -229,6 +249,7 @@ export default {
     // use object spread operator for mapstate with vuex so we can use locally computed properties
     ...mapState({
       recipe: state => state.recipe.recipe,
+      addShoppingListItemsModalOpen: state => state.shoppinglist.addShoppingListItemsModalOpen,
     }),
   },
   methods: {
@@ -238,6 +259,10 @@ export default {
     createNewRecipe() {
       this.$store.dispatch("createNewBlankRecipe");
       this.$emit("closeSidebar", false);
+    },
+    toggleAddShoppingListItemsModal() {
+      this.$store.dispatch("toggleShoppingListItemModal");    
+      this.$emit("closeSidebar", false);  
     },
   }
 };

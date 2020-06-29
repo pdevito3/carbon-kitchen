@@ -9,7 +9,7 @@
       </button>
     </div>
     
-    <div class="grid grid-cols-2 gap-8 row-gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 row-gap-8">
       <div v-for="(category, index) in LodashList" :key="index">
         <h2 class="p-2 bg-gray-300 opacity-75 text-gray-800 shadow rounded-md font-semibold">{{category[0].category}}</h2>
         <div class="px-2">
@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <AddShoppingListItems class="mt-3 lg:mt-2" />
+    <AddShoppingListItems />
 
   </div>
 </template>
