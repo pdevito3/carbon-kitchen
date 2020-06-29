@@ -14,10 +14,10 @@
         <h2 class="p-2 bg-gray-300 opacity-75 text-gray-800 shadow rounded-md font-semibold">{{category[0].category}}</h2>
         <div class="px-2">
           <ul>
-            <li class="pt-4" v-for="item in category" :key="item.id">
+            <li class="pt-4" v-for="item in category" :key="item.shoppingListItemId">
               <label :for="'acquired' + item.shoppingListItemId" class="flex items-center rounded shadow px-4 py-2 cursor-pointer">
                 <div class="absolute flex items-center h-5">
-                  <input :id="'acquired' + item.shoppingListItemId" type="checkbox" v-model="item.acquired" class="form-checkbox h-4 w-4 text-red-600 transition duration-150 ease-in-out" />
+                  <input @change="toggleItemAcquisition(item)" :id="'acquired' + item.shoppingListItemId" type="checkbox" v-model="item.acquired" class="form-checkbox h-4 w-4 text-red-600 transition duration-150 ease-in-out" />
                 </div>
                 <div class="pl-7 text-md leading-7">
                   <p class="font-medium text-gray-700 select-none">{{item.amount}} {{item.unit}} {{item.name}}</p>
@@ -43,7 +43,7 @@
             <li class="pt-4" v-for="item in aquiredShoppingListItems" :key="item.id">
               <label :for="'acquired' + item.shoppingListItemId" class="flex items-center rounded shadow px-4 py-2 cursor-pointer">
                 <div class="absolute flex items-center h-5">
-                  <input @change="markItemAsAcquired(item.shoppingListItemId)" :id="'acquired' + item.shoppingListItemId" type="checkbox" v-model="item.acquired" class="form-checkbox h-4 w-4 text-red-600 transition duration-150 ease-in-out" />
+                  <input @change="toggleItemAcquisition(item)" :id="'acquired' + item.shoppingListItemId" type="checkbox" v-model="item.acquired" class="form-checkbox h-4 w-4 text-red-600 transition duration-150 ease-in-out" />
                 </div>
                 <div class="pl-7 text-md leading-7">
                   <p class="font-medium text-gray-700 select-none">{{item.amount}} {{item.unit}} {{item.name}}</p>
@@ -99,8 +99,11 @@ export default {
     getAcquiredShoppingListItems() {
       this.$store.dispatch("getAcquiredShoppingListItems");
     },
-    markItemAsAcquired(itemId) {
-      this.$store.dispatch("markItemAsAcquired",itemId);
+    // markItemAsAcquired(itemId) {
+    //   this.$store.dispatch("markItemAsAcquired", { itemId, acquired: false });
+    // },
+    toggleItemAcquisition(item) {
+      this.$store.dispatch("toggleItemAcquisition", { itemId: item.shoppingListItemId, acquired: item.acquired });
     },
     toggleModal() {
       this.$store.dispatch("toggleShoppingListItemModal");      

@@ -50,8 +50,8 @@ export const actions = {
   toggleShoppingListItemModal({ commit }){
     commit('TOGGLE_ADDSHOPPINGLISTITEMMODAL')
   },
-  markItemAsAcquired({ commit, dispatch }, itemId) {
-    let patchDoc = [{ "op": "replace", "path": "/acquired", "value": false}] ;
+  toggleItemAcquisition({ dispatch }, { itemId, acquired }) {
+    let patchDoc = [{ "op": "replace", "path": "/acquired", "value": acquired}] ;
     
     axios.patch(
       `http://localhost:5002/api/v1/shoppingListItems/${itemId}`,
