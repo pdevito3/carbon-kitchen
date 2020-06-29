@@ -99,9 +99,6 @@ export default {
     getAcquiredShoppingListItems() {
       this.$store.dispatch("getAcquiredShoppingListItems");
     },
-    // markItemAsAcquired(itemId) {
-    //   this.$store.dispatch("markItemAsAcquired", { itemId, acquired: false });
-    // },
     toggleItemAcquisition(item) {
       this.$store.dispatch("toggleItemAcquisition", { itemId: item.shoppingListItemId, acquired: item.acquired });
     },
