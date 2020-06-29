@@ -46,9 +46,10 @@ export const actions = {
           headers: {
             'Content-Type': 'application/json'
           }
+        }).then(res => {
+          dispatch("getShoppingListItems");
         });
     })
-    dispatch("getShoppingListItems");
   },
   setEditableShoppingListItem({ commit }, editableShoppingListItem) {
     commit('SET_EDITABLESHOPPINGLISTITEM', editableShoppingListItem)

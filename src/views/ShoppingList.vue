@@ -15,14 +15,15 @@
         <div class="px-2">
           <ul>
             <li class="pt-4" v-for="item in shoppingListItems" :key="item.shoppingListItemId">
-              <div class="flex items-center rounded shadow-md px-4 py-2">
+              <label :for="'acquired' + item.shoppingListItemId" class="flex items-center rounded shadow-md px-4 py-2">
                 <div class="absolute flex items-center h-5">
-                  <input id="acquired" type="checkbox" v-model="item.acquired" class="form-checkbox h-4 w-4 text-red-600 transition duration-150 ease-in-out" />
+                  <input :id="'acquired' + item.shoppingListItemId" type="checkbox" v-model="item.acquired" class="form-checkbox h-4 w-4 text-red-600 transition duration-150 ease-in-out" />
                 </div>
                 <div class="pl-7 text-md leading-7">
-                  <p class="font-medium text-gray-700">{{item.amount}} {{item.unit}} {{item.name}}</p>
+                  <p class="font-medium text-gray-700 select-none">{{item.amount}} {{item.unit}} {{item.name}}</p>
+                  <p class="font-bold text-sm text-red-500">{{item.category}}</p>
                 </div>
-              </div>
+              </label>
             </li>
           </ul>
         </div>
