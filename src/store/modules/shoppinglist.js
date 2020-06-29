@@ -41,36 +41,34 @@ export const actions = {
       });
   },
   getAcquiredShoppingListItems({commit}) {
-      axios.get(`http://localhost:5002/api/v1/shoppingListItems/?filters=acquired==true, hidden==false`)
+      axios.get(`http://localhost:5002/api/v1/shoppingListItems/?filters=acquired==true, hidden==false&sortorder=name`)
       .then(res => {
         commit('UPDATE_ACQUIRED_SHOPPINGLISTITEMS', res.data);
         return res.data;
       });
   },
-  AddIngredientsToList({ commit, dispatch }, shoppingListItemsToAdd) {
-   shoppingListItemsToAdd.map(async (itemToAdd) => {
-      itemToAdd.acquired = false;
-      itemToAdd.hidden = false;
-      itemToAdd.shoppingListId = 1;
-      itemToAdd.category = "Unknown";
-      axios.post(
-        `http://localhost:5002/api/v1/shoppingListItems/`,
-        JSON.stringify(itemToAdd),
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then(res => {
-          dispatch("getShoppingListItems");
-        });
-    })
+  toggleShoppingListItemModal({ commit }){
+    commit('TOGGLE_ADDSHOPPINGLISTITEMMODAL')
+  },
+  markItemAsAcquired({ commit, dispatch }, itemId) {
+    let patchDoc = [{ "op": "replace", "path": "/acquired", "value": false}] ;
+    
+    axios.patch(
+      `http://localhost:5002/api/v1/shoppingListItems/${itemId}`,
+      JSON.stringify(patchDoc),
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => {
+        dispatch("getAcquiredShoppingListItems");
+        dispatch("getNonAcquiredShoppingListItems");
+      });
+    
   },
   setEditableShoppingListItem({ commit }, editableShoppingListItem) {
     commit('SET_EDITABLESHOPPINGLISTITEM', editableShoppingListItem)
   },
-  toggleShoppingListItemModal({ commit }){
-    commit('TOGGLE_ADDSHOPPINGLISTITEMMODAL')
-  }
 }
 
 export const modules = {
