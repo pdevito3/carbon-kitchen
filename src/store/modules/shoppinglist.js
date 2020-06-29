@@ -5,15 +5,19 @@ import axios from 'axios';
 Vue.use(Vuex);
 
 export const state = {
-  shoppingListItems: [],
+  nonAquiredShoppingListItems: [],
+  aquiredShoppingListItems: [],
   addShoppingListItemsModalOpen: false
 }
 
 //update state synchronously 
 //**mutations should always be abstracted out and put into actions**
 export const mutations = {
-  UPDATE_SHOPPINGLISTITEMS(state, shoppingListItems) {
-    state.shoppingListItems = shoppingListItems;
+  UPDATE_NONACQUIRED_SHOPPINGLISTITEMS(state, shoppingListItems) {
+    state.nonAquiredShoppingListItems = shoppingListItems;
+  },
+  UPDATE_ACQUIRED_SHOPPINGLISTITEMS(state, shoppingListItems) {
+    state.aquiredShoppingListItems = shoppingListItems;
   },
   TOGGLE_ADDSHOPPINGLISTITEMMODAL(state) {
     state.addShoppingListItemsModalOpen = !state.addShoppingListItemsModalOpen;
@@ -29,10 +33,17 @@ export const getters = {
 
 //asynchronously wrap business logic around mutations. 
 export const actions = {
-  getShoppingListItems({commit}) {
-      axios.get(`http://localhost:5002/api/v1/shoppingListItems/`)
+  getNonAcquiredShoppingListItems({commit}) {
+      axios.get(`http://localhost:5002/api/v1/shoppingListItems/?filters=acquired==false, hidden==false`)
       .then(res => {
-        commit('UPDATE_SHOPPINGLISTITEMS', res.data);
+        commit('UPDATE_NONACQUIRED_SHOPPINGLISTITEMS', res.data);
+        return res.data;
+      });
+  },
+  getAcquiredShoppingListItems({commit}) {
+      axios.get(`http://localhost:5002/api/v1/shoppingListItems/?filters=acquired==true, hidden==false`)
+      .then(res => {
+        commit('UPDATE_ACQUIRED_SHOPPINGLISTITEMS', res.data);
         return res.data;
       });
   },
@@ -41,7 +52,7 @@ export const actions = {
       itemToAdd.acquired = false;
       itemToAdd.hidden = false;
       itemToAdd.shoppingListId = 1;
-      itemToAdd.category = "TBD via Lookup endpoint";
+      itemToAdd.category = "Unknown";
       axios.post(
         `http://localhost:5002/api/v1/shoppingListItems/`,
         JSON.stringify(itemToAdd),
