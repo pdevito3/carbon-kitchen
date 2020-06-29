@@ -1,17 +1,17 @@
 <template>
   <div> 
-    <div v-show="open" class="fixed bottom-0 inset-x-0 px-4 pb-6 sm:inset-0 sm:p-0 sm:flex sm:items-center sm:justify-center">
-      <div v-show="open" 
+    <div v-show="addShoppingListItemsModalOpen" class="fixed bottom-0 inset-x-0 px-4 pb-6 sm:inset-0 sm:p-0 sm:flex sm:items-center sm:justify-center">
+      <div v-show="addShoppingListItemsModalOpen" 
         x-transition:enter="ease-out duration-300" 
         x-transition:enter-start="opacity-0" 
         x-transition:enter-end="opacity-100" 
         x-transition:leave="ease-in duration-200" 
         x-transition:leave-start="opacity-100" 
         x-transition:leave-end="opacity-0" class="fixed inset-0 transition-opacity">
-        <div @click="toggleModal(false)" class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        <div @click="toggleModal()" class="absolute inset-0 bg-gray-500 opacity-75"></div>
       </div>
 
-      <div v-show="open" 
+      <div v-show="addShoppingListItemsModalOpen" 
         class="bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full sm:p-3" 
         x-transition:enter="ease-out duration-300" 
         x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
@@ -25,7 +25,7 @@
           <div>
             <div class="flex justify-end">
               <button class="flex items-center justify-center h-8 w-8 rounded-full bg-gray-100">
-                <svg @click="toggleModal(false)" class="h-5 w-5 text-gray-600" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                <svg @click="toggleModal()" class="h-5 w-5 text-gray-600" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                   <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import IngredientList from "@/components/global/IngredientList.vue";
 
 export default {
@@ -66,16 +67,22 @@ export default {
       ingredientList: [{}]
     };
   },
+  computed: {
+    // use object spread operator for mapstate with vuex so we can use locally computed properties
+    ...mapState({
+      addShoppingListItemsModalOpen: state => state.shoppinglist.addShoppingListItemsModalOpen,
+    })
+  },
   methods: {
     updateIngredients(newList) {
       this.ingredientList = newList;
     },
-    toggleModal(displayModal) {
-      this.$emit("toggleModal", displayModal);
+    toggleModal() {
+      this.$store.dispatch("toggleShoppingListItemModal");      
     },
     submitList(){
-      this.toggleModal(false);
-      this.$emit("AddIngredientsToList", this.ingredientList);
+      this.toggleModal();
+      this.$store.dispatch("AddIngredientsToList",this.ingredientList);
       this.updateIngredients([{}]);
     }
   }

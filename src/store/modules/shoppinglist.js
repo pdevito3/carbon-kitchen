@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-import router from '@/router';
 
 Vue.use(Vuex);
 
 export const state = {
   shoppingListItems: [],
+  addShoppingListItemsModalOpen: false
 }
 
 //update state synchronously 
@@ -14,6 +14,9 @@ export const state = {
 export const mutations = {
   UPDATE_SHOPPINGLISTITEMS(state, shoppingListItems) {
     state.shoppingListItems = shoppingListItems;
+  },
+  TOGGLE_ADDSHOPPINGLISTITEMMODAL(state) {
+    state.addShoppingListItemsModalOpen = !state.addShoppingListItemsModalOpen;
   },
 }
 
@@ -54,6 +57,9 @@ export const actions = {
   setEditableShoppingListItem({ commit }, editableShoppingListItem) {
     commit('SET_EDITABLESHOPPINGLISTITEM', editableShoppingListItem)
   },
+  toggleShoppingListItemModal({ commit }){
+    commit('TOGGLE_ADDSHOPPINGLISTITEMMODAL')
+  }
 }
 
 export const modules = {

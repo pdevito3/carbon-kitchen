@@ -3,20 +3,19 @@
     <div class="sm:flex sm:justify-between px-1 py-3 text-center sm:px-3">
       <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">Shopping List</h1>
       <button 
-        @click="addIngredientModalIsOpen = true;" 
+        @click="toggleModal()" 
         class="w-full sm:w-auto mt-3 sm:mt-0 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 shadow-sm hover:bg-red-500 focus:outline-none focus:shadow-outline-blue focus:bg-red-500 active:bg-red-600 transition duration-150 ease-in-out">
         Add items To Shopping List
       </button>
     </div>
     
-    <!--  -->
     <div class="grid grid-cols-2 gap-8 row-gap-8">
       <div v-for="(category, index) in LodashList" :key="index">
         <h2 class="p-2 bg-gray-300 opacity-75 text-gray-800 shadow rounded-md font-semibold">{{category[0].category}}</h2>
         <div class="px-2">
           <ul>
             <li class="pt-4" v-for="item in category" :key="item.id">
-              <label :for="'acquired' + item.shoppingListItemId" class="flex items-center rounded shadow px-4 py-2">
+              <label :for="'acquired' + item.shoppingListItemId" class="flex items-center rounded shadow px-4 py-2 cursor-pointer">
                 <div class="absolute flex items-center h-5">
                   <input :id="'acquired' + item.shoppingListItemId" type="checkbox" v-model="item.acquired" class="form-checkbox h-4 w-4 text-red-600 transition duration-150 ease-in-out" />
                 </div>
@@ -30,10 +29,7 @@
       </div>
     </div>
 
-    <AddShoppingListItems class="mt-3 lg:mt-2" 
-      :open="addIngredientModalIsOpen" 
-      @AddIngredientsToList="AddIngredientsToList"
-      @toggleModal="toggleModal" />
+    <AddShoppingListItems class="mt-3 lg:mt-2" />
 
   </div>
 </template>
@@ -66,15 +62,12 @@ export default {
     }
   },
   methods: {
-    AddIngredientsToList(ingredients) {
-      this.$store.dispatch("AddIngredientsToList",ingredients);
-    },
     getShoppingListItems() {
       this.$store.dispatch("getShoppingListItems");
     },
-    toggleModal(displayModal) {
-      this.addIngredientModalIsOpen = displayModal;
-    }
+    toggleModal() {
+      this.$store.dispatch("toggleShoppingListItemModal");      
+    },
   }
 }
 </script>
