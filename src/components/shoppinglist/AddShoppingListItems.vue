@@ -82,7 +82,7 @@ export default {
     },
     submitList(){
       this.toggleModal();
-      this.$store.dispatch("AddIngredientsToList",this.ingredientList);
+      this.$store.dispatch("addIngredientsToList",this.ingredientList);
       this.updateIngredients([{}]);
     }
   }

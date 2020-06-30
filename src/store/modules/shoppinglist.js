@@ -69,6 +69,25 @@ export const actions = {
   setEditableShoppingListItem({ commit }, editableShoppingListItem) {
     commit('SET_EDITABLESHOPPINGLISTITEM', editableShoppingListItem)
   },
+  addIngredientsToList({ commit, dispatch }, shoppingListItemsToAdd) {
+    shoppingListItemsToAdd.map(async (itemToAdd) => {
+      itemToAdd.acquired = false;
+      itemToAdd.hidden = false;
+      itemToAdd.shoppingListId = 1;
+      itemToAdd.category = "Unknown";
+      axios.post(
+        `http://localhost:5002/api/v1/shoppingListItems/`,
+        JSON.stringify(itemToAdd),
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then(res => {
+          dispatch("getAcquiredShoppingListItems");
+          dispatch("getNonAcquiredShoppingListItems");
+        });
+    })
+  }
 }
 
 export const modules = {
