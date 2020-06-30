@@ -63,8 +63,25 @@ export const actions = {
       }).then(res => {
         dispatch("getAcquiredShoppingListItems");
         dispatch("getNonAcquiredShoppingListItems");
-      });
-    
+      });    
+  },
+  hideAcquiredItems({ dispatch, state }) {
+    let patchDoc = [{ "op": "replace", "path": "/hidden", "value": true}] ;
+
+    state.aquiredShoppingListItems.forEach(item => {
+      axios.patch(
+        `http://localhost:5002/api/v1/shoppingListItems/${item.shoppingListItemId}`,
+        JSON.stringify(patchDoc),
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then(res => {
+          dispatch("getAcquiredShoppingListItems");
+          dispatch("getNonAcquiredShoppingListItems");
+        });       
+    })
+
   },
   setEditableShoppingListItem({ commit }, editableShoppingListItem) {
     commit('SET_EDITABLESHOPPINGLISTITEM', editableShoppingListItem)

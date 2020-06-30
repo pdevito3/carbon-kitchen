@@ -34,7 +34,7 @@
         <!-- v-show to account for loading -->
         <div v-show="aquiredShoppingListItemsCount > 0" class="flex items-center justify-between">
           <h2 class="text-xl font-bold leading-5 text-gray-900 sm:text-2xl sm:leading-7 sm:truncate">Acquired Items</h2>
-          <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">
+          <button @click="hideAcquired()" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">
             Hide Acquired
           </button>
         </div>
@@ -105,6 +105,9 @@ export default {
     toggleModal() {
       this.$store.dispatch("toggleShoppingListItemModal");      
     },
+    hideAcquired() {
+      this.$store.dispatch("hideAcquiredItems");
+    }
   }
 }
 </script>
