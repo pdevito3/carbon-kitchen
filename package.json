@@ -15,6 +15,7 @@
     "core-js": "^3.6.4",
     "heroicons": "^0.3.6",
     "lodash.groupby": "^4.6.0",
+    "lodash.isempty": "^4.4.0",
     "mathjs": "^7.0.0",
     "postcss-cli": "^7.1.0",
     "register-service-worker": "^1.6.2",

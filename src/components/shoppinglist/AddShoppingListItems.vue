@@ -37,8 +37,10 @@
             </div>
             <div class="px-0 sm:px-2 mt-4 sm:mt-5">  
               <IngredientList 
+                ref="ingredientList"
                 :ingredientList=ingredientList
-                @updateIngredients="updateIngredients" />
+                @updateIngredients="updateIngredients"
+                @enterPressed="submitList" />
             </div>
           </div>
           <div class="mt-5 sm:mt-6">
@@ -78,7 +80,7 @@ export default {
       this.ingredientList = newList;
     },
     toggleModal() {
-      this.$store.dispatch("toggleShoppingListItemModal");      
+      this.$store.dispatch("toggleShoppingListItemModal");     
     },
     submitList(){
       this.toggleModal();

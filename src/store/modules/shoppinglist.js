@@ -87,7 +87,9 @@ export const actions = {
     commit('SET_EDITABLESHOPPINGLISTITEM', editableShoppingListItem)
   },
   addIngredientsToList({ commit, dispatch }, shoppingListItemsToAdd) {
-    shoppingListItemsToAdd.map(async (itemToAdd) => {
+    shoppingListItemsToAdd
+    .filter(value => Object.keys(value).length !== 0)
+    .map(async (itemToAdd) => {
       itemToAdd.acquired = false;
       itemToAdd.hidden = false;
       itemToAdd.shoppingListId = 1;

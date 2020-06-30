@@ -4,8 +4,10 @@
       v-for="(ingredient, index) in ingredientList" 
       :index="index"
       :key="index"
-      :id="index"
+      :id="`ingredient-record${index}`"
       :ingredient="ingredient" 
+      ref="ingredientList"
+      @enterPressed="enterPressed"
       @removeIngredient="removeIngredient" />
     <div class="mt-2">
       <button
@@ -39,13 +41,27 @@ export default {
     return {};
   },
   methods: {
+    selectIngredientRow() {
+      let maxKey = this.ingredientList.length - 1;
+      this.$nextTick(() => this.$refs.ingredientList[maxKey].$refs.amount.focus());
+    },
     addIngredient() {
-      this.$props.ingredientList.push({});
-      this.$emit("updateIngredients", this.$props.ingredientList);
+      this.ingredientList.push({});
+
+      this.selectIngredientRow();
+      this.$emit("updateIngredients", this.ingredientList);
     },
     removeIngredient(ingredientIndex) {
-      this.$props.ingredientList.splice(ingredientIndex, 1);
-      this.$emit("updateIngredients", this.$props.ingredientList);
+      this.ingredientList.splice(ingredientIndex, 1);
+      this.$emit("updateIngredients", this.ingredientList);
+    },
+    enterPressed(rowIsEmpty){
+      if(rowIsEmpty){
+        this.$emit("enterPressed");
+      }
+      else{
+        this.addIngredient();
+      }
     }
   }
 }

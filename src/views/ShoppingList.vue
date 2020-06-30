@@ -5,7 +5,7 @@
       <button 
         @click="toggleModal()" 
         class="w-full sm:w-auto mt-3 sm:mt-0 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 shadow-sm hover:bg-red-500 focus:outline-none focus:shadow-outline-blue focus:bg-red-500 active:bg-red-600 transition duration-150 ease-in-out">
-        Add items To Shopping List
+        Add Items To Shopping List
       </button>
     </div>
     
@@ -55,7 +55,7 @@
       </div>
     </div>
 
-    <AddShoppingListItems />
+    <AddShoppingListItems ref="shoppingListModal" />
 
   </div>
 </template>
@@ -103,7 +103,12 @@ export default {
       this.$store.dispatch("toggleItemAcquisition", { itemId: item.shoppingListItemId, acquired: item.acquired });
     },
     toggleModal() {
-      this.$store.dispatch("toggleShoppingListItemModal");      
+      this.$store.dispatch("toggleShoppingListItemModal"); 
+
+      // this is a code smell... shouldn't have this here. should be on the addshoppionglistitems.vue 
+      // component, but when i tried doing it on `upddated` it debounces, even when using lodash.debouce... really annoying
+      // doesn't even work from sidebar because i can't have the modal there
+      this.$refs.shoppingListModal.$refs.ingredientList.selectIngredientRow(); 
     },
     hideAcquired() {
       this.$store.dispatch("hideAcquiredItems");
