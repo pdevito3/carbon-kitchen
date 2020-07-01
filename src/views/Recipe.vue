@@ -276,16 +276,20 @@ export default {
     scalableIngredients() {
       let scaleVal = this.scale;
 
-      if(fraction(scaleVal) > 0) {
-        let scalable = this.ingredients.map(i => ({...i}));
-
-        scalable.forEach(ingredient => {
-          ingredient.amount = ingredient.amount * Math.round(fraction(scaleVal) * 1000)/1000;
-        })
-        return scalable;
-      }
-      else {
-        return this.ingredients;
+      try {
+        if(fraction(scaleVal) > 0) {
+          let scalable = this.ingredients.map(i => ({...i}));
+  
+          scalable.forEach(ingredient => {
+            ingredient.amount = ingredient.amount * Math.round(fraction(scaleVal) * 1000)/1000;
+          })
+          return scalable;
+        }
+        else {
+          return this.ingredients;
+        }
+      } catch (error) {
+          return this.ingredients;        
       }
     },
     // batchCalc: {
