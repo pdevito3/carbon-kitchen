@@ -188,7 +188,6 @@ export function makeServer({ environment = "development" } = {}) {
 
       this.delete("/ingredients/:id", (schema, request) => {
         let id = request.params.id
-        console.log('delete id:', id)
 
         return schema.ingredients.find(id).destroy()
       })

@@ -10,7 +10,7 @@ export const state = {
   recipes: [],
   saving: false,
   pageState: "view",
-  editableRecipe: null
+  editableRecipe: []
 }
 
 
