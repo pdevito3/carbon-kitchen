@@ -155,6 +155,8 @@
             :key="index"
             :id="index"
             :ingredient="ingredient" 
+            ref="editableIngredients"
+            @enterPressed="enterPressed"
             @removeIngredient="removeIngredient" />
           <div class="mt-2">
             <button
@@ -384,9 +386,24 @@ export default {
     },
     addEditableIngredient() {
       this.editableIngredients.push({recipeId: this.recipe.recipeId});
+      this.selectIngredientRow();
     },
     removeIngredient(ingredientIndex) {
       this.editableIngredients.splice(ingredientIndex, 1);
+    },
+    selectIngredientRow() {
+      // this is code dup from ingredientlist.vue, need to consolodate and import
+      let maxKey = this.editableIngredients.length - 1;
+      this.$nextTick(() => this.$refs.editableIngredients[maxKey].$refs.amount.focus());
+    },
+    enterPressed(rowIsEmpty){
+      // this is code dup from ingredientlist.vue, need to consolodate and import
+      if(rowIsEmpty){
+        this.$emit("enterPressed");
+      }
+      else{
+        this.addEditableIngredient();
+      }
     }
   }
 };
