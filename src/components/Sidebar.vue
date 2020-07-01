@@ -1,6 +1,5 @@
 <template>
-  <!-- still needs @keydown.window.escape="sidebarOpen = false" -->
-  <div class="h-screen flex overflow-hidden bg-gray-100">
+  <div class="h-screen flex overflow-hidden bg-gray-100" @keydown.escape="closeSidebar()">
     <!-- Off-canvas menu for mobile -->
     <div class="md:hidden">
       <div
