@@ -249,13 +249,11 @@ export default {
   },
   data() {
     return {
-      open: false,
       editableIngredients: [],
       ingredientView: listView,
       scale: 1
     };
   },
-
   created() {
     let id = this.$route.params.id;
 

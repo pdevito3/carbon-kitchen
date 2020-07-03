@@ -1,7 +1,9 @@
 <template>
-  <div class="h-screen flex overflow-hidden bg-gray-100" x-data="{ sidebarOpen: false }" @keydown.escape="toggleSidebar(false)">
+  <div class="h-screen flex overflow-hidden bg-gray-100" @keydown.escape="toggleSidebar(false)">
+    <button @click="toggleList(!open)"></button>
     <sidebar :sidebarOpen="sidebarOpen" @closeSidebar="toggleSidebar" />
     <div class="flex flex-col w-0 flex-1 overflow-hidden">
+      <select-ingredients />
       <searchbar @openSidebar="toggleSidebar" />
       <main
         class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none"
@@ -18,13 +20,17 @@
 <script>
 import Sidebar from "@/components/Sidebar.vue";
 import Searchbar from "@/components/Searchbar.vue";
+import SelectIngredients from "@/components/recipe/SelectIngredients.vue";
 
 export default {
-  components: { Sidebar, Searchbar },
+  components: { 
+    Sidebar, 
+    Searchbar,
+    SelectIngredients, 
+  },
   data() {
     return {
-      sidebarOpen: false,
-      open: false
+      sidebarOpen: false
     };
   },
   methods: {

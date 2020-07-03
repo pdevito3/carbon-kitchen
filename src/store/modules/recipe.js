@@ -10,7 +10,8 @@ export const state = {
   recipes: [],
   saving: false,
   pageState: "view",
-  editableRecipe: []
+  editableRecipe: [],
+  ingredientListOpen: true
 }
 
 
@@ -31,6 +32,9 @@ export const mutations = {
   },
   SET_EDITABLERECIPE(state, editableRecipe) {
     state.editableRecipe = editableRecipe;
+  },
+  SET_INGEDIENTLISTOPEN(state, ingredientListOpen) {
+    state.ingredientListOpen = ingredientListOpen;
   }
 }
 
@@ -124,6 +128,9 @@ export const actions = {
   },
   setEditableRecipe({ commit }, editableRecipe) {
     commit('SET_EDITABLERECIPE', editableRecipe)
+  },
+  setIngredientListOpen({ commit }, ingredientListOpen) {
+    commit('SET_INGEDIENTLISTOPEN', ingredientListOpen)
   },
 }
 

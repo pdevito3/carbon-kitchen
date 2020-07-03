@@ -71,7 +71,7 @@
       >
         <div class="py-1 rounded-md bg-white shadow">
           <button
-            class="w-full flex block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
+            class="w-full flex px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +91,7 @@
             <span class="pl-2">Add to Meal Plan</span>
           </button>
           <button
-            class="w-full flex block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
+            class="w-full flex px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

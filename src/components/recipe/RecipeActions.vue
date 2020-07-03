@@ -58,6 +58,7 @@
 
     <span class="ml-1 sm:ml-2 md:ml-1 lg:ml-2 shadow-sm rounded-md">
       <button
+        @click="openIngredientList()"
         type="button"
         class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
         :class="pageState != 'view' ? 'opacity-50 cursor-not-allowed' : ''"
@@ -94,13 +95,13 @@
           <div class="py-1 rounded-md bg-white shadow-xs">
             <a
               href="#"
-              class="flex justify-left block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+              class="flex justify-left px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
             >
             <PencilAlt class="-ml-1 mr-2 h-5 w-5 text-gray-500" />Edit
             </a>
             <a
               href="#"
-              class="flex justify-left block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+              class="flex justify-left px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
             >              
               <ClipboardList class="-ml-1 mr-2 h-5 w-5 text-gray-500" />Plan
             </a>
@@ -159,7 +160,10 @@ export default {
     },
     editRecipe() {
       this.emitRecipeAction("edit");
-    }
+    },
+    openIngredientList() {
+      this.$store.dispatch("setIngredientListOpen", true);
+    },
   },
   created() {
     // this.pageState = pageStateProp;
