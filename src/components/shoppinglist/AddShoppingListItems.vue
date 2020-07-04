@@ -1,24 +1,27 @@
 <template>
   <div> 
     <div v-show="addShoppingListItemsModalOpen" class="fixed bottom-0 inset-x-0 px-4 pb-6 sm:inset-0 sm:p-0 sm:flex sm:items-center sm:justify-center">
-      <div v-show="addShoppingListItemsModalOpen" 
-        enter-active-class="ease-out duration-300" 
-        enter-class="opacity-0" 
-        enter-to-class="opacity-100" 
-        leave-active-class="ease-in duration-200" 
-        leave-class="opacity-100" 
-        leave-to-class="opacity-0" class="fixed inset-0 transition-opacity">
-        <div @click="toggleModal()" class="absolute inset-0 bg-gray-500 opacity-75"></div>
-      </div>
+      <transition
+      enter-active-class="ease-out duration-300" 
+      enter-class="opacity-0" 
+      enter-to-class="opacity-100" 
+      leave-active-class="ease-in duration-200" 
+      leave-class="opacity-100" 
+      leave-to-class="opacity-0" class="fixed inset-0 transition-opacity">
+        <div v-show="addShoppingListItemsModalOpen" >
+          <div @click="toggleModal()" class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+      </transition>
 
-      <div v-show="addShoppingListItemsModalOpen" 
-        class="bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full sm:p-3" 
-        enter-active-class="ease-out duration-300" 
-        enter-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
-        enter-to-class="opacity-100 translate-y-0 sm:scale-100" 
-        leave-active-class="ease-in duration-200" 
-        leave-class="opacity-100 translate-y-0 sm:scale-100" 
-        leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
+      <transition
+      enter-active-class="ease-out duration-300" 
+      enter-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
+      enter-to-class="opacity-100 translate-y-0 sm:scale-100" 
+      leave-active-class="ease-in duration-200" 
+      leave-class="opacity-100 translate-y-0 sm:scale-100" 
+      leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+        <div v-show="addShoppingListItemsModalOpen" 
+        class="bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full sm:p-3"  
         role="dialog" 
         aria-modal="true" 
         aria-labelledby="modal-headline">
@@ -35,7 +38,7 @@
                 </svg>
               </button>
             </div>
-            <div class="px-0 sm:px-2 mt-4 sm:mt-5">  
+            <div class="max-h-64 md:max-h-96 overflow-y-auto px-0 sm:px-2 mt-4 sm:mt-5">  
               <IngredientList 
                 ref="ingredientList"
                 :ingredientList=ingredientList
@@ -44,14 +47,16 @@
             </div>
           </div>
           <div class="mt-5 sm:mt-6">
-          <span class="flex w-full rounded-md shadow-sm">
-            <button @click="submitList()" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-              Add To Shopping List
-            </button>
-          </span>
+            <span class="flex w-full rounded-md shadow-sm">
+              <button @click="submitList()" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                Add To Shopping List
+              </button>
+            </span>
           </div>
         </div>
-      </div>
+      </transition>
+        
+        </div>
     </div>
 </template>
 
