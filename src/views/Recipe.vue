@@ -113,7 +113,7 @@
     <div class="mt-2">
       <div class="flex flex-col md:flex-row w-full">
         <div class="w-full md:w-1/2 px-2">
-        <div class="flex justify-between items-center">
+          <div class="flex justify-between items-center">
           <div class="space-x-4 flex items-center">
             <h2
               class="pt-2 text-xl font-bold leading-7 text-gray-900 md:pt-0 md:text-2xl md:leading-9 md:truncate"
@@ -179,15 +179,21 @@
         <!-- batch view -->
         <form class="px-0 sm:px-2" v-if="pageState=='edit' && ingredientView == BATCHVIEW">
           <div class="mt-2 sm:col-span-2">
-            <!-- <div class="max-w-lg flex rounded-md shadow-sm">
+            <div class="max-w-lg flex rounded-md shadow-sm">
               <textarea
               rows="16"
               id="batchIngredients"
               v-model="batchCalc"
               class="mt-1 form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 py-2 px-2 lg:py-1 rounded-md shadow-sm resize-none"
             />
-            </div> -->
-            <!-- <p class="mt-2 text-sm text-gray-500">Format[Amount] [Unit] [Ingredient] ([Notes])</p> -->
+            </div> 
+             <p class="mt-2 text-sm text-gray-500 font-semibold">New line between items</p>
+             <p class="mt-px text-sm text-gray-500">1 cup basil</p>
+             <p class="mt-px text-sm text-gray-500">1 basil leaf</p>
+             <p class="mt-px text-sm text-gray-500">1 package pasta</p>
+             <p class="mt-px text-sm text-gray-500">16 oz pasta</p>
+             <p class="mt-px text-sm text-gray-500">16oz pasta</p>
+             <p class="mt-px text-sm text-gray-500">1 chicken breast</p>
           </div>
         </form>
 
@@ -200,12 +206,7 @@
             <div class="grid grid-cols-10 gap-1">
               <div class="py-2 lg:py-1 col-span-1">{{ingredient.amount}}</div>
               <div class="py-2 lg:py-1 col-span-3 lg:col-span-2">{{ingredient.unit}}</div>
-              <div class="py-2 lg:py-1 col-span-6 lg:col-span-7">
-                <div>{{ingredient.ingredient}}</div>
-                <!-- <div class="text-sm text-gray-900 italic">{{ingredient.notes}}</div> -->
-                <div>{{ingredient.name}}</div>
-                <!-- <div class="text-sm text-gray-900 italic">{{ingredient.notes}}</div> -->
-              </div>
+              <div class="py-2 lg:py-1 col-span-6 lg:col-span-7">{{ingredient.name}}</div>
             </div>
           </li>
         </ul>
@@ -261,6 +262,7 @@ export default {
   created() {
     this.getRecipe(this.id);
     this.getIngredients(this.id);
+    this.editableIngredients = this.ingredients;
 
     this.LISTVIEW = listView;
     this.BATCHVIEW = batchView;
@@ -288,45 +290,57 @@ export default {
         else {
           return this.ingredients;
         }
-      } catch (error) {
-          return this.ingredients;        
+      } 
+      catch (error) {
+        return this.ingredients;        
       }
     },
-    // batchCalc: {
-      // // getter
-      // get: function () {
-      //   let amountArr = this.editableIngredients.map(i => i.amount);
-      //   let unitArr = this.editableIngredients.map(i => i.unit);
-      //   let ingredientArr = this.editableIngredients.map(i => i.ingredient);
-      //   let noteArr = this.editableIngredients.map(i => i.notes);
+    batchCalc: {
+      // getter
+      get: function () {
+        let amountArr = this.editableIngredients.map(i => i.amount ?? '');
+        let unitArr = this.editableIngredients.map(i => i.unit ?? '');
+        let ingredientArr = this.editableIngredients.map(i => i.name ?? '');
 
-      //   let newArray = amountArr.map(function(value, index) {
-      //     return `${value} ${unitArr[index]} ${ingredientArr[index]} (${noteArr[index]})`;
-      //   });
+        let newArray = amountArr.map(function(value, index) {
+          return `${value} ${unitArr[index]} ${ingredientArr[index]}`.trim();
+        });
         
-      //   return newArray.join("\n")
-      // },
-      // // setter
-      // set: function (ingredientsString) {
-      //   this.editableIngredients = [];
-      //   let stringArr = ingredientsString.split('\n')
+        return newArray.join("\r")
+      },
+      // setter
+      set: function (ingredientsString) {
+        // this.editableIngredients = [];
+        // let stringArr = ingredientsString.split('\n')
 
-      //   stringArr.forEach(eachIngredient => {
-      //     let amount = eachIngredient.substr(0, eachIngredient.indexOf(" "));
-      //     eachIngredient = eachIngredient.splice(eachIngredient.indexOf(" "), 1);
-      //     console.log("eachIngredient")
+        // stringArr.forEach(eachIngredient => {
+        //   let splitIngredient = eachIngredient.splice(' ');
+        //   if(splitIngredient.length == 1)
+        //     this.editableIngredients.push({
+        //       recipeId: this.recipe.recipeId
+        //       , name: eachIngredient
+        //     });
+        //   else {
+        //     // if i can convert split[0] to a decimal, then make that amount
+        //       // add a condition eventually to account for something like 16oz pasta where it can recognize units and put a space there
+        //     // if the second string == cup, package, handful, tsp, teaspoon, t, T, tbsp, pint, oz, etc. then make that a unit
+        //     // make the rest of it the name
+        //   } 
 
-      //     this.editableIngredients.push(
-      //       {
-      //         recipeId: this.recipe.recipeId
-      //         , amount: amount
-      //         , unit: "tablespoon" // eachIngredient.substr(getPosition(eachIngredient," ",2), eachIngredient.indexOf(" "))
-      //         , ingredient: "pepper"
-      //         // , notes: ""
-      //       }
-      //     )});
-      // },      
-    // }
+        //   let amount = eachIngredient.substr(0, eachIngredient.indexOf(" "));
+        //   eachIngredient = eachIngredient.splice(eachIngredient.indexOf(" "), 1);
+        //   console.log("eachIngredient")
+
+        //   this.editableIngredients.push(
+        //     {
+        //       recipeId: this.recipe.recipeId
+        //       , amount: amount
+        //       , unit: "tablespoon" // eachIngredient.substr(getPosition(eachIngredient," ",2), eachIngredient.indexOf(" "))
+        //       , ingredient: "pepper"
+        //     }
+        //   )});
+      },      
+    }
   },
   methods: {
     getLinkHost(url) {
