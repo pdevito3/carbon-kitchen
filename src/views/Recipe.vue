@@ -228,6 +228,7 @@
         </div>
       </div>
     </div>
+    <select-ingredients />
   </div>
 </template>
 
@@ -235,6 +236,7 @@
 <script>
 import RecipeActions from "@/components/recipe/RecipeActions.vue";
 import IngredientRecord from "@/components/recipe/IngredientRecord.vue";
+import SelectIngredients from "@/components/recipe/SelectIngredients.vue";
 import { mapState } from "vuex";
 import axios from 'axios';
 import {fraction} from 'mathjs';
@@ -245,6 +247,7 @@ const batchView = 'batch';
 export default {
   components: {
     RecipeActions,
+    SelectIngredients, 
     IngredientRecord
   },
   data() {
