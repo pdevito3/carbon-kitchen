@@ -4,6 +4,7 @@
     <sidebar :sidebarOpen="sidebarOpen" @closeSidebar="toggleSidebar" />
     <div class="flex flex-col w-0 flex-1 overflow-hidden">
       <select-ingredients />
+      <portal-target name="modals" multiple></portal-target>
       <searchbar @openSidebar="toggleSidebar" />
       <main
         class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none"
