@@ -162,7 +162,7 @@ export default {
       this.emitRecipeAction("edit");
     },
     openIngredientList() {
-      this.$store.dispatch("setIngredientListOpen", true);
+      this.emitRecipeAction("openIngredientList");
     },
   },
   created() {

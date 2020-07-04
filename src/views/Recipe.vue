@@ -249,16 +249,15 @@ export default {
   },
   data() {
     return {
+      id: this.$route.params.id,
       editableIngredients: [],
       ingredientView: listView,
       scale: 1
     };
   },
   created() {
-    let id = this.$route.params.id;
-
-    this.getRecipe(id);
-    this.getIngredients(id);
+    this.getRecipe(this.id);
+    this.getIngredients(this.id);
 
     this.LISTVIEW = listView;
     this.BATCHVIEW = batchView;
@@ -351,6 +350,8 @@ export default {
         case "save":
           this.saveRecipe();
           return "save";
+        case "openIngredientList":
+          this.openIngredientList();
       }
     },
     startEdit() {    
@@ -406,6 +407,12 @@ export default {
       else{
         this.addEditableIngredient();
       }
+    },
+    openIngredientList(){
+      //make sure ingredients list is set in store
+      this.getIngredients(this.id);
+
+      this.$store.dispatch("setIngredientListOpen", true);
     }
   }
 };

@@ -11,7 +11,7 @@ export const state = {
   saving: false,
   pageState: "view",
   editableRecipe: [],
-  ingredientListOpen: true
+  ingredientListOpen: false
 }
 
 
