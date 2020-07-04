@@ -87,26 +87,26 @@ export const actions = {
     commit('SET_EDITABLESHOPPINGLISTITEM', editableShoppingListItem)
   },
   addIngredientsToList({ commit, dispatch }, shoppingListItemsToAdd) {
-    shoppingListItemsToAdd
-    .filter(value => Object.keys(value).length !== 0)
-    .map(async (itemToAdd) => {
-      itemToAdd.acquired = false;
-      itemToAdd.hidden = false;
-      itemToAdd.shoppingListId = 1;
-      itemToAdd.category = "Unknown";
-      
-      axios.post(
-        `http://localhost:5002/api/v1/shoppingListItems/`,
-        JSON.stringify(itemToAdd),
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then(res => {
-          dispatch("getAcquiredShoppingListItems");
-          dispatch("getNonAcquiredShoppingListItems");
-        });
-    })
+    return shoppingListItemsToAdd
+      .filter(value => Object.keys(value).length !== 0)
+      .map(async (itemToAdd) => {
+        itemToAdd.acquired = false;
+        itemToAdd.hidden = false;
+        itemToAdd.shoppingListId = 1;
+        itemToAdd.category = "Unknown";
+        
+        axios.post(
+          `http://localhost:5002/api/v1/shoppingListItems/`,
+          JSON.stringify(itemToAdd),
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }).then(res => {
+            dispatch("getAcquiredShoppingListItems");
+            dispatch("getNonAcquiredShoppingListItems");
+          });
+      })
   }
 }
 
