@@ -52,9 +52,10 @@ export const actions = {
     commit('SET_SAVING', false);
   },
   getIngredients({dispatch, commit}, recipeId) {
-    axios.get(`http://localhost:5000/api/v1/ingredients?recipeId=${recipeId}&SortOrder=IngredientId`)
+    axios.get(`http://localhost:5000/api/v1/ingredients?recipeId=${recipeId}&SortOrder=IngredientId?PageSize=100`)
     .then(res => {
-      commit('UPDATE_INGREDIENTS', res.data);
+      let data = res.data;
+      commit('UPDATE_INGREDIENTS', data);
     });
   },
   addIngredient({ commit }, ingredient) {

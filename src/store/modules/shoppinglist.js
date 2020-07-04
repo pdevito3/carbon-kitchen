@@ -26,9 +26,9 @@ export const mutations = {
 
 // acts like global computed methods
 export const getters = {
-  shoppingListItemCount: state => {
-    return state.shoppingListItems.length;
-  }
+  // shoppingListItemCount: state => {
+  //   return state.shoppingListItems.length;
+  // }
 }
 
 //asynchronously wrap business logic around mutations. 
