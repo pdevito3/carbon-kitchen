@@ -228,7 +228,7 @@
         </div>
       </div>
     </div>
-    <select-ingredients />
+    <select-ingredients :ingredients="ingredients" />
   </div>
 </template>
 

@@ -55,9 +55,11 @@
                         <div 
                         v-for="ingredient in this.ingredients" 
                         :key="ingredient.ingredientId" 
+                        :id="`ingredient${ingredient.ingredientId}`"
+                        ref="ingredients"
                         class="relative flex items-start">
                           <div class="absolute flex items-center h-5">
-                            <input :id="`ingredient${ingredient.ingredientId}`" checked="true" type="checkbox" class="form-checkbox h-4 w-4 text-red-600 transition duration-150 ease-in-out" />
+                            <input ref="isChecked" :id="`checked${ingredient.ingredientId}`" checked="true" type="checkbox" class="form-checkbox h-4 w-4 text-red-600 transition duration-150 ease-in-out" />
                           </div>
                           <div class="pl-7 text-sm leading-5">
                             <label :for="`ingredient${ingredient.ingredientId}`" class="font-medium text-gray-700">{{ingredient.name}}</label>
@@ -78,7 +80,7 @@
                     </button>
                   </span>
                   <span class="inline-flex rounded-md shadow-sm">
-                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out">
+                    <button @click="submitIngredients()" type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out">
                       Save
                     </button>
                   </span>
@@ -95,24 +97,36 @@
 import { mapState } from "vuex";
 
 export default {
+  props: ['ingredients'],
   components: { },
   data() {
     return {};
-  },
-  created() {
-    console.log("a");
   },
   computed: {
     // use object spread operator for mapstate with vuex so we can use locally computed properties
     ...mapState({
       open: state => state.recipe.ingredientListOpen,
-      ingredients: state => state.ingredients.ingredients,
     }),
   },
   methods: {
     close() {
       this.$store.dispatch("setIngredientListOpen", false);
     },
+    submitIngredients(){
+      let ingredientsToAdd = [];
+      this.$refs.isChecked.forEach((e) => {
+        let isChecked = e.checked;
+        
+        if(isChecked){
+          let id = e.id.replace('checked','');
+          ingredientsToAdd.push(this.ingredients.filter((i) => {
+            return i.ingredientId == id;
+          })[0])
+        }
+      });
+      
+      this.$store.dispatch("addIngredientsToList",ingredientsToAdd);
+    }
   }
 }
 </script>

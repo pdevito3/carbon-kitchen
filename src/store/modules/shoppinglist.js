@@ -94,6 +94,7 @@ export const actions = {
       itemToAdd.hidden = false;
       itemToAdd.shoppingListId = 1;
       itemToAdd.category = "Unknown";
+      
       axios.post(
         `http://localhost:5002/api/v1/shoppingListItems/`,
         JSON.stringify(itemToAdd),
