@@ -6,7 +6,7 @@
         type="button"
         class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
       >
-        <ChevronLeft class="h-5 w-5 text-gray-500" />
+        <ChevronLeft class="h-5 w-5 fill-current" />
         <p class="hidden sm:block sm:pl-2 md:hidden lg:block">Back</p>
       </router-link>
     </span>
@@ -17,7 +17,7 @@
         type="button"
         class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
       >
-        <PencilAlt class="h-5 w-5 text-gray-500 fill-current" />
+        <PencilAlt class="h-5 w-5 fill-current" />
         <p class="hidden sm:block sm:pl-2 md:hidden lg:block">Edit</p>
       </button>
     </span>
@@ -26,7 +26,7 @@
       <button
         @click="saveRecipe()"
         type="button"
-        class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-l-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+        class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
       >
         <Save class ="h-5 w-5 fill-current" />
         <p v-if="this.saving" class="hidden sm:block sm:pl-2 md:hidden lg:block">Saving...</p>
@@ -38,9 +38,9 @@
       <button
         @click="cancelUpdate()"
         type="button"
-        class="-ml-px inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-r-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+        class="ml-2 inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
       >
-        <XCircle class="h-5 w-5 text-gray-500 fill-current" />
+        <XCircle class="h-5 w-5 fill-current" />
         <p class="hidden sm:block sm:pl-2 md:hidden lg:block">Cancel</p>
       </button>
     </span>
@@ -63,7 +63,7 @@
         class="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
         :class="pageState != 'view' ? 'opacity-50 cursor-not-allowed' : ''"
       >
-        <ClipboardList class="h-5 w-5 text-gray-500" />
+        <ClipboardList class="h-5 w-5 stroke-current" />
         <p class="hidden sm:block sm:pl-2 md:hidden lg:block">Shop</p>
       </button>
     </span>
