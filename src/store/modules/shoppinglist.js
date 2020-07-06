@@ -34,14 +34,14 @@ export const getters = {
 //asynchronously wrap business logic around mutations. 
 export const actions = {
   getNonAcquiredShoppingListItems({commit}) {
-      axios.get(`http://localhost:5002/api/v1/shoppingListItems/?filters=acquired==false, hidden==false`)
+      axios.get(`http://localhost:5000/api/v1/shoppingListItems/?filters=acquired==false, hidden==false`)
       .then(res => {
         commit('UPDATE_NONACQUIRED_SHOPPINGLISTITEMS', res.data);
         return res.data;
       });
   },
   getAcquiredShoppingListItems({commit}) {
-      axios.get(`http://localhost:5002/api/v1/shoppingListItems/?filters=acquired==true, hidden==false&sortorder=name`)
+      axios.get(`http://localhost:5000/api/v1/shoppingListItems/?filters=acquired==true, hidden==false&sortorder=name`)
       .then(res => {
         commit('UPDATE_ACQUIRED_SHOPPINGLISTITEMS', res.data);
         return res.data;
@@ -54,7 +54,7 @@ export const actions = {
     let patchDoc = [{ "op": "replace", "path": "/acquired", "value": acquired}] ;
     
     axios.patch(
-      `http://localhost:5002/api/v1/shoppingListItems/${itemId}`,
+      `http://localhost:5000/api/v1/shoppingListItems/${itemId}`,
       JSON.stringify(patchDoc),
       {
         headers: {
@@ -70,7 +70,7 @@ export const actions = {
 
     state.aquiredShoppingListItems.forEach(item => {
       axios.patch(
-        `http://localhost:5002/api/v1/shoppingListItems/${item.shoppingListItemId}`,
+        `http://localhost:5000/api/v1/shoppingListItems/${item.shoppingListItemId}`,
         JSON.stringify(patchDoc),
         {
           headers: {
@@ -96,7 +96,7 @@ export const actions = {
         itemToAdd.category = "Unknown";
         
         axios.post(
-          `http://localhost:5002/api/v1/shoppingListItems/`,
+          `http://localhost:5000/api/v1/shoppingListItems/`,
           JSON.stringify(itemToAdd),
           {
             headers: {

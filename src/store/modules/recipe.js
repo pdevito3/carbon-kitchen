@@ -52,14 +52,14 @@ export const actions = {
   //   commit('UPDATE_RECIPE', recipe)
   // },
   getRecipe({dispatch, commit}, recipeId) {
-      axios.get(`http://localhost:5001/api/v1/recipes/${recipeId}`)
+      axios.get(`http://localhost:5000/api/v1/recipes/${recipeId}`)
       .then(res => {
         commit('UPDATE_RECIPE', res.data);
         return res.data;
       });
   },
   getRecipes({dispatch, commit}) {
-      axios.get(`http://localhost:5001/api/v1/recipes/`)
+      axios.get(`http://localhost:5000/api/v1/recipes/`)
       .then(res => {
         commit('UPDATE_RECIPES', res.data);
         return res.data;
@@ -69,7 +69,7 @@ export const actions = {
     commit('SET_SAVING', true);
   
     axios.post(
-      `http://localhost:5001/api/v1/recipes/`,
+      `http://localhost:5000/api/v1/recipes/`,
       JSON.stringify(recipe),
       {
         headers: {
@@ -104,7 +104,7 @@ export const actions = {
     commit('SET_SAVING', true);
   
     axios.put(
-      `http://localhost:5001/api/v1/recipes/${recipe.recipeId}`,
+      `http://localhost:5000/api/v1/recipes/${recipe.recipeId}`,
       JSON.stringify(recipe),
       {
         headers: {
