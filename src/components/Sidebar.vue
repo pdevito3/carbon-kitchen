@@ -102,12 +102,12 @@
                 My Recipes
               </div>
               <button
-              @click="createNewRecipe()"
-                type="button"
-                class="sm:w-auto px-1 py-1 border border-red-300 text-sm leading-5 font-medium rounded-full text-red-700 bg-gray-200 hover:text-red-500 hover:border-2 hover:border-red-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
-              >
-              <PlusCircle  class="w-5 h-5" />
-            </button>
+                @click="createNewRecipe()"
+                  type="button"
+                  class="sm:w-auto px-1 py-1 border border-red-300 text-sm leading-5 font-medium rounded-full text-red-700 bg-gray-200 hover:text-red-500 hover:border-2 hover:border-red-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+                >
+                <PlusCircle  class="w-5 h-5" />
+              </button>
             </router-link>
 
             <router-link
@@ -120,12 +120,12 @@
                 Shopping List
               </div>
               <button
-              @click="toggleAddShoppingListItemsModal()" 
-                type="button"
-                class="sm:w-auto px-1 py-1 border border-red-300 text-sm leading-5 font-medium rounded-full text-red-700 bg-gray-200 hover:text-red-500 hover:border-2 hover:border-red-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
-              >
-                <PlusCircle  class="w-5 h-5" />
-            </button>
+                @click="toggleAddShoppingListItemsModal()" 
+                  type="button"
+                  class="sm:w-auto px-1 py-1 border border-red-300 text-sm leading-5 font-medium rounded-full text-red-700 bg-gray-200 hover:text-red-500 hover:border-2 hover:border-red-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+                >
+                  <PlusCircle  class="w-5 h-5" />
+              </button>
             </router-link>
           </nav>
         </div>

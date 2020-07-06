@@ -263,7 +263,6 @@ import SelectIngredients from "@/components/recipe/SelectIngredients.vue";
 import Home from "heroicons/outline/home.svg";
 import Flag from "heroicons/outline/flag.svg";
 import { mapState } from "vuex";
-import axios from "axios";
 import { fraction } from "mathjs";
 
 const listView = "list";

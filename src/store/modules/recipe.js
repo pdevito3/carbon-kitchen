@@ -67,7 +67,7 @@ export const actions = {
   },
   createNewRecipe({ dispatch, commit }, recipe) {
     commit('SET_SAVING', true);
-  
+
     axios.post(
       `http://localhost:5000/api/v1/recipes/`,
       JSON.stringify(recipe),

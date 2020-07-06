@@ -6,6 +6,13 @@ import store from './store/index';
 import './assets/styles/tailwind.css';
 import PortalVue from 'portal-vue'
 // import { makeServer } from "./server";
+import Axios from 'axios'
+
+Vue.prototype.$http = Axios;
+const token = localStorage.getItem('token')
+if (token) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+}
 
 Vue.use(PortalVue)
 Vue.config.productionTip = false;

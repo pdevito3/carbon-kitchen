@@ -48,6 +48,7 @@
             />
           </svg>
         </button>
+
         <div ref="menu" class="ml-3 relative">
           <div>
             <button
@@ -69,23 +70,32 @@
             leave-class="opacity-100 scale-100"
             leave-to-class="opacity-0 scale-95"
           >
-            <div
-              v-show="menuOpen"
-              class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg"
-            >
-              <div class="py-1 rounded-md bg-white shadow-xs">
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-                >Your Profile</a>
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-                >Settings</a>
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-                >Sign out</a>
+
+          <!-- this is my menu -->
+            <div :class="[menuOpen ? 'block' : 'hidden']">               
+              <button class="fixed opacity-0 inset-0 h-full w-full cursor-default" @click="toggleMenu()" ></button>
+              <div
+                class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg"
+              >
+                <div class="py-1 rounded-md bg-white shadow-xs">
+                  <router-link
+                    to="/login"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
+                  >Login</router-link>
+
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
+                  >Your Profile</a>
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
+                  >Settings</a>
+                  <button 
+                    @click="logout()"
+                    class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
+                  >Sign out</button>
+                </div>
               </div>
             </div>
           </transition>
@@ -102,12 +112,23 @@ export default {
       menuOpen: false
     };
   },
+  computed : {
+    isLoggedIn : function(){ return this.$store.getters.isLoggedIn}
+  },
   methods: {
     openSidebar() {
       this.$emit("openSidebar", true);
     },
     toggleMenu() {
       this.menuOpen = !this.menuOpen;
+    },
+    logout() {
+      this.$store.dispatch('logout')
+      .then(() => {
+        if(this.$route.path != '/login')
+          this.$router.push('/login')
+      })
+      .then(() => this.toggleMenu())
     }
   }
 };
