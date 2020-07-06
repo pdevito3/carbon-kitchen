@@ -17,10 +17,14 @@ export const mutations = {
   AUTH_REQUEST(state){
     state.status = 'loading'
   },
-  AUTH_SUCCESS(state, token, user){
-    state.status = 'success'
+  AUTH_SUCCESS_TOKEN(state, token){
     state.token = token
+  },
+  AUTH_SUCCESS_USER(state, user){
     state.user = user
+  },
+  AUTH_SUCCESS_STATUS(state, status){
+    state.status = status
   },
   AUTH_ERROR(state){
     state.status = 'error'
@@ -39,37 +43,43 @@ export const getters = {
 
 //asynchronously wrap business logic around mutations. 
 export const actions = {
-  login({commit}, user){
+  login({commit, dispatch}, user){
     return new Promise((resolve, reject) => {
-      commit('AUTH_REQUEST')
+      commit('AUTH_REQUEST');
       axios({url: 'http://localhost:5000/api/auth/authenticate', data: user, method: 'POST' })
       .then(resp => {
-        const token = resp.data.token
-        const user = resp.data.user
-        localStorage.setItem('token', token)
+        const token = resp.data.token;
+        const user = resp.data.user;
+        localStorage.setItem('token', token);
         
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-        commit('AUTH_SUCCESS', token, user)
-        resolve(resp)
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        dispatch("authSuccess", { token, user }); 
+        resolve(resp);
       })
       .catch(err => {
-        commit('AUTH_ERROR')
-        localStorage.removeItem('token')
-        reject(err)
+        commit('AUTH_ERROR');
+        localStorage.removeItem('token');
+        reject(err);
       })
     })
   },
-  register({commit}, user){
+  authSuccess({ commit }, {token ,user}){
+    commit('AUTH_SUCCESS_STATUS', 'success');
+    commit('AUTH_SUCCESS_TOKEN', token);
+    commit('AUTH_SUCCESS_USER', user);
+  },
+  register({ commit, dispatch }, user){
     return new Promise((resolve, reject) => {
-      commit('AUTH_REQUEST')
+      commit('AUTH_REQUEST');
       axios({url: 'http://localhost:5000/register', data: user, method: 'POST' })
       .then(resp => {
-        const token = resp.data.token
-        const user = resp.data.user
-        localStorage.setItem('token', token)
-        axios.defaults.headers.common['Authorization'] = token
-        commit('AUTH_SUCCESS', token, user)
-        resolve(resp)
+        const token = resp.data.token;
+        const user = resp.data.user;
+        localStorage.setItem('token', token);
+        axios.defaults.headers.common['Authorization'] = token;
+
+        dispatch("authSuccess", { token, user }); 
+        resolve(resp);
       })
       .catch(err => {
         commit('AUTH_ERROR', err)
@@ -78,7 +88,7 @@ export const actions = {
       })
     })
   },
-  logout({commit}){
+  logout({ commit }){
     return new Promise((resolve, reject) => {
       commit('LOGOUT')
       localStorage.removeItem('token')
