@@ -57,13 +57,13 @@ const routes = [
     meta: { layout: 'app-layout'},
     component: () => import('../views/Register.vue'),
   },
-  // {
-  //   path: '*',
-  //   props: true,
-  //   name: '404',
-  //   meta: { layout: 'app-layout'},
-  //   component: () => import('@/views/404.vue'),
-  // }
+  {
+    path: '*',
+    props: true,
+    name: '404',
+    meta: { layout: 'empty-layout'},
+    component: () => import('@/views/404.vue'),
+  }
 ];
 
 const router = new VueRouter({
