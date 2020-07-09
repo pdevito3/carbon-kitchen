@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
 import store from '@/store/index';
 
 Vue.use(VueRouter);
@@ -9,48 +8,62 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    meta: { 
+      layout: 'app-layout', 
+      requiresAuth: true
+    },
+    component: () => import('../views/MyRecipes.vue'),
   },
   {
     path: '/myrecipes',
     name: 'MyRecipes',
-    component: () => import(/* webpackChunkName: "about" */ '../views/MyRecipes.vue'),
+    meta: { 
+      layout: 'app-layout', 
+      requiresAuth: true
+    },
+    component: () => import('../views/MyRecipes.vue'),
   },
   {
     path: '/myrecipes/recipe/:id',
     props: true,
     name: 'Recipe',
+    meta: { 
+      layout: 'app-layout', 
+      requiresAuth: true
+    },
     component: () => import('../views/Recipe.vue'),
   },
   {
     path: '/shoppinglist',
     props: true,
     name: 'ShoppingList',
-    component: () => import('../views/ShoppingList.vue'),
     meta: { 
+      layout: 'app-layout', 
       requiresAuth: true
-    }
+    },
+    component: () => import('../views/ShoppingList.vue'),
   },
   {
     path: '/login',
     props: true,
     name: 'Login',
+    meta: { layout: 'empty-layout'},
     component: () => import('../views/Login.vue'),
   },
   {
     path: '/register',
     props: true,
     name: 'Register',
+    meta: { layout: 'app-layout'},
     component: () => import('../views/Register.vue'),
-  }
+  },
   // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  // },
+  //   path: '*',
+  //   props: true,
+  //   name: '404',
+  //   meta: { layout: 'app-layout'},
+  //   component: () => import('@/views/404.vue'),
+  // }
 ];
 
 const router = new VueRouter({

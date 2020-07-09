@@ -8,6 +8,12 @@ import PortalVue from 'portal-vue'
 // import { makeServer } from "./server";
 import Axios from 'axios'
 
+import AppLayout from '@/layouts/AppLayout';
+import EmptyLayout from '@/layouts/EmptyLayout';
+
+Vue.component('app-layout', AppLayout);
+Vue.component('empty-layout', EmptyLayout);
+
 Vue.prototype.$http = Axios;
 const token = localStorage.getItem('token')
 if (token) {
