@@ -31,18 +31,10 @@
           <nav class="px-2">
             <router-link
               @click.native="closeSidebar"
-              to="/"
-              exact-active-class="group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-red-900 focus:outline-none focus:bg-red-700 transition ease-in-out duration-150"
-              class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-red-300 hover:text-white hover:bg-red-700 focus:outline-none focus:text-white focus:bg-red-700 transition ease-in-out duration-150"
-            >
-              <Home class="mr-4 h-6 w-6 text-red-400 group-hover:text-red-300 group-focus:text-red-300 transition ease-in-out duration-150" />
-              Dashboard
-            </router-link>
-            <router-link
-              @click.native="closeSidebar"
               to="/myrecipes"
-              exact-active-class="group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-red-900 focus:outline-none focus:bg-red-700 transition ease-in-out duration-150"
-              class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-red-300 hover:text-white hover:bg-red-700 focus:outline-none focus:text-white focus:bg-red-700 transition ease-in-out duration-150"
+              :class="path == '/' || path == '/myrecipes' 
+              ? 'group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-red-900 focus:outline-none focus:bg-red-700 transition ease-in-out duration-150' 
+              :'mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-red-300 hover:text-white hover:bg-red-700 focus:outline-none focus:text-white focus:bg-red-700 transition ease-in-out duration-150'"
             >
               <ColorSwatch class="mr-4 h-6 w-6 text-red-400 group-hover:text-red-300 group-focus:text-red-300 transition ease-in-out duration-150" />
               Recipes
@@ -83,19 +75,12 @@
         <div class="mt-5 h-0 flex-1 flex flex-col overflow-y-auto">
           <!-- Sidebar component, swap this element with another sidebar if you like -->
           <nav class="flex-1 px-2 bg-red-800">
-            <router-link
-              to="/"
-              exact-active-class="group flex items-center px-2 py-2 text-sm leading-5 font-medium text-white rounded-md bg-red-900 focus:outline-none focus:bg-red-700 transition ease-in-out duration-150"
-              class="mt-1 group flex items-center px-2 py-2 text-sm leading-5 font-medium text-red-300 rounded-md hover:text-white hover:bg-red-700 focus:outline-none focus:text-white focus:bg-red-700 transition ease-in-out duration-150"
-            >
-              <Home class="mr-3 h-6 w-6 text-red-400 group-focus:text-red-300 transition ease-in-out duration-150" />
-              Dashboard
-            </router-link>
 
             <router-link
               to="/myrecipes"
-              exact-active-class="group flex items-center px-2 py-2 text-sm leading-5 font-medium text-white rounded-md bg-red-900 focus:outline-none focus:bg-red-700 transition ease-in-out duration-150"
-              class="mt-1 group flex items-center justify-between px-2 py-2 text-sm leading-5 font-medium text-red-300 rounded-md hover:text-white hover:bg-red-700 focus:outline-none focus:text-white focus:bg-red-700 transition ease-in-out duration-150"
+              :class="path == '/' || path == '/myrecipes' 
+              ? 'group flex items-center justify-between px-2 py-2 text-sm leading-5 font-medium text-white rounded-md bg-red-900 focus:outline-none focus:bg-red-700 transition ease-in-out duration-150' 
+              : 'mt-1 group flex items-center justify-between px-2 py-2 text-sm leading-5 font-medium text-red-300 rounded-md hover:text-white hover:bg-red-700 focus:outline-none focus:text-white focus:bg-red-700 transition ease-in-out duration-150'"
             >
               <div class="flex">
                 <ColorSwatch class="mr-3 h-6 w-6 text-red-400 group-hover:text-red-300 group-focus:text-red-300 transition ease-in-out duration-150" />
@@ -164,6 +149,9 @@ export default {
       recipe: state => state.recipe.recipe,
       addShoppingListItemsModalOpen: state => state.shoppinglist.addShoppingListItemsModalOpen,
     }),
+    path() {
+      return this.$route.fullPath;
+    }
   },
   methods: {
     closeSidebar() {
