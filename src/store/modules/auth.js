@@ -6,9 +6,8 @@ Vue.use(Vuex);
 
 // https://scotch.io/tutorials/handling-authentication-in-vue-using-vuex
 export const state = {
-  status: '',
-  token: localStorage.getItem('token') || '',
-  user : {}
+  status: localStorage.status.replace('"','').replace(/'/g, ''),
+  user : {token: localStorage.tokenlife.replace('"','').replace(/'/g, '').replace(/(?:\r\n|\r|\n)/g, '')}
 }
 
 //update state synchronously 
@@ -18,7 +17,7 @@ export const mutations = {
     state.status = 'loading'
   },
   AUTH_SUCCESS_TOKEN(state, token){
-    state.token = token
+    state.user.token = token
   },
   AUTH_SUCCESS_USER(state, user){
     state.user = user
@@ -31,14 +30,15 @@ export const mutations = {
   },
   LOGOUT(state){
     state.status = ''
-    state.token = ''
+    state.user.token = ''
   },
 }
 
 // acts like global computed methods
 export const getters = {
-  isLoggedIn: state => !!state.token,
+  isLoggedIn: state => state.user.token.length > 2,
   authStatus: state => state.status,
+  user: state => state.user,
 }
 
 //asynchronously wrap business logic around mutations. 
@@ -48,12 +48,11 @@ export const actions = {
       commit('AUTH_REQUEST');
       axios({url: 'http://localhost:5000/api/auth/authenticate', data: user, method: 'POST' })
       .then(resp => {
-        const token = resp.data.token;
-        const user = resp.data.user;
-        localStorage.setItem('token', token);
+        const user = resp.data;
+        // localStorage.setItem('token', user.token);
         
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        dispatch("authSuccess", { token, user }); 
+        axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
+        dispatch("authSuccess", { user }); 
         resolve(resp);
       })
       .catch(err => {
@@ -63,9 +62,9 @@ export const actions = {
       })
     })
   },
-  authSuccess({ commit }, {token ,user}){
+  authSuccess({ commit }, {user}){
     commit('AUTH_SUCCESS_STATUS', 'success');
-    commit('AUTH_SUCCESS_TOKEN', token);
+    commit('AUTH_SUCCESS_TOKEN', user.token);
     commit('AUTH_SUCCESS_USER', user);
   },
   register({ commit, dispatch }, user){
@@ -73,12 +72,10 @@ export const actions = {
       commit('AUTH_REQUEST');
       axios({url: 'http://localhost:5000/register', data: user, method: 'POST' })
       .then(resp => {
-        const token = resp.data.token;
         const user = resp.data.user;
-        localStorage.setItem('token', token);
-        axios.defaults.headers.common['Authorization'] = token;
+        axios.defaults.headers.common['Authorization'] = user.token;
 
-        dispatch("authSuccess", { token, user }); 
+        dispatch("authSuccess", { user }); 
         resolve(resp);
       })
       .catch(err => {
@@ -94,6 +91,7 @@ export const actions = {
       localStorage.removeItem('token')
       delete axios.defaults.headers.common['Authorization']
       resolve()
+      window.localStorage.clear();
     })
   }
 }
