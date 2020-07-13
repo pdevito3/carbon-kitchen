@@ -14,11 +14,18 @@ import EmptyLayout from '@/layouts/EmptyLayout';
 Vue.component('app-layout', AppLayout);
 Vue.component('empty-layout', EmptyLayout);
 
-Vue.prototype.$http = Axios;
 const token = localStorage.getItem('token')
 if (token) {
-  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+  Axios.defaults.headers.common['Authorization'] = token
 }
+
+Vue.directive('focus', {
+  // When the bound element is inserted into the DOM...
+  inserted: function (el) {
+    // Focus the element
+    el.focus()
+  }
+})
 
 Vue.use(PortalVue)
 Vue.config.productionTip = false;

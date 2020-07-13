@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import Axios from 'axios'
 
 export default {
   computed : {
@@ -24,7 +25,7 @@ export default {
     //   });
     // });
 
-    this.$http.interceptors.response.use(response => {
+    Axios.interceptors.response.use(response => {
       return response;
     }, error => {
       if (error.response.status === 401) {

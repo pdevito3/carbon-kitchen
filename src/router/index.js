@@ -88,7 +88,7 @@ router.beforeEach((to, from, next) => {
 
   const publicPage = to.meta.publicPage ?? false;
   const loggedIn = store.getters.isLoggedIn;
-  console.log('usertoken',store.getters.user.token)
+  // console.log('usertoken',store.getters.user.token)
   console.log('loggedIn',loggedIn)
   if (!publicPage && !loggedIn) {
     return next('/login');

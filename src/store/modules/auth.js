@@ -6,8 +6,8 @@ Vue.use(Vuex);
 
 // https://scotch.io/tutorials/handling-authentication-in-vue-using-vuex
 export const state = {
-  status: localStorage.status.replace('"','').replace(/'/g, ''),
-  user : {token: localStorage.tokenlife.replace('"','').replace(/'/g, '').replace(/(?:\r\n|\r|\n)/g, '')}
+  status: '',
+  user : {token: localStorage.tokenlife || ''}
 }
 
 //update state synchronously 
@@ -49,7 +49,7 @@ export const actions = {
       axios({url: 'http://localhost:5000/api/auth/authenticate', data: user, method: 'POST' })
       .then(resp => {
         const user = resp.data;
-        // localStorage.setItem('token', user.token);
+        localStorage.setItem('token', user.token);
         
         axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
         dispatch("authSuccess", { user }); 
